@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./fonts.css";
+
+@layer base {
+  body {
+    @apply font-poppins font-light text-black bg-white;
+  }
+}
+
+@layer components {
+  /* .container-grid {
+    @apply w-full grid grid-cols-mobile-container tablet:grid-cols-tablet-container laptop:grid-cols-laptop-container desktop:grid-cols-desktop-container 4k:grid-cols-4k-container;
+  }
+
+  .content-grid {
+    @apply grid grid-cols-mobile-content tablet:grid-cols-tablet-content laptop:grid-cols-laptop-content desktop:grid-cols-desktop-content 4k:grid-cols-4k-content gap-x-mobile-gap tablet:gap-x-tablet-gap laptop:gap-x-laptop-gap desktop:gap-x-desktop-gap 4k:gap-x-4k-gap;
+  } */
+
+  .button {
+    @apply px-xxs h-s inline-flex justify-center items-center rounded-normal text-16;
+  }
+
+  .image-button {
+    @apply h-s inline-flex justify-center items-center rounded-normal text-16;
+  }
+
+  .green-button {
+    @apply bg-green hover:bg-green-hover text-blue;
+  }
+
+  .blue-button {
+    @apply bg-blue hover:bg-blue-hover text-blue;
+  }
+
+  .white-blue-button {
+    @apply border-2 border-blue text-blue hover:bg-blue hover:text-blue;
+  }
+
+  .white-green-button {
+    @apply border-2 border-green text-green hover:bg-green hover:text-blue;
+  }
+
+  .bulleted li::marker {
+    content: url(./bullet.svg);
+  }
+
+  .bulleted li {
+    @apply pl-xs;
+  }
+}
