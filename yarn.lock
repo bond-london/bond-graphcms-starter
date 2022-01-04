@@ -1082,10 +1082,10 @@
   resolved "https://registry.yarnpkg.com/@bond-london/bond-tailwind-plugin/-/bond-tailwind-plugin-1.0.1.tgz#ed7923c6009e13dfbcfc604bc0ec875a15e3b0de"
   integrity sha512-ImacNo0xWtEXtZjbYfgtKphD5GQR0/18nhCAbJa3EYi4iivCyTU6sWIdCB5OBBc0smU9cVwN5DR7W/DRPnlVIQ==
 
-"@bond-london/gatsby-graphcms-components@^1.10.3":
-  version "1.10.3"
-  resolved "https://registry.yarnpkg.com/@bond-london/gatsby-graphcms-components/-/gatsby-graphcms-components-1.10.3.tgz#0d02fff6ef9a5f91a960f7e01dd55b6491793def"
-  integrity sha512-5WHBwtzvy9Q2Fu5HyPmIMKR/BNCtleyDWCSE3TgRIWQdOClSAZSM8sR3VY8iVCLosdiLRn1wRN5LTgrPe5pPxQ==
+"@bond-london/gatsby-graphcms-components@^1.11.0":
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/@bond-london/gatsby-graphcms-components/-/gatsby-graphcms-components-1.11.0.tgz#926b1c581fa43932728a628b5b7f274e1bdc6910"
+  integrity sha512-okubf4+LioU/Yq6GPNVJXW0a4UFtcuOyBJ4aT/peQW7YNyXjbvVGYd6KI+MzpUnnBNVmGEuoMpm104enyt74Fg==
   dependencies:
     react-helmet "^6.1.0"
 

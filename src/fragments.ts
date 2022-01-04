@@ -29,8 +29,8 @@ export const svgFragment = graphql`
 /* @type {Fragment} */
 export const lottieFragment = graphql`
   fragment LottieFragment on File {
+    publicURL
     lottie {
-      animationJson
       encoded
     }
   }

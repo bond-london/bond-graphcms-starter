@@ -39,6 +39,7 @@ export const AspectRatioVisual: React.FC<{
           fitParent={true}
           className={visualClassName}
           loopDelay={loopDelay}
+          cover={true}
         />
       </div>
     </div>

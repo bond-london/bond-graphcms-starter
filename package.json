@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@bond-london/bond-tailwind-plugin": "^1.0.1",
-    "@bond-london/gatsby-graphcms-components": "^1.10.3",
+    "@bond-london/gatsby-graphcms-components": "^1.11.0",
     "@bond-london/gatsby-plugin-cookie-scripts": "^2.0.1",
     "@bond-london/gatsby-plugin-generate-typings": "^2.0.0",
     "@bond-london/gatsby-transformer-extracted-lottie": "^2.0.1",

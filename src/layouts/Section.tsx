@@ -2,11 +2,13 @@ import { useFirstVisibleToUser } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
 import React from "react";
 
+export type CoreSectionElement = "div" | "section" | "footer";
+
 export const CoreSection: React.FC<{
   componentName: string;
   className: string;
   contentClassName?: string;
-  element?: keyof JSX.IntrinsicElements;
+  element?: CoreSectionElement;
   preChildren?: React.ReactNode;
   postChildren?: React.ReactNode;
   visibleThreshold?: number;
@@ -32,6 +34,7 @@ export const CoreSection: React.FC<{
 
   return (
     <Element
+      ref={ref}
       data-component={componentName}
       className={classNames(
         "relative grid-container container-grid",
@@ -39,9 +42,9 @@ export const CoreSection: React.FC<{
       )}
     >
       {preChildren}
-      <div ref={ref} className={classNames(contentClassName)}>
-        {children}
-      </div>
+      {children && (
+        <div className={classNames(contentClassName)}>{children}</div>
+      )}
       {postChildren}
     </Element>
   );
@@ -54,7 +57,7 @@ export const Section: React.FC<{
   spacingClassName?: string;
   topSpacing?: boolean;
   bottomSpacing?: boolean;
-  element?: keyof JSX.IntrinsicElements;
+  element?: CoreSectionElement;
   preChildren?: React.ReactNode;
   postChildren?: React.ReactNode;
   visibleThreshold?: number;
