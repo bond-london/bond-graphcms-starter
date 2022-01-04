@@ -52,8 +52,13 @@ export const LinkOrButton: React.FC<
 
   const label = icon || visual ? name : undefined;
   const inside = icon ? (
-    <div className="grid grid-cols-icon-button gap-x-xs">
-      <Icon type={icon} className={classNames("mt-icon", iconClassName)} />
+    <div
+      className={classNames(
+        "min-h-icon min-w-icon",
+        children ? "grid grid-cols-icon-button gap-x-xxs" : "flex justify-start"
+      )}
+    >
+      <Icon type={icon} className={classNames("self-center", iconClassName)} />
       {children && <div>{children}</div>}
     </div>
   ) : visual ? (

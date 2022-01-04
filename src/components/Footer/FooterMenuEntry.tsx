@@ -10,7 +10,7 @@ export const FooterMenuEntry: React.FC<{
 }) => {
   return (
     <LinkOrButton
-      iconClassName="text-blue"
+      iconClassName="h-line-height"
       icon={withIcon ? icon || "Blank" : undefined}
       name={name}
       internal={internal}

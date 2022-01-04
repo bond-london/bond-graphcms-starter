@@ -12,7 +12,13 @@ export const FooterMenuEntries: React.FC<{
   separator?: string;
 }> = ({ links, withIcons, className, separator, size }) => {
   return (
-    <div className={classNames(className, "flex", sizeToTextClassName(size))}>
+    <div
+      className={classNames(
+        className,
+        "flex gap-x-xxs",
+        sizeToTextClassName(size)
+      )}
+    >
       {links.map((link, index) => (
         <Fragment key={link.name || index}>
           {separator && index > 0 && <span>&nbsp;{separator}&nbsp;</span>}

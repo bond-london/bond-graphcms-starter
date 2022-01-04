@@ -1077,10 +1077,10 @@
     "@babel/helper-validator-identifier" "^7.15.7"
     to-fast-properties "^2.0.0"
 
-"@bond-london/bond-tailwind-plugin@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@bond-london/bond-tailwind-plugin/-/bond-tailwind-plugin-1.0.0.tgz#09977949267df6cf1d8dc9f9b47becf1bc91aa84"
-  integrity sha512-MP8gCRXp0fBKjDR1rnTZX0mTFmpAIXyb7soJi9RO52ZcUH2iAU1F60xpGEq9WjqSSQTUKK4UZrL0S5eFpxoJqA==
+"@bond-london/bond-tailwind-plugin@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@bond-london/bond-tailwind-plugin/-/bond-tailwind-plugin-1.0.1.tgz#ed7923c6009e13dfbcfc604bc0ec875a15e3b0de"
+  integrity sha512-ImacNo0xWtEXtZjbYfgtKphD5GQR0/18nhCAbJa3EYi4iivCyTU6sWIdCB5OBBc0smU9cVwN5DR7W/DRPnlVIQ==
 
 "@bond-london/gatsby-graphcms-components@^1.10.3":
   version "1.10.3"
