@@ -1,7 +1,7 @@
 import { VisualAsset } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
 import React, { useCallback, useState } from "react";
-import { Icon, IconType, LinkOrButton } from "..";
+import { IconType, LinkOrButton } from "..";
 import { useBodyScrollLock } from "../../layouts";
 import { NavigationMenu } from "./NavigationMenu";
 
@@ -60,9 +60,13 @@ export const NavigationBar: React.FC<{
           isOpen ? "grid-rows-nav-open" : "grid-rows-nav-closed"
         )}
       >
-        <LinkOrButton internal="/" className="col-start-1 col-span-2 py-xs">
-          <Icon type="BondLogo" className="h-m" />
-        </LinkOrButton>
+        <LinkOrButton
+          internal="/"
+          className="col-start-1 col-span-2 py-xs"
+          icon="BondLogo"
+          name="Home page"
+          iconClassName="h-m"
+        />
         <button
           aria-label="Toggle menu"
           className="col-start-4 col-span-1 tablet:col-start-8 justify-self-end laptop:hidden relative w-xs h-xxs "

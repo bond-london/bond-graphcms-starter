@@ -11,9 +11,9 @@ export function getButtonColour(colour?: NamedLinkColour): string {
   switch (colour) {
     case "Blue":
       return "blue-button";
-    case "WhiteBlue":
+    case "BlueWhite":
       return "white-blue-button";
-    case "WhiteGreen":
+    case "GreenWhite":
       return "white-green-button";
   }
   return "green-button";
@@ -50,10 +50,11 @@ export const LinkOrButton: React.FC<
         )
       : className;
 
+  const label = icon || visual ? name : undefined;
   const inside = icon ? (
     <div className="grid grid-cols-icon-button gap-x-xs">
       <Icon type={icon} className={classNames("mt-icon", iconClassName)} />
-      <div>{name || children}</div>
+      {children && <div>{children}</div>}
     </div>
   ) : visual ? (
     <AutoVisualNoLottie visual={visual} />
@@ -63,7 +64,7 @@ export const LinkOrButton: React.FC<
 
   if (internal) {
     return (
-      <Link className={realButtonClassName} to={internal}>
+      <Link className={realButtonClassName} to={internal} aria-label={label}>
         {inside}
       </Link>
     );
@@ -73,6 +74,7 @@ export const LinkOrButton: React.FC<
     if (newPage) {
       return (
         <a
+          aria-label={label}
           href={external}
           className={classNames(realButtonClassName, "inline-flex")}
           target="_blank"
@@ -84,6 +86,7 @@ export const LinkOrButton: React.FC<
     }
     return (
       <a
+        aria-label={label}
         className={classNames(realButtonClassName, "inline-flex")}
         href={external}
       >
@@ -94,7 +97,11 @@ export const LinkOrButton: React.FC<
 
   if (action) {
     return (
-      <button onClick={action} className={realButtonClassName}>
+      <button
+        onClick={action}
+        className={realButtonClassName}
+        aria-label={label}
+      >
         {inside}
       </button>
     );

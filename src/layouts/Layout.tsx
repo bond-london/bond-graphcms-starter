@@ -30,7 +30,7 @@ export const DefaultNavigationMenu: Menu = {
 export const DefaultFooterInformation: FooterInformation = {
   columns: [
     [
-      { type: "Logo", size: "Large" },
+      { type: "Logo", size: "Large", text: "Home page" },
       {
         type: "Text",
         size: "Medium",
@@ -45,11 +45,13 @@ export const DefaultFooterInformation: FooterInformation = {
             icon: "Facebook",
             external: "https://www.facebook.com",
             newPage: true,
+            name: "Facebook",
           },
           {
             icon: "LinkedIn",
             external: "https://www.linkedin.com",
             newPage: true,
+            name: "LinkedIn",
           },
         ],
       },
