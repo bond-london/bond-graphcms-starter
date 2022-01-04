@@ -1,8 +1,11 @@
 import { getVisual } from "@bond-london/gatsby-graphcms-components";
 import { graphql } from "gatsby";
 import React from "react";
-import { Team } from "../components";
 import { GraphCms_Team } from "../generated/graphql-types";
+import loadable from "@loadable/component";
+const Team = loadable(() => import("../components"), {
+  resolveComponent: (lib) => lib.Team,
+});
 
 export const CMSTeam: React.FC<{ team: GraphCms_Team }> = ({
   team: { people },
