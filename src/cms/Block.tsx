@@ -2,13 +2,20 @@ import { getVisual } from "@bond-london/gatsby-graphcms-components";
 import { cleanupRTF, getRTF, tryGetRTF } from "@bond-london/graphcms-rich-text";
 import { graphql } from "gatsby";
 import React from "react";
-import { BasicRTF, Hero, NamedLinkInformation } from "../components";
+import { NamedLinkInformation } from "../components";
 import {
   GraphCms_Block,
   GraphCms_Link,
   GraphCms_Union_InternalLink_RelatedLink,
 } from "../generated/graphql-types";
 import { arrayOrUndefined } from "../utils";
+import loadable from "@loadable/component";
+const BasicRTF = loadable(() => import("../components"), {
+  resolveComponent: (lib) => lib.BasicRTF,
+});
+const Hero = loadable(() => import("../components"), {
+  resolveComponent: (lib) => lib.Hero,
+});
 
 const RichTextBlock: React.FC<{ block: GraphCms_Block }> = ({
   block: { content, asset, loop, preview, left },
