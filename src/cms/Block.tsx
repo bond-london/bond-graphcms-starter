@@ -29,9 +29,6 @@ const HeroBlock: React.FC<{ block: GraphCms_Block }> = ({
   block: { content, asset, title, showTitle, loop, preview, links, textColour },
 }) => {
   const rtf = tryGetRTF(content, true);
-  if (!rtf) {
-    return null;
-  }
   const visual = getVisual(asset, loop, preview);
   if (!visual) {
     return null;
