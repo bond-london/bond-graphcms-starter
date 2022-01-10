@@ -72,6 +72,7 @@ export const RenderTable: React.FC<{
                 }
               >
                 <RenderElements
+                  parentIndex={0}
                   index={index}
                   contents={cell}
                   renderers={renderers}
@@ -98,6 +99,7 @@ export const RenderTable: React.FC<{
                   <div className="laptop:hidden inline-block w-1/3 pr-mobile-gap p4">
                     {header && (
                       <RenderElements
+                        parentIndex={0}
                         index={index}
                         contents={table.header[index]}
                         renderers={renderers}
@@ -106,6 +108,7 @@ export const RenderTable: React.FC<{
                   </div>
                   <div className="w-2/3 inline-block laptop:w-auto">
                     <RenderElements
+                      parentIndex={0}
                       index={index}
                       contents={cell}
                       renderers={renderers}

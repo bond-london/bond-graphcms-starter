@@ -4,7 +4,7 @@ require("dotenv").config({
 
 const GOOGLE_TAG = process.env.GOOGLE_TAG;
 
-const languages = ["en"];
+const languages = ["en", "fr_CH"];
 const siteUrl = process.env.GATSBY_SITE_URL || "http://localhost:8000";
 const showDevPages = !!process.env.SHOW_DEV_PAGES;
 
@@ -91,6 +91,18 @@ module.exports = {
         checkSupportedExtensions: false,
       },
     },
+    {
+      resolve: "@bond-london/gatsby-plugin-cms-i18next",
+      options: {
+        localeJsonSourceName: `locale`,
+        languages,
+        defaultLanguage: languages[0],
+        siteUrl,
+        i18nextOptions: {
+          lowerCaseLng: true,
+        },
+      },
+    },
     "@bond-london/gatsby-transformer-extracted-svg",
     "@bond-london/gatsby-transformer-extracted-lottie",
     {
@@ -99,6 +111,7 @@ module.exports = {
         endpoint: process.env.GRAPHCMS_ENDPOINT,
         stages: [process.env.GRAPHCMS_STAGE],
         token: process.env.GRAPHCMS_TOKEN,
+        locales: languages,
       },
     },
     {
@@ -108,6 +121,14 @@ module.exports = {
         path: "./src/images/",
       },
       __key: "images",
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "locale",
+        path: "./locales",
+      },
+      __key: "locale",
     },
     {
       resolve: "@bond-london/gatsby-plugin-generate-typings",

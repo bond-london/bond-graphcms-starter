@@ -5,6 +5,7 @@ exports.createPages = async function ({ actions, graphql }) {
         nodes {
           slug
           id
+          locale
         }
       }
     }
@@ -12,11 +13,15 @@ exports.createPages = async function ({ actions, graphql }) {
 
   const pageComponent = require.resolve(`./src/templates/page.tsx`);
   data.allGraphCmsPage.nodes.forEach((node) => {
-    const { slug, id } = node;
+    const { slug, locale, id } = node;
     if (slug !== "404") {
       const isHome = slug === "index" || slug === "home";
-      const path = `/${!slug || isHome ? "" : slug}`;
-      actions.createPage({ path, component: pageComponent, context: { id } });
+      const path = `/${locale}/${!slug || isHome ? "" : slug}`;
+      actions.createPage({
+        path,
+        component: pageComponent,
+        context: { id, language: locale },
+      });
     }
   });
 };

@@ -50,11 +50,13 @@ fragment Link on Link {
     ... on Page {
       remoteTypeName: __typename
       remoteId: id
+      locale
       stage
     }
     ... on Person {
       remoteTypeName: __typename
       remoteId: id
+      locale
       stage
     }
   }

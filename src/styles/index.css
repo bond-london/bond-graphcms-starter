@@ -50,4 +50,8 @@
   .bulleted li {
     @apply pl-xs;
   }
+
+  .aspect-square {
+    @apply aspect-w-1 aspect-h-1;
+  }
 }

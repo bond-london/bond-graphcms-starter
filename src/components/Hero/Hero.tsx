@@ -4,13 +4,13 @@ import React from "react";
 import { LinkOrButton, NamedLinkInformation } from "..";
 import { AspectRatioVisual, RTF } from "../../elements";
 import { useFirstVisible } from "../../utils";
-import { RTFContent } from "@bond-london/graphcms-rich-text";
+import { CleanedRTF } from "@bond-london/graphcms-rich-text";
 import { Section } from "../../layouts";
 import { ColourName, lookupColourClassName } from "../../lookups";
 
 export const Hero: React.FC<{
   title?: string;
-  content?: RTFContent;
+  content?: CleanedRTF;
   links?: NamedLinkInformation[];
   visual?: VisualAsset;
   textColour?: ColourName;

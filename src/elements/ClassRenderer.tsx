@@ -17,7 +17,8 @@ export interface RTFContext {
 }
 
 export const ClassRenderer: React.FC<ClassNodeRendererProps> = (props) => {
-  const { className, children } = props;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { className, index, parentIndex: _unusedParentIndex, children } = props;
   if (!className) {
     return <>{children}</>;
   }
@@ -30,6 +31,7 @@ export const ClassRenderer: React.FC<ClassNodeRendererProps> = (props) => {
     <RenderElements
       classNameOverrides={props.classNameOverrides}
       index={0}
+      parentIndex={index}
       renderers={props.renderers}
       context={context}
       removeEmptyElements={props.removeEmptyElements}

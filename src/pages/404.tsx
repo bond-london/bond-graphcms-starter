@@ -12,7 +12,16 @@ const Page: React.FC<{ data: { page: GraphCms_Page } }> = ({
 export default Page;
 
 export const page404Query = graphql`
-  query {
+  query ($language: String!) {
+    _locales: allLocale(filter: { language: { eq: $language } }) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
     page: graphCmsPage(slug: { eq: "404" }) {
       ...PageFragment
     }

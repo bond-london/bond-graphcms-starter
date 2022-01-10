@@ -7,7 +7,7 @@ import React from "react";
 import loadable from "@loadable/component";
 
 const AutoVisualWithLottie = loadable(
-  () => import("@bond-london/gatsby-graphcms-components"),
+  () => import("@bond-london/gatsby-graphcms-components/dist/lottie"),
   { resolveComponent: (lib) => lib.AutoVisualWithLottie }
 );
 

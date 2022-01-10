@@ -9,8 +9,15 @@ import {
   NodeRendererProps,
   RealRTFProps,
   ClassNodeRendererProps,
+  EmbedNodeRendererProps,
 } from "@bond-london/graphcms-rich-text";
 import { ClassRenderer } from "./ClassRenderer";
+import {
+  ImageAssetRenderer,
+  ImageAssetRendererProps,
+} from "./ImageAssetRenderer";
+import { CMSPerson } from "../cms";
+import { GraphCms_Person } from "../generated/graphql-types";
 
 const projectRenderers: Partial<NodeRenderer> = {
   code_block: (props) => (
@@ -22,6 +29,25 @@ const projectRenderers: Partial<NodeRenderer> = {
   class: (props) => (
     <ClassRenderer {...(props as unknown as ClassNodeRendererProps)} />
   ),
+  embed_asset: {
+    image: (props) => (
+      <ImageAssetRenderer {...(props as unknown as ImageAssetRendererProps)} />
+    ),
+  },
+  embed_node: {
+    Person: (props: EmbedNodeRendererProps) => {
+      const { isInline } = props;
+      const person = props as unknown as GraphCms_Person;
+      return (
+        <CMSPerson
+          person={person}
+          className={classNames(
+            isInline ? "w-mobile-2-cols" : "w-mobile-4-cols"
+          )}
+        />
+      );
+    },
+  },
 };
 
 const projectClassNameOverrides: ClassNameOverrides = {

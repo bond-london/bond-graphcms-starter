@@ -65,6 +65,10 @@ export type File = Node & {
   readonly childrenImageSharp?: Maybe<ReadonlyArray<Maybe<ImageSharp>>>;
   /** Returns the first child node of type ImageSharp or null if there are no children of given type on this node */
   readonly childImageSharp?: Maybe<ImageSharp>;
+  /** Returns all children nodes filtered by type Locale */
+  readonly childrenLocale?: Maybe<ReadonlyArray<Maybe<Locale>>>;
+  /** Returns the first child node of type Locale or null if there are no children of given type on this node */
+  readonly childLocale?: Maybe<Locale>;
   readonly id: Scalars['ID'];
   readonly parent?: Maybe<Node>;
   readonly children: ReadonlyArray<Node>;
@@ -250,8 +254,6 @@ export type Site = Node & {
   readonly __typename?: 'Site';
   readonly buildTime?: Maybe<Scalars['Date']>;
   readonly siteMetadata?: Maybe<SiteSiteMetadata>;
-  readonly port?: Maybe<Scalars['Int']>;
-  readonly host?: Maybe<Scalars['String']>;
   readonly flags?: Maybe<SiteFlags>;
   readonly polyfill?: Maybe<Scalars['Boolean']>;
   readonly pathPrefix?: Maybe<Scalars['String']>;
@@ -710,6 +712,7 @@ export type GraphCms_Block = Node & {
   readonly actualStage: Scalars['String'];
   readonly remoteTypeName: Scalars['String'];
   readonly remoteId: Scalars['ID'];
+  readonly locale: GraphCms_Locale;
   readonly stage: GraphCms_Stage;
   readonly title: Scalars['String'];
   readonly name?: Maybe<Scalars['String']>;
@@ -919,6 +922,7 @@ export type GraphCms_Page = Node & {
   readonly actualStage: Scalars['String'];
   readonly remoteTypeName: Scalars['String'];
   readonly remoteId: Scalars['ID'];
+  readonly locale: GraphCms_Locale;
   readonly stage: GraphCms_Stage;
   readonly title: Scalars['String'];
   readonly slug: Scalars['String'];
@@ -971,6 +975,7 @@ export type GraphCms_Person = Node & {
   readonly actualStage: Scalars['String'];
   readonly remoteTypeName: Scalars['String'];
   readonly remoteId: Scalars['ID'];
+  readonly locale: GraphCms_Locale;
   readonly stage: GraphCms_Stage;
   readonly name: Scalars['String'];
   readonly position: Scalars['String'];
@@ -1206,7 +1211,8 @@ export type GraphCms_UserPublishedAtArgs = {
 };
 
 export type GraphCms_Locale =
-  | 'en';
+  | 'en'
+  | 'fr_CH';
 
 export type GraphCms_Stage =
   | 'DRAFT'
@@ -1221,9 +1227,10 @@ export type GraphCms_BlockContentRichText = {
   readonly markdown: Scalars['String'];
   readonly text: Scalars['String'];
   readonly references: ReadonlyArray<GraphCms_BlockContentRichTextEmbeddedTypes>;
+  readonly cleaned?: Maybe<Scalars['JSON']>;
 };
 
-export type GraphCms_BlockContentRichTextEmbeddedTypes = GraphCms_Asset;
+export type GraphCms_BlockContentRichTextEmbeddedTypes = GraphCms_Asset | GraphCms_Person;
 
 export type GraphCms_BlockType =
   | 'hero'
@@ -1257,6 +1264,7 @@ export type GraphCms_CollectionContentRichText = {
   readonly markdown: Scalars['String'];
   readonly text: Scalars['String'];
   readonly references: ReadonlyArray<GraphCms_CollectionContentRichTextEmbeddedTypes>;
+  readonly cleaned?: Maybe<Scalars['JSON']>;
 };
 
 export type GraphCms_CollectionContentRichTextEmbeddedTypes = GraphCms_Asset;
@@ -1322,6 +1330,18 @@ export type GraphCms_MarkdownNode = Node & {
   readonly internal: Internal;
 };
 
+export type Locale = Node & {
+  readonly __typename?: 'Locale';
+  readonly id: Scalars['ID'];
+  readonly parent?: Maybe<Node>;
+  readonly children: ReadonlyArray<Node>;
+  readonly internal: Internal;
+  readonly language?: Maybe<Scalars['String']>;
+  readonly ns?: Maybe<Scalars['String']>;
+  readonly data?: Maybe<Scalars['String']>;
+  readonly fileAbsolutePath?: Maybe<Scalars['String']>;
+};
+
 export type Query = {
   readonly __typename?: 'Query';
   readonly file?: Maybe<File>;
@@ -1368,6 +1388,8 @@ export type Query = {
   readonly allGraphCmsUser: GraphCms_UserConnection;
   readonly graphCmsMarkdownNode?: Maybe<GraphCms_MarkdownNode>;
   readonly allGraphCmsMarkdownNode: GraphCms_MarkdownNodeConnection;
+  readonly locale?: Maybe<Locale>;
+  readonly allLocale: LocaleConnection;
 };
 
 
@@ -1409,6 +1431,8 @@ export type QueryFileArgs = {
   publicURL?: InputMaybe<StringQueryOperatorInput>;
   childrenImageSharp?: InputMaybe<ImageSharpFilterListInput>;
   childImageSharp?: InputMaybe<ImageSharpFilterInput>;
+  childrenLocale?: InputMaybe<LocaleFilterListInput>;
+  childLocale?: InputMaybe<LocaleFilterInput>;
   id?: InputMaybe<StringQueryOperatorInput>;
   parent?: InputMaybe<NodeFilterInput>;
   children?: InputMaybe<NodeFilterListInput>;
@@ -1474,8 +1498,6 @@ export type QueryAllDirectoryArgs = {
 export type QuerySiteArgs = {
   buildTime?: InputMaybe<DateQueryOperatorInput>;
   siteMetadata?: InputMaybe<SiteSiteMetadataFilterInput>;
-  port?: InputMaybe<IntQueryOperatorInput>;
-  host?: InputMaybe<StringQueryOperatorInput>;
   flags?: InputMaybe<SiteFlagsFilterInput>;
   polyfill?: InputMaybe<BooleanQueryOperatorInput>;
   pathPrefix?: InputMaybe<StringQueryOperatorInput>;
@@ -1694,6 +1716,7 @@ export type QueryGraphCmsBlockArgs = {
   actualStage?: InputMaybe<StringQueryOperatorInput>;
   remoteTypeName?: InputMaybe<StringQueryOperatorInput>;
   remoteId?: InputMaybe<IdQueryOperatorInput>;
+  locale?: InputMaybe<GraphCms_LocaleQueryOperatorInput>;
   stage?: InputMaybe<GraphCms_StageQueryOperatorInput>;
   title?: InputMaybe<StringQueryOperatorInput>;
   name?: InputMaybe<StringQueryOperatorInput>;
@@ -1837,6 +1860,7 @@ export type QueryGraphCmsPageArgs = {
   actualStage?: InputMaybe<StringQueryOperatorInput>;
   remoteTypeName?: InputMaybe<StringQueryOperatorInput>;
   remoteId?: InputMaybe<IdQueryOperatorInput>;
+  locale?: InputMaybe<GraphCms_LocaleQueryOperatorInput>;
   stage?: InputMaybe<GraphCms_StageQueryOperatorInput>;
   title?: InputMaybe<StringQueryOperatorInput>;
   slug?: InputMaybe<StringQueryOperatorInput>;
@@ -1872,6 +1896,7 @@ export type QueryGraphCmsPersonArgs = {
   actualStage?: InputMaybe<StringQueryOperatorInput>;
   remoteTypeName?: InputMaybe<StringQueryOperatorInput>;
   remoteId?: InputMaybe<IdQueryOperatorInput>;
+  locale?: InputMaybe<GraphCms_LocaleQueryOperatorInput>;
   stage?: InputMaybe<GraphCms_StageQueryOperatorInput>;
   name?: InputMaybe<StringQueryOperatorInput>;
   position?: InputMaybe<StringQueryOperatorInput>;
@@ -2041,6 +2066,26 @@ export type QueryAllGraphCmsMarkdownNodeArgs = {
   limit?: InputMaybe<Scalars['Int']>;
 };
 
+
+export type QueryLocaleArgs = {
+  id?: InputMaybe<StringQueryOperatorInput>;
+  parent?: InputMaybe<NodeFilterInput>;
+  children?: InputMaybe<NodeFilterListInput>;
+  internal?: InputMaybe<InternalFilterInput>;
+  language?: InputMaybe<StringQueryOperatorInput>;
+  ns?: InputMaybe<StringQueryOperatorInput>;
+  data?: InputMaybe<StringQueryOperatorInput>;
+  fileAbsolutePath?: InputMaybe<StringQueryOperatorInput>;
+};
+
+
+export type QueryAllLocaleArgs = {
+  filter?: InputMaybe<LocaleFilterInput>;
+  sort?: InputMaybe<LocaleSortInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+};
+
 export type StringQueryOperatorInput = {
   readonly eq?: InputMaybe<Scalars['String']>;
   readonly ne?: InputMaybe<Scalars['String']>;
@@ -2178,6 +2223,21 @@ export type BooleanQueryOperatorInput = {
   readonly ne?: InputMaybe<Scalars['Boolean']>;
   readonly in?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Boolean']>>>;
   readonly nin?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Boolean']>>>;
+};
+
+export type LocaleFilterListInput = {
+  readonly elemMatch?: InputMaybe<LocaleFilterInput>;
+};
+
+export type LocaleFilterInput = {
+  readonly id?: InputMaybe<StringQueryOperatorInput>;
+  readonly parent?: InputMaybe<NodeFilterInput>;
+  readonly children?: InputMaybe<NodeFilterListInput>;
+  readonly internal?: InputMaybe<InternalFilterInput>;
+  readonly language?: InputMaybe<StringQueryOperatorInput>;
+  readonly ns?: InputMaybe<StringQueryOperatorInput>;
+  readonly data?: InputMaybe<StringQueryOperatorInput>;
+  readonly fileAbsolutePath?: InputMaybe<StringQueryOperatorInput>;
 };
 
 export type FileConnection = {
@@ -2415,6 +2475,91 @@ export type FileFieldsEnum =
   | 'childImageSharp___internal___mediaType'
   | 'childImageSharp___internal___owner'
   | 'childImageSharp___internal___type'
+  | 'childrenLocale'
+  | 'childrenLocale___id'
+  | 'childrenLocale___parent___id'
+  | 'childrenLocale___parent___parent___id'
+  | 'childrenLocale___parent___parent___children'
+  | 'childrenLocale___parent___children'
+  | 'childrenLocale___parent___children___id'
+  | 'childrenLocale___parent___children___children'
+  | 'childrenLocale___parent___internal___content'
+  | 'childrenLocale___parent___internal___contentDigest'
+  | 'childrenLocale___parent___internal___description'
+  | 'childrenLocale___parent___internal___fieldOwners'
+  | 'childrenLocale___parent___internal___ignoreType'
+  | 'childrenLocale___parent___internal___mediaType'
+  | 'childrenLocale___parent___internal___owner'
+  | 'childrenLocale___parent___internal___type'
+  | 'childrenLocale___children'
+  | 'childrenLocale___children___id'
+  | 'childrenLocale___children___parent___id'
+  | 'childrenLocale___children___parent___children'
+  | 'childrenLocale___children___children'
+  | 'childrenLocale___children___children___id'
+  | 'childrenLocale___children___children___children'
+  | 'childrenLocale___children___internal___content'
+  | 'childrenLocale___children___internal___contentDigest'
+  | 'childrenLocale___children___internal___description'
+  | 'childrenLocale___children___internal___fieldOwners'
+  | 'childrenLocale___children___internal___ignoreType'
+  | 'childrenLocale___children___internal___mediaType'
+  | 'childrenLocale___children___internal___owner'
+  | 'childrenLocale___children___internal___type'
+  | 'childrenLocale___internal___content'
+  | 'childrenLocale___internal___contentDigest'
+  | 'childrenLocale___internal___description'
+  | 'childrenLocale___internal___fieldOwners'
+  | 'childrenLocale___internal___ignoreType'
+  | 'childrenLocale___internal___mediaType'
+  | 'childrenLocale___internal___owner'
+  | 'childrenLocale___internal___type'
+  | 'childrenLocale___language'
+  | 'childrenLocale___ns'
+  | 'childrenLocale___data'
+  | 'childrenLocale___fileAbsolutePath'
+  | 'childLocale___id'
+  | 'childLocale___parent___id'
+  | 'childLocale___parent___parent___id'
+  | 'childLocale___parent___parent___children'
+  | 'childLocale___parent___children'
+  | 'childLocale___parent___children___id'
+  | 'childLocale___parent___children___children'
+  | 'childLocale___parent___internal___content'
+  | 'childLocale___parent___internal___contentDigest'
+  | 'childLocale___parent___internal___description'
+  | 'childLocale___parent___internal___fieldOwners'
+  | 'childLocale___parent___internal___ignoreType'
+  | 'childLocale___parent___internal___mediaType'
+  | 'childLocale___parent___internal___owner'
+  | 'childLocale___parent___internal___type'
+  | 'childLocale___children'
+  | 'childLocale___children___id'
+  | 'childLocale___children___parent___id'
+  | 'childLocale___children___parent___children'
+  | 'childLocale___children___children'
+  | 'childLocale___children___children___id'
+  | 'childLocale___children___children___children'
+  | 'childLocale___children___internal___content'
+  | 'childLocale___children___internal___contentDigest'
+  | 'childLocale___children___internal___description'
+  | 'childLocale___children___internal___fieldOwners'
+  | 'childLocale___children___internal___ignoreType'
+  | 'childLocale___children___internal___mediaType'
+  | 'childLocale___children___internal___owner'
+  | 'childLocale___children___internal___type'
+  | 'childLocale___internal___content'
+  | 'childLocale___internal___contentDigest'
+  | 'childLocale___internal___description'
+  | 'childLocale___internal___fieldOwners'
+  | 'childLocale___internal___ignoreType'
+  | 'childLocale___internal___mediaType'
+  | 'childLocale___internal___owner'
+  | 'childLocale___internal___type'
+  | 'childLocale___language'
+  | 'childLocale___ns'
+  | 'childLocale___data'
+  | 'childLocale___fileAbsolutePath'
   | 'id'
   | 'parent___id'
   | 'parent___parent___id'
@@ -2582,6 +2727,8 @@ export type FileFilterInput = {
   readonly publicURL?: InputMaybe<StringQueryOperatorInput>;
   readonly childrenImageSharp?: InputMaybe<ImageSharpFilterListInput>;
   readonly childImageSharp?: InputMaybe<ImageSharpFilterInput>;
+  readonly childrenLocale?: InputMaybe<LocaleFilterListInput>;
+  readonly childLocale?: InputMaybe<LocaleFilterInput>;
   readonly id?: InputMaybe<StringQueryOperatorInput>;
   readonly parent?: InputMaybe<NodeFilterInput>;
   readonly children?: InputMaybe<NodeFilterListInput>;
@@ -2910,8 +3057,6 @@ export type SiteFieldsEnum =
   | 'siteMetadata___title'
   | 'siteMetadata___description'
   | 'siteMetadata___siteUrl'
-  | 'port'
-  | 'host'
   | 'flags___FAST_DEV'
   | 'polyfill'
   | 'pathPrefix'
@@ -3048,8 +3193,6 @@ export type SiteGroupConnectionGroupArgs = {
 export type SiteFilterInput = {
   readonly buildTime?: InputMaybe<DateQueryOperatorInput>;
   readonly siteMetadata?: InputMaybe<SiteSiteMetadataFilterInput>;
-  readonly port?: InputMaybe<IntQueryOperatorInput>;
-  readonly host?: InputMaybe<StringQueryOperatorInput>;
   readonly flags?: InputMaybe<SiteFlagsFilterInput>;
   readonly polyfill?: InputMaybe<BooleanQueryOperatorInput>;
   readonly pathPrefix?: InputMaybe<StringQueryOperatorInput>;
@@ -4578,6 +4721,7 @@ export type GraphCms_PersonFilterInput = {
   readonly actualStage?: InputMaybe<StringQueryOperatorInput>;
   readonly remoteTypeName?: InputMaybe<StringQueryOperatorInput>;
   readonly remoteId?: InputMaybe<IdQueryOperatorInput>;
+  readonly locale?: InputMaybe<GraphCms_LocaleQueryOperatorInput>;
   readonly stage?: InputMaybe<GraphCms_StageQueryOperatorInput>;
   readonly name?: InputMaybe<StringQueryOperatorInput>;
   readonly position?: InputMaybe<StringQueryOperatorInput>;
@@ -4643,6 +4787,7 @@ export type GraphCms_BlockFilterInput = {
   readonly actualStage?: InputMaybe<StringQueryOperatorInput>;
   readonly remoteTypeName?: InputMaybe<StringQueryOperatorInput>;
   readonly remoteId?: InputMaybe<IdQueryOperatorInput>;
+  readonly locale?: InputMaybe<GraphCms_LocaleQueryOperatorInput>;
   readonly stage?: InputMaybe<GraphCms_StageQueryOperatorInput>;
   readonly title?: InputMaybe<StringQueryOperatorInput>;
   readonly name?: InputMaybe<StringQueryOperatorInput>;
@@ -4675,6 +4820,7 @@ export type GraphCms_BlockContentRichTextFilterInput = {
   readonly html?: InputMaybe<StringQueryOperatorInput>;
   readonly markdown?: InputMaybe<StringQueryOperatorInput>;
   readonly text?: InputMaybe<StringQueryOperatorInput>;
+  readonly cleaned?: InputMaybe<JsonQueryOperatorInput>;
 };
 
 export type GraphCms_LinkFilterListInput = {
@@ -4847,6 +4993,7 @@ export type GraphCms_CollectionContentRichTextFilterInput = {
   readonly html?: InputMaybe<StringQueryOperatorInput>;
   readonly markdown?: InputMaybe<StringQueryOperatorInput>;
   readonly text?: InputMaybe<StringQueryOperatorInput>;
+  readonly cleaned?: InputMaybe<JsonQueryOperatorInput>;
 };
 
 export type GraphCms_CollectionTypeQueryOperatorInput = {
@@ -4868,6 +5015,7 @@ export type GraphCms_PageFilterInput = {
   readonly actualStage?: InputMaybe<StringQueryOperatorInput>;
   readonly remoteTypeName?: InputMaybe<StringQueryOperatorInput>;
   readonly remoteId?: InputMaybe<IdQueryOperatorInput>;
+  readonly locale?: InputMaybe<GraphCms_LocaleQueryOperatorInput>;
   readonly stage?: InputMaybe<GraphCms_StageQueryOperatorInput>;
   readonly title?: InputMaybe<StringQueryOperatorInput>;
   readonly slug?: InputMaybe<StringQueryOperatorInput>;
@@ -5108,6 +5256,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPerson___actualStage'
   | 'relatedPerson___remoteTypeName'
   | 'relatedPerson___remoteId'
+  | 'relatedPerson___locale'
   | 'relatedPerson___stage'
   | 'relatedPerson___name'
   | 'relatedPerson___position'
@@ -5256,6 +5405,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPerson___asset___relatedPerson___actualStage'
   | 'relatedPerson___asset___relatedPerson___remoteTypeName'
   | 'relatedPerson___asset___relatedPerson___remoteId'
+  | 'relatedPerson___asset___relatedPerson___locale'
   | 'relatedPerson___asset___relatedPerson___stage'
   | 'relatedPerson___asset___relatedPerson___name'
   | 'relatedPerson___asset___relatedPerson___position'
@@ -5274,6 +5424,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPerson___asset___relatedBlock___actualStage'
   | 'relatedPerson___asset___relatedBlock___remoteTypeName'
   | 'relatedPerson___asset___relatedBlock___remoteId'
+  | 'relatedPerson___asset___relatedBlock___locale'
   | 'relatedPerson___asset___relatedBlock___stage'
   | 'relatedPerson___asset___relatedBlock___title'
   | 'relatedPerson___asset___relatedBlock___name'
@@ -5297,6 +5448,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPerson___asset___previewBlock___actualStage'
   | 'relatedPerson___asset___previewBlock___remoteTypeName'
   | 'relatedPerson___asset___previewBlock___remoteId'
+  | 'relatedPerson___asset___previewBlock___locale'
   | 'relatedPerson___asset___previewBlock___stage'
   | 'relatedPerson___asset___previewBlock___title'
   | 'relatedPerson___asset___previewBlock___name'
@@ -5338,6 +5490,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPerson___asset___relatedPage___actualStage'
   | 'relatedPerson___asset___relatedPage___remoteTypeName'
   | 'relatedPerson___asset___relatedPage___remoteId'
+  | 'relatedPerson___asset___relatedPage___locale'
   | 'relatedPerson___asset___relatedPage___stage'
   | 'relatedPerson___asset___relatedPage___title'
   | 'relatedPerson___asset___relatedPage___slug'
@@ -5418,6 +5571,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPerson___asset___localFile___url'
   | 'relatedPerson___asset___localFile___publicURL'
   | 'relatedPerson___asset___localFile___childrenImageSharp'
+  | 'relatedPerson___asset___localFile___childrenLocale'
   | 'relatedPerson___asset___localFile___id'
   | 'relatedPerson___asset___localFile___children'
   | 'relatedPerson___asset___id'
@@ -5539,6 +5693,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPerson___relatedCollection___content___html'
   | 'relatedPerson___relatedCollection___content___markdown'
   | 'relatedPerson___relatedCollection___content___text'
+  | 'relatedPerson___relatedCollection___content___cleaned'
   | 'relatedPerson___relatedCollection___createdBy___updatedAt'
   | 'relatedPerson___relatedCollection___createdBy___createdAt'
   | 'relatedPerson___relatedCollection___createdBy___publishedAt'
@@ -5649,6 +5804,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPerson___relatedCollection___relatedPage___actualStage'
   | 'relatedPerson___relatedCollection___relatedPage___remoteTypeName'
   | 'relatedPerson___relatedCollection___relatedPage___remoteId'
+  | 'relatedPerson___relatedCollection___relatedPage___locale'
   | 'relatedPerson___relatedCollection___relatedPage___stage'
   | 'relatedPerson___relatedCollection___relatedPage___title'
   | 'relatedPerson___relatedCollection___relatedPage___slug'
@@ -5681,6 +5837,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPerson___relatedPage___actualStage'
   | 'relatedPerson___relatedPage___remoteTypeName'
   | 'relatedPerson___relatedPage___remoteId'
+  | 'relatedPerson___relatedPage___locale'
   | 'relatedPerson___relatedPage___stage'
   | 'relatedPerson___relatedPage___title'
   | 'relatedPerson___relatedPage___slug'
@@ -5960,6 +6117,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___actualStage'
   | 'relatedBlock___remoteTypeName'
   | 'relatedBlock___remoteId'
+  | 'relatedBlock___locale'
   | 'relatedBlock___stage'
   | 'relatedBlock___title'
   | 'relatedBlock___name'
@@ -5970,6 +6128,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___content___html'
   | 'relatedBlock___content___markdown'
   | 'relatedBlock___content___text'
+  | 'relatedBlock___content___cleaned'
   | 'relatedBlock___loop'
   | 'relatedBlock___left'
   | 'relatedBlock___createdBy___updatedAt'
@@ -6116,6 +6275,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___asset___relatedPerson___actualStage'
   | 'relatedBlock___asset___relatedPerson___remoteTypeName'
   | 'relatedBlock___asset___relatedPerson___remoteId'
+  | 'relatedBlock___asset___relatedPerson___locale'
   | 'relatedBlock___asset___relatedPerson___stage'
   | 'relatedBlock___asset___relatedPerson___name'
   | 'relatedBlock___asset___relatedPerson___position'
@@ -6134,6 +6294,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___asset___relatedBlock___actualStage'
   | 'relatedBlock___asset___relatedBlock___remoteTypeName'
   | 'relatedBlock___asset___relatedBlock___remoteId'
+  | 'relatedBlock___asset___relatedBlock___locale'
   | 'relatedBlock___asset___relatedBlock___stage'
   | 'relatedBlock___asset___relatedBlock___title'
   | 'relatedBlock___asset___relatedBlock___name'
@@ -6157,6 +6318,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___asset___previewBlock___actualStage'
   | 'relatedBlock___asset___previewBlock___remoteTypeName'
   | 'relatedBlock___asset___previewBlock___remoteId'
+  | 'relatedBlock___asset___previewBlock___locale'
   | 'relatedBlock___asset___previewBlock___stage'
   | 'relatedBlock___asset___previewBlock___title'
   | 'relatedBlock___asset___previewBlock___name'
@@ -6198,6 +6360,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___asset___relatedPage___actualStage'
   | 'relatedBlock___asset___relatedPage___remoteTypeName'
   | 'relatedBlock___asset___relatedPage___remoteId'
+  | 'relatedBlock___asset___relatedPage___locale'
   | 'relatedBlock___asset___relatedPage___stage'
   | 'relatedBlock___asset___relatedPage___title'
   | 'relatedBlock___asset___relatedPage___slug'
@@ -6278,6 +6441,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___asset___localFile___url'
   | 'relatedBlock___asset___localFile___publicURL'
   | 'relatedBlock___asset___localFile___childrenImageSharp'
+  | 'relatedBlock___asset___localFile___childrenLocale'
   | 'relatedBlock___asset___localFile___id'
   | 'relatedBlock___asset___localFile___children'
   | 'relatedBlock___asset___id'
@@ -6360,6 +6524,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___preview___relatedPerson___actualStage'
   | 'relatedBlock___preview___relatedPerson___remoteTypeName'
   | 'relatedBlock___preview___relatedPerson___remoteId'
+  | 'relatedBlock___preview___relatedPerson___locale'
   | 'relatedBlock___preview___relatedPerson___stage'
   | 'relatedBlock___preview___relatedPerson___name'
   | 'relatedBlock___preview___relatedPerson___position'
@@ -6378,6 +6543,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___preview___relatedBlock___actualStage'
   | 'relatedBlock___preview___relatedBlock___remoteTypeName'
   | 'relatedBlock___preview___relatedBlock___remoteId'
+  | 'relatedBlock___preview___relatedBlock___locale'
   | 'relatedBlock___preview___relatedBlock___stage'
   | 'relatedBlock___preview___relatedBlock___title'
   | 'relatedBlock___preview___relatedBlock___name'
@@ -6401,6 +6567,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___preview___previewBlock___actualStage'
   | 'relatedBlock___preview___previewBlock___remoteTypeName'
   | 'relatedBlock___preview___previewBlock___remoteId'
+  | 'relatedBlock___preview___previewBlock___locale'
   | 'relatedBlock___preview___previewBlock___stage'
   | 'relatedBlock___preview___previewBlock___title'
   | 'relatedBlock___preview___previewBlock___name'
@@ -6442,6 +6609,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___preview___relatedPage___actualStage'
   | 'relatedBlock___preview___relatedPage___remoteTypeName'
   | 'relatedBlock___preview___relatedPage___remoteId'
+  | 'relatedBlock___preview___relatedPage___locale'
   | 'relatedBlock___preview___relatedPage___stage'
   | 'relatedBlock___preview___relatedPage___title'
   | 'relatedBlock___preview___relatedPage___slug'
@@ -6522,6 +6690,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___preview___localFile___url'
   | 'relatedBlock___preview___localFile___publicURL'
   | 'relatedBlock___preview___localFile___childrenImageSharp'
+  | 'relatedBlock___preview___localFile___childrenLocale'
   | 'relatedBlock___preview___localFile___id'
   | 'relatedBlock___preview___localFile___children'
   | 'relatedBlock___preview___id'
@@ -6758,6 +6927,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___relatedCollection___content___html'
   | 'relatedBlock___relatedCollection___content___markdown'
   | 'relatedBlock___relatedCollection___content___text'
+  | 'relatedBlock___relatedCollection___content___cleaned'
   | 'relatedBlock___relatedCollection___createdBy___updatedAt'
   | 'relatedBlock___relatedCollection___createdBy___createdAt'
   | 'relatedBlock___relatedCollection___createdBy___publishedAt'
@@ -6868,6 +7038,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___relatedCollection___relatedPage___actualStage'
   | 'relatedBlock___relatedCollection___relatedPage___remoteTypeName'
   | 'relatedBlock___relatedCollection___relatedPage___remoteId'
+  | 'relatedBlock___relatedCollection___relatedPage___locale'
   | 'relatedBlock___relatedCollection___relatedPage___stage'
   | 'relatedBlock___relatedCollection___relatedPage___title'
   | 'relatedBlock___relatedCollection___relatedPage___slug'
@@ -6900,6 +7071,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedBlock___relatedPage___actualStage'
   | 'relatedBlock___relatedPage___remoteTypeName'
   | 'relatedBlock___relatedPage___remoteId'
+  | 'relatedBlock___relatedPage___locale'
   | 'relatedBlock___relatedPage___stage'
   | 'relatedBlock___relatedPage___title'
   | 'relatedBlock___relatedPage___slug'
@@ -7067,6 +7239,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___actualStage'
   | 'previewBlock___remoteTypeName'
   | 'previewBlock___remoteId'
+  | 'previewBlock___locale'
   | 'previewBlock___stage'
   | 'previewBlock___title'
   | 'previewBlock___name'
@@ -7077,6 +7250,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___content___html'
   | 'previewBlock___content___markdown'
   | 'previewBlock___content___text'
+  | 'previewBlock___content___cleaned'
   | 'previewBlock___loop'
   | 'previewBlock___left'
   | 'previewBlock___createdBy___updatedAt'
@@ -7223,6 +7397,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___asset___relatedPerson___actualStage'
   | 'previewBlock___asset___relatedPerson___remoteTypeName'
   | 'previewBlock___asset___relatedPerson___remoteId'
+  | 'previewBlock___asset___relatedPerson___locale'
   | 'previewBlock___asset___relatedPerson___stage'
   | 'previewBlock___asset___relatedPerson___name'
   | 'previewBlock___asset___relatedPerson___position'
@@ -7241,6 +7416,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___asset___relatedBlock___actualStage'
   | 'previewBlock___asset___relatedBlock___remoteTypeName'
   | 'previewBlock___asset___relatedBlock___remoteId'
+  | 'previewBlock___asset___relatedBlock___locale'
   | 'previewBlock___asset___relatedBlock___stage'
   | 'previewBlock___asset___relatedBlock___title'
   | 'previewBlock___asset___relatedBlock___name'
@@ -7264,6 +7440,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___asset___previewBlock___actualStage'
   | 'previewBlock___asset___previewBlock___remoteTypeName'
   | 'previewBlock___asset___previewBlock___remoteId'
+  | 'previewBlock___asset___previewBlock___locale'
   | 'previewBlock___asset___previewBlock___stage'
   | 'previewBlock___asset___previewBlock___title'
   | 'previewBlock___asset___previewBlock___name'
@@ -7305,6 +7482,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___asset___relatedPage___actualStage'
   | 'previewBlock___asset___relatedPage___remoteTypeName'
   | 'previewBlock___asset___relatedPage___remoteId'
+  | 'previewBlock___asset___relatedPage___locale'
   | 'previewBlock___asset___relatedPage___stage'
   | 'previewBlock___asset___relatedPage___title'
   | 'previewBlock___asset___relatedPage___slug'
@@ -7385,6 +7563,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___asset___localFile___url'
   | 'previewBlock___asset___localFile___publicURL'
   | 'previewBlock___asset___localFile___childrenImageSharp'
+  | 'previewBlock___asset___localFile___childrenLocale'
   | 'previewBlock___asset___localFile___id'
   | 'previewBlock___asset___localFile___children'
   | 'previewBlock___asset___id'
@@ -7467,6 +7646,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___preview___relatedPerson___actualStage'
   | 'previewBlock___preview___relatedPerson___remoteTypeName'
   | 'previewBlock___preview___relatedPerson___remoteId'
+  | 'previewBlock___preview___relatedPerson___locale'
   | 'previewBlock___preview___relatedPerson___stage'
   | 'previewBlock___preview___relatedPerson___name'
   | 'previewBlock___preview___relatedPerson___position'
@@ -7485,6 +7665,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___preview___relatedBlock___actualStage'
   | 'previewBlock___preview___relatedBlock___remoteTypeName'
   | 'previewBlock___preview___relatedBlock___remoteId'
+  | 'previewBlock___preview___relatedBlock___locale'
   | 'previewBlock___preview___relatedBlock___stage'
   | 'previewBlock___preview___relatedBlock___title'
   | 'previewBlock___preview___relatedBlock___name'
@@ -7508,6 +7689,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___preview___previewBlock___actualStage'
   | 'previewBlock___preview___previewBlock___remoteTypeName'
   | 'previewBlock___preview___previewBlock___remoteId'
+  | 'previewBlock___preview___previewBlock___locale'
   | 'previewBlock___preview___previewBlock___stage'
   | 'previewBlock___preview___previewBlock___title'
   | 'previewBlock___preview___previewBlock___name'
@@ -7549,6 +7731,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___preview___relatedPage___actualStage'
   | 'previewBlock___preview___relatedPage___remoteTypeName'
   | 'previewBlock___preview___relatedPage___remoteId'
+  | 'previewBlock___preview___relatedPage___locale'
   | 'previewBlock___preview___relatedPage___stage'
   | 'previewBlock___preview___relatedPage___title'
   | 'previewBlock___preview___relatedPage___slug'
@@ -7629,6 +7812,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___preview___localFile___url'
   | 'previewBlock___preview___localFile___publicURL'
   | 'previewBlock___preview___localFile___childrenImageSharp'
+  | 'previewBlock___preview___localFile___childrenLocale'
   | 'previewBlock___preview___localFile___id'
   | 'previewBlock___preview___localFile___children'
   | 'previewBlock___preview___id'
@@ -7865,6 +8049,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___relatedCollection___content___html'
   | 'previewBlock___relatedCollection___content___markdown'
   | 'previewBlock___relatedCollection___content___text'
+  | 'previewBlock___relatedCollection___content___cleaned'
   | 'previewBlock___relatedCollection___createdBy___updatedAt'
   | 'previewBlock___relatedCollection___createdBy___createdAt'
   | 'previewBlock___relatedCollection___createdBy___publishedAt'
@@ -7975,6 +8160,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___relatedCollection___relatedPage___actualStage'
   | 'previewBlock___relatedCollection___relatedPage___remoteTypeName'
   | 'previewBlock___relatedCollection___relatedPage___remoteId'
+  | 'previewBlock___relatedCollection___relatedPage___locale'
   | 'previewBlock___relatedCollection___relatedPage___stage'
   | 'previewBlock___relatedCollection___relatedPage___title'
   | 'previewBlock___relatedCollection___relatedPage___slug'
@@ -8007,6 +8193,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'previewBlock___relatedPage___actualStage'
   | 'previewBlock___relatedPage___remoteTypeName'
   | 'previewBlock___relatedPage___remoteId'
+  | 'previewBlock___relatedPage___locale'
   | 'previewBlock___relatedPage___stage'
   | 'previewBlock___relatedPage___title'
   | 'previewBlock___relatedPage___slug'
@@ -8184,6 +8371,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedCollection___content___html'
   | 'relatedCollection___content___markdown'
   | 'relatedCollection___content___text'
+  | 'relatedCollection___content___cleaned'
   | 'relatedCollection___createdBy___updatedAt'
   | 'relatedCollection___createdBy___createdAt'
   | 'relatedCollection___createdBy___publishedAt'
@@ -8328,6 +8516,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedCollection___asset___relatedPerson___actualStage'
   | 'relatedCollection___asset___relatedPerson___remoteTypeName'
   | 'relatedCollection___asset___relatedPerson___remoteId'
+  | 'relatedCollection___asset___relatedPerson___locale'
   | 'relatedCollection___asset___relatedPerson___stage'
   | 'relatedCollection___asset___relatedPerson___name'
   | 'relatedCollection___asset___relatedPerson___position'
@@ -8346,6 +8535,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedCollection___asset___relatedBlock___actualStage'
   | 'relatedCollection___asset___relatedBlock___remoteTypeName'
   | 'relatedCollection___asset___relatedBlock___remoteId'
+  | 'relatedCollection___asset___relatedBlock___locale'
   | 'relatedCollection___asset___relatedBlock___stage'
   | 'relatedCollection___asset___relatedBlock___title'
   | 'relatedCollection___asset___relatedBlock___name'
@@ -8369,6 +8559,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedCollection___asset___previewBlock___actualStage'
   | 'relatedCollection___asset___previewBlock___remoteTypeName'
   | 'relatedCollection___asset___previewBlock___remoteId'
+  | 'relatedCollection___asset___previewBlock___locale'
   | 'relatedCollection___asset___previewBlock___stage'
   | 'relatedCollection___asset___previewBlock___title'
   | 'relatedCollection___asset___previewBlock___name'
@@ -8410,6 +8601,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedCollection___asset___relatedPage___actualStage'
   | 'relatedCollection___asset___relatedPage___remoteTypeName'
   | 'relatedCollection___asset___relatedPage___remoteId'
+  | 'relatedCollection___asset___relatedPage___locale'
   | 'relatedCollection___asset___relatedPage___stage'
   | 'relatedCollection___asset___relatedPage___title'
   | 'relatedCollection___asset___relatedPage___slug'
@@ -8490,6 +8682,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedCollection___asset___localFile___url'
   | 'relatedCollection___asset___localFile___publicURL'
   | 'relatedCollection___asset___localFile___childrenImageSharp'
+  | 'relatedCollection___asset___localFile___childrenLocale'
   | 'relatedCollection___asset___localFile___id'
   | 'relatedCollection___asset___localFile___children'
   | 'relatedCollection___asset___id'
@@ -8612,6 +8805,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedCollection___relatedCollection___content___html'
   | 'relatedCollection___relatedCollection___content___markdown'
   | 'relatedCollection___relatedCollection___content___text'
+  | 'relatedCollection___relatedCollection___content___cleaned'
   | 'relatedCollection___relatedCollection___createdBy___updatedAt'
   | 'relatedCollection___relatedCollection___createdBy___createdAt'
   | 'relatedCollection___relatedCollection___createdBy___publishedAt'
@@ -8722,6 +8916,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedCollection___relatedCollection___relatedPage___actualStage'
   | 'relatedCollection___relatedCollection___relatedPage___remoteTypeName'
   | 'relatedCollection___relatedCollection___relatedPage___remoteId'
+  | 'relatedCollection___relatedCollection___relatedPage___locale'
   | 'relatedCollection___relatedCollection___relatedPage___stage'
   | 'relatedCollection___relatedCollection___relatedPage___title'
   | 'relatedCollection___relatedCollection___relatedPage___slug'
@@ -8754,6 +8949,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedCollection___relatedPage___actualStage'
   | 'relatedCollection___relatedPage___remoteTypeName'
   | 'relatedCollection___relatedPage___remoteId'
+  | 'relatedCollection___relatedPage___locale'
   | 'relatedCollection___relatedPage___stage'
   | 'relatedCollection___relatedPage___title'
   | 'relatedCollection___relatedPage___slug'
@@ -8921,6 +9117,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPage___actualStage'
   | 'relatedPage___remoteTypeName'
   | 'relatedPage___remoteId'
+  | 'relatedPage___locale'
   | 'relatedPage___stage'
   | 'relatedPage___title'
   | 'relatedPage___slug'
@@ -9071,6 +9268,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPage___image___relatedPerson___actualStage'
   | 'relatedPage___image___relatedPerson___remoteTypeName'
   | 'relatedPage___image___relatedPerson___remoteId'
+  | 'relatedPage___image___relatedPerson___locale'
   | 'relatedPage___image___relatedPerson___stage'
   | 'relatedPage___image___relatedPerson___name'
   | 'relatedPage___image___relatedPerson___position'
@@ -9089,6 +9287,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPage___image___relatedBlock___actualStage'
   | 'relatedPage___image___relatedBlock___remoteTypeName'
   | 'relatedPage___image___relatedBlock___remoteId'
+  | 'relatedPage___image___relatedBlock___locale'
   | 'relatedPage___image___relatedBlock___stage'
   | 'relatedPage___image___relatedBlock___title'
   | 'relatedPage___image___relatedBlock___name'
@@ -9112,6 +9311,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPage___image___previewBlock___actualStage'
   | 'relatedPage___image___previewBlock___remoteTypeName'
   | 'relatedPage___image___previewBlock___remoteId'
+  | 'relatedPage___image___previewBlock___locale'
   | 'relatedPage___image___previewBlock___stage'
   | 'relatedPage___image___previewBlock___title'
   | 'relatedPage___image___previewBlock___name'
@@ -9153,6 +9353,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPage___image___relatedPage___actualStage'
   | 'relatedPage___image___relatedPage___remoteTypeName'
   | 'relatedPage___image___relatedPage___remoteId'
+  | 'relatedPage___image___relatedPage___locale'
   | 'relatedPage___image___relatedPage___stage'
   | 'relatedPage___image___relatedPage___title'
   | 'relatedPage___image___relatedPage___slug'
@@ -9233,6 +9434,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedPage___image___localFile___url'
   | 'relatedPage___image___localFile___publicURL'
   | 'relatedPage___image___localFile___childrenImageSharp'
+  | 'relatedPage___image___localFile___childrenLocale'
   | 'relatedPage___image___localFile___id'
   | 'relatedPage___image___localFile___children'
   | 'relatedPage___image___id'
@@ -9643,6 +9845,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedLink___asset___relatedPerson___actualStage'
   | 'relatedLink___asset___relatedPerson___remoteTypeName'
   | 'relatedLink___asset___relatedPerson___remoteId'
+  | 'relatedLink___asset___relatedPerson___locale'
   | 'relatedLink___asset___relatedPerson___stage'
   | 'relatedLink___asset___relatedPerson___name'
   | 'relatedLink___asset___relatedPerson___position'
@@ -9661,6 +9864,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedLink___asset___relatedBlock___actualStage'
   | 'relatedLink___asset___relatedBlock___remoteTypeName'
   | 'relatedLink___asset___relatedBlock___remoteId'
+  | 'relatedLink___asset___relatedBlock___locale'
   | 'relatedLink___asset___relatedBlock___stage'
   | 'relatedLink___asset___relatedBlock___title'
   | 'relatedLink___asset___relatedBlock___name'
@@ -9684,6 +9888,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedLink___asset___previewBlock___actualStage'
   | 'relatedLink___asset___previewBlock___remoteTypeName'
   | 'relatedLink___asset___previewBlock___remoteId'
+  | 'relatedLink___asset___previewBlock___locale'
   | 'relatedLink___asset___previewBlock___stage'
   | 'relatedLink___asset___previewBlock___title'
   | 'relatedLink___asset___previewBlock___name'
@@ -9725,6 +9930,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedLink___asset___relatedPage___actualStage'
   | 'relatedLink___asset___relatedPage___remoteTypeName'
   | 'relatedLink___asset___relatedPage___remoteId'
+  | 'relatedLink___asset___relatedPage___locale'
   | 'relatedLink___asset___relatedPage___stage'
   | 'relatedLink___asset___relatedPage___title'
   | 'relatedLink___asset___relatedPage___slug'
@@ -9805,6 +10011,7 @@ export type GraphCms_AssetFieldsEnum =
   | 'relatedLink___asset___localFile___url'
   | 'relatedLink___asset___localFile___publicURL'
   | 'relatedLink___asset___localFile___childrenImageSharp'
+  | 'relatedLink___asset___localFile___childrenLocale'
   | 'relatedLink___asset___localFile___id'
   | 'relatedLink___asset___localFile___children'
   | 'relatedLink___asset___id'
@@ -10292,6 +10499,43 @@ export type GraphCms_AssetFieldsEnum =
   | 'localFile___childImageSharp___internal___mediaType'
   | 'localFile___childImageSharp___internal___owner'
   | 'localFile___childImageSharp___internal___type'
+  | 'localFile___childrenLocale'
+  | 'localFile___childrenLocale___id'
+  | 'localFile___childrenLocale___parent___id'
+  | 'localFile___childrenLocale___parent___children'
+  | 'localFile___childrenLocale___children'
+  | 'localFile___childrenLocale___children___id'
+  | 'localFile___childrenLocale___children___children'
+  | 'localFile___childrenLocale___internal___content'
+  | 'localFile___childrenLocale___internal___contentDigest'
+  | 'localFile___childrenLocale___internal___description'
+  | 'localFile___childrenLocale___internal___fieldOwners'
+  | 'localFile___childrenLocale___internal___ignoreType'
+  | 'localFile___childrenLocale___internal___mediaType'
+  | 'localFile___childrenLocale___internal___owner'
+  | 'localFile___childrenLocale___internal___type'
+  | 'localFile___childrenLocale___language'
+  | 'localFile___childrenLocale___ns'
+  | 'localFile___childrenLocale___data'
+  | 'localFile___childrenLocale___fileAbsolutePath'
+  | 'localFile___childLocale___id'
+  | 'localFile___childLocale___parent___id'
+  | 'localFile___childLocale___parent___children'
+  | 'localFile___childLocale___children'
+  | 'localFile___childLocale___children___id'
+  | 'localFile___childLocale___children___children'
+  | 'localFile___childLocale___internal___content'
+  | 'localFile___childLocale___internal___contentDigest'
+  | 'localFile___childLocale___internal___description'
+  | 'localFile___childLocale___internal___fieldOwners'
+  | 'localFile___childLocale___internal___ignoreType'
+  | 'localFile___childLocale___internal___mediaType'
+  | 'localFile___childLocale___internal___owner'
+  | 'localFile___childLocale___internal___type'
+  | 'localFile___childLocale___language'
+  | 'localFile___childLocale___ns'
+  | 'localFile___childLocale___data'
+  | 'localFile___childLocale___fileAbsolutePath'
   | 'localFile___id'
   | 'localFile___parent___id'
   | 'localFile___parent___parent___id'
@@ -10519,6 +10763,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'actualStage'
   | 'remoteTypeName'
   | 'remoteId'
+  | 'locale'
   | 'stage'
   | 'title'
   | 'name'
@@ -10529,6 +10774,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'content___html'
   | 'content___markdown'
   | 'content___text'
+  | 'content___cleaned'
   | 'loop'
   | 'left'
   | 'createdBy___updatedAt'
@@ -10783,6 +11029,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'asset___relatedPerson___actualStage'
   | 'asset___relatedPerson___remoteTypeName'
   | 'asset___relatedPerson___remoteId'
+  | 'asset___relatedPerson___locale'
   | 'asset___relatedPerson___stage'
   | 'asset___relatedPerson___name'
   | 'asset___relatedPerson___position'
@@ -10896,6 +11143,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'asset___relatedPerson___relatedPage___actualStage'
   | 'asset___relatedPerson___relatedPage___remoteTypeName'
   | 'asset___relatedPerson___relatedPage___remoteId'
+  | 'asset___relatedPerson___relatedPage___locale'
   | 'asset___relatedPerson___relatedPage___stage'
   | 'asset___relatedPerson___relatedPage___title'
   | 'asset___relatedPerson___relatedPage___slug'
@@ -10946,6 +11194,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'asset___relatedBlock___actualStage'
   | 'asset___relatedBlock___remoteTypeName'
   | 'asset___relatedBlock___remoteId'
+  | 'asset___relatedBlock___locale'
   | 'asset___relatedBlock___stage'
   | 'asset___relatedBlock___title'
   | 'asset___relatedBlock___name'
@@ -10956,6 +11205,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'asset___relatedBlock___content___html'
   | 'asset___relatedBlock___content___markdown'
   | 'asset___relatedBlock___content___text'
+  | 'asset___relatedBlock___content___cleaned'
   | 'asset___relatedBlock___loop'
   | 'asset___relatedBlock___left'
   | 'asset___relatedBlock___createdBy___updatedAt'
@@ -11114,6 +11364,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'asset___relatedBlock___relatedPage___actualStage'
   | 'asset___relatedBlock___relatedPage___remoteTypeName'
   | 'asset___relatedBlock___relatedPage___remoteId'
+  | 'asset___relatedBlock___relatedPage___locale'
   | 'asset___relatedBlock___relatedPage___stage'
   | 'asset___relatedBlock___relatedPage___title'
   | 'asset___relatedBlock___relatedPage___slug'
@@ -11146,6 +11397,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'asset___previewBlock___actualStage'
   | 'asset___previewBlock___remoteTypeName'
   | 'asset___previewBlock___remoteId'
+  | 'asset___previewBlock___locale'
   | 'asset___previewBlock___stage'
   | 'asset___previewBlock___title'
   | 'asset___previewBlock___name'
@@ -11156,6 +11408,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'asset___previewBlock___content___html'
   | 'asset___previewBlock___content___markdown'
   | 'asset___previewBlock___content___text'
+  | 'asset___previewBlock___content___cleaned'
   | 'asset___previewBlock___loop'
   | 'asset___previewBlock___left'
   | 'asset___previewBlock___createdBy___updatedAt'
@@ -11314,6 +11567,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'asset___previewBlock___relatedPage___actualStage'
   | 'asset___previewBlock___relatedPage___remoteTypeName'
   | 'asset___previewBlock___relatedPage___remoteId'
+  | 'asset___previewBlock___relatedPage___locale'
   | 'asset___previewBlock___relatedPage___stage'
   | 'asset___previewBlock___relatedPage___title'
   | 'asset___previewBlock___relatedPage___slug'
@@ -11356,6 +11610,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'asset___relatedCollection___content___html'
   | 'asset___relatedCollection___content___markdown'
   | 'asset___relatedCollection___content___text'
+  | 'asset___relatedCollection___content___cleaned'
   | 'asset___relatedCollection___createdBy___updatedAt'
   | 'asset___relatedCollection___createdBy___createdAt'
   | 'asset___relatedCollection___createdBy___publishedAt'
@@ -11466,6 +11721,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'asset___relatedCollection___relatedPage___actualStage'
   | 'asset___relatedCollection___relatedPage___remoteTypeName'
   | 'asset___relatedCollection___relatedPage___remoteId'
+  | 'asset___relatedCollection___relatedPage___locale'
   | 'asset___relatedCollection___relatedPage___stage'
   | 'asset___relatedCollection___relatedPage___title'
   | 'asset___relatedCollection___relatedPage___slug'
@@ -11498,6 +11754,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'asset___relatedPage___actualStage'
   | 'asset___relatedPage___remoteTypeName'
   | 'asset___relatedPage___remoteId'
+  | 'asset___relatedPage___locale'
   | 'asset___relatedPage___stage'
   | 'asset___relatedPage___title'
   | 'asset___relatedPage___slug'
@@ -11861,6 +12118,19 @@ export type GraphCms_BlockFieldsEnum =
   | 'asset___localFile___childImageSharp___gatsbyImageData'
   | 'asset___localFile___childImageSharp___id'
   | 'asset___localFile___childImageSharp___children'
+  | 'asset___localFile___childrenLocale'
+  | 'asset___localFile___childrenLocale___id'
+  | 'asset___localFile___childrenLocale___children'
+  | 'asset___localFile___childrenLocale___language'
+  | 'asset___localFile___childrenLocale___ns'
+  | 'asset___localFile___childrenLocale___data'
+  | 'asset___localFile___childrenLocale___fileAbsolutePath'
+  | 'asset___localFile___childLocale___id'
+  | 'asset___localFile___childLocale___children'
+  | 'asset___localFile___childLocale___language'
+  | 'asset___localFile___childLocale___ns'
+  | 'asset___localFile___childLocale___data'
+  | 'asset___localFile___childLocale___fileAbsolutePath'
   | 'asset___localFile___id'
   | 'asset___localFile___parent___id'
   | 'asset___localFile___parent___children'
@@ -12015,6 +12285,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'preview___relatedPerson___actualStage'
   | 'preview___relatedPerson___remoteTypeName'
   | 'preview___relatedPerson___remoteId'
+  | 'preview___relatedPerson___locale'
   | 'preview___relatedPerson___stage'
   | 'preview___relatedPerson___name'
   | 'preview___relatedPerson___position'
@@ -12128,6 +12399,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'preview___relatedPerson___relatedPage___actualStage'
   | 'preview___relatedPerson___relatedPage___remoteTypeName'
   | 'preview___relatedPerson___relatedPage___remoteId'
+  | 'preview___relatedPerson___relatedPage___locale'
   | 'preview___relatedPerson___relatedPage___stage'
   | 'preview___relatedPerson___relatedPage___title'
   | 'preview___relatedPerson___relatedPage___slug'
@@ -12178,6 +12450,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'preview___relatedBlock___actualStage'
   | 'preview___relatedBlock___remoteTypeName'
   | 'preview___relatedBlock___remoteId'
+  | 'preview___relatedBlock___locale'
   | 'preview___relatedBlock___stage'
   | 'preview___relatedBlock___title'
   | 'preview___relatedBlock___name'
@@ -12188,6 +12461,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'preview___relatedBlock___content___html'
   | 'preview___relatedBlock___content___markdown'
   | 'preview___relatedBlock___content___text'
+  | 'preview___relatedBlock___content___cleaned'
   | 'preview___relatedBlock___loop'
   | 'preview___relatedBlock___left'
   | 'preview___relatedBlock___createdBy___updatedAt'
@@ -12346,6 +12620,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'preview___relatedBlock___relatedPage___actualStage'
   | 'preview___relatedBlock___relatedPage___remoteTypeName'
   | 'preview___relatedBlock___relatedPage___remoteId'
+  | 'preview___relatedBlock___relatedPage___locale'
   | 'preview___relatedBlock___relatedPage___stage'
   | 'preview___relatedBlock___relatedPage___title'
   | 'preview___relatedBlock___relatedPage___slug'
@@ -12378,6 +12653,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'preview___previewBlock___actualStage'
   | 'preview___previewBlock___remoteTypeName'
   | 'preview___previewBlock___remoteId'
+  | 'preview___previewBlock___locale'
   | 'preview___previewBlock___stage'
   | 'preview___previewBlock___title'
   | 'preview___previewBlock___name'
@@ -12388,6 +12664,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'preview___previewBlock___content___html'
   | 'preview___previewBlock___content___markdown'
   | 'preview___previewBlock___content___text'
+  | 'preview___previewBlock___content___cleaned'
   | 'preview___previewBlock___loop'
   | 'preview___previewBlock___left'
   | 'preview___previewBlock___createdBy___updatedAt'
@@ -12546,6 +12823,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'preview___previewBlock___relatedPage___actualStage'
   | 'preview___previewBlock___relatedPage___remoteTypeName'
   | 'preview___previewBlock___relatedPage___remoteId'
+  | 'preview___previewBlock___relatedPage___locale'
   | 'preview___previewBlock___relatedPage___stage'
   | 'preview___previewBlock___relatedPage___title'
   | 'preview___previewBlock___relatedPage___slug'
@@ -12588,6 +12866,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'preview___relatedCollection___content___html'
   | 'preview___relatedCollection___content___markdown'
   | 'preview___relatedCollection___content___text'
+  | 'preview___relatedCollection___content___cleaned'
   | 'preview___relatedCollection___createdBy___updatedAt'
   | 'preview___relatedCollection___createdBy___createdAt'
   | 'preview___relatedCollection___createdBy___publishedAt'
@@ -12698,6 +12977,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'preview___relatedCollection___relatedPage___actualStage'
   | 'preview___relatedCollection___relatedPage___remoteTypeName'
   | 'preview___relatedCollection___relatedPage___remoteId'
+  | 'preview___relatedCollection___relatedPage___locale'
   | 'preview___relatedCollection___relatedPage___stage'
   | 'preview___relatedCollection___relatedPage___title'
   | 'preview___relatedCollection___relatedPage___slug'
@@ -12730,6 +13010,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'preview___relatedPage___actualStage'
   | 'preview___relatedPage___remoteTypeName'
   | 'preview___relatedPage___remoteId'
+  | 'preview___relatedPage___locale'
   | 'preview___relatedPage___stage'
   | 'preview___relatedPage___title'
   | 'preview___relatedPage___slug'
@@ -13093,6 +13374,19 @@ export type GraphCms_BlockFieldsEnum =
   | 'preview___localFile___childImageSharp___gatsbyImageData'
   | 'preview___localFile___childImageSharp___id'
   | 'preview___localFile___childImageSharp___children'
+  | 'preview___localFile___childrenLocale'
+  | 'preview___localFile___childrenLocale___id'
+  | 'preview___localFile___childrenLocale___children'
+  | 'preview___localFile___childrenLocale___language'
+  | 'preview___localFile___childrenLocale___ns'
+  | 'preview___localFile___childrenLocale___data'
+  | 'preview___localFile___childrenLocale___fileAbsolutePath'
+  | 'preview___localFile___childLocale___id'
+  | 'preview___localFile___childLocale___children'
+  | 'preview___localFile___childLocale___language'
+  | 'preview___localFile___childLocale___ns'
+  | 'preview___localFile___childLocale___data'
+  | 'preview___localFile___childLocale___fileAbsolutePath'
   | 'preview___localFile___id'
   | 'preview___localFile___parent___id'
   | 'preview___localFile___parent___children'
@@ -13302,6 +13596,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'links___asset___relatedPerson___actualStage'
   | 'links___asset___relatedPerson___remoteTypeName'
   | 'links___asset___relatedPerson___remoteId'
+  | 'links___asset___relatedPerson___locale'
   | 'links___asset___relatedPerson___stage'
   | 'links___asset___relatedPerson___name'
   | 'links___asset___relatedPerson___position'
@@ -13320,6 +13615,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'links___asset___relatedBlock___actualStage'
   | 'links___asset___relatedBlock___remoteTypeName'
   | 'links___asset___relatedBlock___remoteId'
+  | 'links___asset___relatedBlock___locale'
   | 'links___asset___relatedBlock___stage'
   | 'links___asset___relatedBlock___title'
   | 'links___asset___relatedBlock___name'
@@ -13343,6 +13639,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'links___asset___previewBlock___actualStage'
   | 'links___asset___previewBlock___remoteTypeName'
   | 'links___asset___previewBlock___remoteId'
+  | 'links___asset___previewBlock___locale'
   | 'links___asset___previewBlock___stage'
   | 'links___asset___previewBlock___title'
   | 'links___asset___previewBlock___name'
@@ -13384,6 +13681,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'links___asset___relatedPage___actualStage'
   | 'links___asset___relatedPage___remoteTypeName'
   | 'links___asset___relatedPage___remoteId'
+  | 'links___asset___relatedPage___locale'
   | 'links___asset___relatedPage___stage'
   | 'links___asset___relatedPage___title'
   | 'links___asset___relatedPage___slug'
@@ -13464,6 +13762,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'links___asset___localFile___url'
   | 'links___asset___localFile___publicURL'
   | 'links___asset___localFile___childrenImageSharp'
+  | 'links___asset___localFile___childrenLocale'
   | 'links___asset___localFile___id'
   | 'links___asset___localFile___children'
   | 'links___asset___id'
@@ -13843,6 +14142,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedCollection___content___html'
   | 'relatedCollection___content___markdown'
   | 'relatedCollection___content___text'
+  | 'relatedCollection___content___cleaned'
   | 'relatedCollection___createdBy___updatedAt'
   | 'relatedCollection___createdBy___createdAt'
   | 'relatedCollection___createdBy___publishedAt'
@@ -13987,6 +14287,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedCollection___asset___relatedPerson___actualStage'
   | 'relatedCollection___asset___relatedPerson___remoteTypeName'
   | 'relatedCollection___asset___relatedPerson___remoteId'
+  | 'relatedCollection___asset___relatedPerson___locale'
   | 'relatedCollection___asset___relatedPerson___stage'
   | 'relatedCollection___asset___relatedPerson___name'
   | 'relatedCollection___asset___relatedPerson___position'
@@ -14005,6 +14306,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedCollection___asset___relatedBlock___actualStage'
   | 'relatedCollection___asset___relatedBlock___remoteTypeName'
   | 'relatedCollection___asset___relatedBlock___remoteId'
+  | 'relatedCollection___asset___relatedBlock___locale'
   | 'relatedCollection___asset___relatedBlock___stage'
   | 'relatedCollection___asset___relatedBlock___title'
   | 'relatedCollection___asset___relatedBlock___name'
@@ -14028,6 +14330,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedCollection___asset___previewBlock___actualStage'
   | 'relatedCollection___asset___previewBlock___remoteTypeName'
   | 'relatedCollection___asset___previewBlock___remoteId'
+  | 'relatedCollection___asset___previewBlock___locale'
   | 'relatedCollection___asset___previewBlock___stage'
   | 'relatedCollection___asset___previewBlock___title'
   | 'relatedCollection___asset___previewBlock___name'
@@ -14069,6 +14372,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedCollection___asset___relatedPage___actualStage'
   | 'relatedCollection___asset___relatedPage___remoteTypeName'
   | 'relatedCollection___asset___relatedPage___remoteId'
+  | 'relatedCollection___asset___relatedPage___locale'
   | 'relatedCollection___asset___relatedPage___stage'
   | 'relatedCollection___asset___relatedPage___title'
   | 'relatedCollection___asset___relatedPage___slug'
@@ -14149,6 +14453,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedCollection___asset___localFile___url'
   | 'relatedCollection___asset___localFile___publicURL'
   | 'relatedCollection___asset___localFile___childrenImageSharp'
+  | 'relatedCollection___asset___localFile___childrenLocale'
   | 'relatedCollection___asset___localFile___id'
   | 'relatedCollection___asset___localFile___children'
   | 'relatedCollection___asset___id'
@@ -14271,6 +14576,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedCollection___relatedCollection___content___html'
   | 'relatedCollection___relatedCollection___content___markdown'
   | 'relatedCollection___relatedCollection___content___text'
+  | 'relatedCollection___relatedCollection___content___cleaned'
   | 'relatedCollection___relatedCollection___createdBy___updatedAt'
   | 'relatedCollection___relatedCollection___createdBy___createdAt'
   | 'relatedCollection___relatedCollection___createdBy___publishedAt'
@@ -14381,6 +14687,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedCollection___relatedCollection___relatedPage___actualStage'
   | 'relatedCollection___relatedCollection___relatedPage___remoteTypeName'
   | 'relatedCollection___relatedCollection___relatedPage___remoteId'
+  | 'relatedCollection___relatedCollection___relatedPage___locale'
   | 'relatedCollection___relatedCollection___relatedPage___stage'
   | 'relatedCollection___relatedCollection___relatedPage___title'
   | 'relatedCollection___relatedCollection___relatedPage___slug'
@@ -14413,6 +14720,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedCollection___relatedPage___actualStage'
   | 'relatedCollection___relatedPage___remoteTypeName'
   | 'relatedCollection___relatedPage___remoteId'
+  | 'relatedCollection___relatedPage___locale'
   | 'relatedCollection___relatedPage___stage'
   | 'relatedCollection___relatedPage___title'
   | 'relatedCollection___relatedPage___slug'
@@ -14580,6 +14888,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedPage___actualStage'
   | 'relatedPage___remoteTypeName'
   | 'relatedPage___remoteId'
+  | 'relatedPage___locale'
   | 'relatedPage___stage'
   | 'relatedPage___title'
   | 'relatedPage___slug'
@@ -14730,6 +15039,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedPage___image___relatedPerson___actualStage'
   | 'relatedPage___image___relatedPerson___remoteTypeName'
   | 'relatedPage___image___relatedPerson___remoteId'
+  | 'relatedPage___image___relatedPerson___locale'
   | 'relatedPage___image___relatedPerson___stage'
   | 'relatedPage___image___relatedPerson___name'
   | 'relatedPage___image___relatedPerson___position'
@@ -14748,6 +15058,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedPage___image___relatedBlock___actualStage'
   | 'relatedPage___image___relatedBlock___remoteTypeName'
   | 'relatedPage___image___relatedBlock___remoteId'
+  | 'relatedPage___image___relatedBlock___locale'
   | 'relatedPage___image___relatedBlock___stage'
   | 'relatedPage___image___relatedBlock___title'
   | 'relatedPage___image___relatedBlock___name'
@@ -14771,6 +15082,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedPage___image___previewBlock___actualStage'
   | 'relatedPage___image___previewBlock___remoteTypeName'
   | 'relatedPage___image___previewBlock___remoteId'
+  | 'relatedPage___image___previewBlock___locale'
   | 'relatedPage___image___previewBlock___stage'
   | 'relatedPage___image___previewBlock___title'
   | 'relatedPage___image___previewBlock___name'
@@ -14812,6 +15124,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedPage___image___relatedPage___actualStage'
   | 'relatedPage___image___relatedPage___remoteTypeName'
   | 'relatedPage___image___relatedPage___remoteId'
+  | 'relatedPage___image___relatedPage___locale'
   | 'relatedPage___image___relatedPage___stage'
   | 'relatedPage___image___relatedPage___title'
   | 'relatedPage___image___relatedPage___slug'
@@ -14892,6 +15205,7 @@ export type GraphCms_BlockFieldsEnum =
   | 'relatedPage___image___localFile___url'
   | 'relatedPage___image___localFile___publicURL'
   | 'relatedPage___image___localFile___childrenImageSharp'
+  | 'relatedPage___image___localFile___childrenLocale'
   | 'relatedPage___image___localFile___id'
   | 'relatedPage___image___localFile___children'
   | 'relatedPage___image___id'
@@ -15344,6 +15658,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'content___html'
   | 'content___markdown'
   | 'content___text'
+  | 'content___cleaned'
   | 'createdBy___updatedAt'
   | 'createdBy___createdAt'
   | 'createdBy___publishedAt'
@@ -15596,6 +15911,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'asset___relatedPerson___actualStage'
   | 'asset___relatedPerson___remoteTypeName'
   | 'asset___relatedPerson___remoteId'
+  | 'asset___relatedPerson___locale'
   | 'asset___relatedPerson___stage'
   | 'asset___relatedPerson___name'
   | 'asset___relatedPerson___position'
@@ -15709,6 +16025,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'asset___relatedPerson___relatedPage___actualStage'
   | 'asset___relatedPerson___relatedPage___remoteTypeName'
   | 'asset___relatedPerson___relatedPage___remoteId'
+  | 'asset___relatedPerson___relatedPage___locale'
   | 'asset___relatedPerson___relatedPage___stage'
   | 'asset___relatedPerson___relatedPage___title'
   | 'asset___relatedPerson___relatedPage___slug'
@@ -15759,6 +16076,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'asset___relatedBlock___actualStage'
   | 'asset___relatedBlock___remoteTypeName'
   | 'asset___relatedBlock___remoteId'
+  | 'asset___relatedBlock___locale'
   | 'asset___relatedBlock___stage'
   | 'asset___relatedBlock___title'
   | 'asset___relatedBlock___name'
@@ -15769,6 +16087,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'asset___relatedBlock___content___html'
   | 'asset___relatedBlock___content___markdown'
   | 'asset___relatedBlock___content___text'
+  | 'asset___relatedBlock___content___cleaned'
   | 'asset___relatedBlock___loop'
   | 'asset___relatedBlock___left'
   | 'asset___relatedBlock___createdBy___updatedAt'
@@ -15927,6 +16246,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'asset___relatedBlock___relatedPage___actualStage'
   | 'asset___relatedBlock___relatedPage___remoteTypeName'
   | 'asset___relatedBlock___relatedPage___remoteId'
+  | 'asset___relatedBlock___relatedPage___locale'
   | 'asset___relatedBlock___relatedPage___stage'
   | 'asset___relatedBlock___relatedPage___title'
   | 'asset___relatedBlock___relatedPage___slug'
@@ -15959,6 +16279,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'asset___previewBlock___actualStage'
   | 'asset___previewBlock___remoteTypeName'
   | 'asset___previewBlock___remoteId'
+  | 'asset___previewBlock___locale'
   | 'asset___previewBlock___stage'
   | 'asset___previewBlock___title'
   | 'asset___previewBlock___name'
@@ -15969,6 +16290,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'asset___previewBlock___content___html'
   | 'asset___previewBlock___content___markdown'
   | 'asset___previewBlock___content___text'
+  | 'asset___previewBlock___content___cleaned'
   | 'asset___previewBlock___loop'
   | 'asset___previewBlock___left'
   | 'asset___previewBlock___createdBy___updatedAt'
@@ -16127,6 +16449,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'asset___previewBlock___relatedPage___actualStage'
   | 'asset___previewBlock___relatedPage___remoteTypeName'
   | 'asset___previewBlock___relatedPage___remoteId'
+  | 'asset___previewBlock___relatedPage___locale'
   | 'asset___previewBlock___relatedPage___stage'
   | 'asset___previewBlock___relatedPage___title'
   | 'asset___previewBlock___relatedPage___slug'
@@ -16169,6 +16492,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'asset___relatedCollection___content___html'
   | 'asset___relatedCollection___content___markdown'
   | 'asset___relatedCollection___content___text'
+  | 'asset___relatedCollection___content___cleaned'
   | 'asset___relatedCollection___createdBy___updatedAt'
   | 'asset___relatedCollection___createdBy___createdAt'
   | 'asset___relatedCollection___createdBy___publishedAt'
@@ -16279,6 +16603,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'asset___relatedCollection___relatedPage___actualStage'
   | 'asset___relatedCollection___relatedPage___remoteTypeName'
   | 'asset___relatedCollection___relatedPage___remoteId'
+  | 'asset___relatedCollection___relatedPage___locale'
   | 'asset___relatedCollection___relatedPage___stage'
   | 'asset___relatedCollection___relatedPage___title'
   | 'asset___relatedCollection___relatedPage___slug'
@@ -16311,6 +16636,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'asset___relatedPage___actualStage'
   | 'asset___relatedPage___remoteTypeName'
   | 'asset___relatedPage___remoteId'
+  | 'asset___relatedPage___locale'
   | 'asset___relatedPage___stage'
   | 'asset___relatedPage___title'
   | 'asset___relatedPage___slug'
@@ -16674,6 +17000,19 @@ export type GraphCms_CollectionFieldsEnum =
   | 'asset___localFile___childImageSharp___gatsbyImageData'
   | 'asset___localFile___childImageSharp___id'
   | 'asset___localFile___childImageSharp___children'
+  | 'asset___localFile___childrenLocale'
+  | 'asset___localFile___childrenLocale___id'
+  | 'asset___localFile___childrenLocale___children'
+  | 'asset___localFile___childrenLocale___language'
+  | 'asset___localFile___childrenLocale___ns'
+  | 'asset___localFile___childrenLocale___data'
+  | 'asset___localFile___childrenLocale___fileAbsolutePath'
+  | 'asset___localFile___childLocale___id'
+  | 'asset___localFile___childLocale___children'
+  | 'asset___localFile___childLocale___language'
+  | 'asset___localFile___childLocale___ns'
+  | 'asset___localFile___childLocale___data'
+  | 'asset___localFile___childLocale___fileAbsolutePath'
   | 'asset___localFile___id'
   | 'asset___localFile___parent___id'
   | 'asset___localFile___parent___children'
@@ -16960,6 +17299,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedCollection___content___html'
   | 'relatedCollection___content___markdown'
   | 'relatedCollection___content___text'
+  | 'relatedCollection___content___cleaned'
   | 'relatedCollection___createdBy___updatedAt'
   | 'relatedCollection___createdBy___createdAt'
   | 'relatedCollection___createdBy___publishedAt'
@@ -17104,6 +17444,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedCollection___asset___relatedPerson___actualStage'
   | 'relatedCollection___asset___relatedPerson___remoteTypeName'
   | 'relatedCollection___asset___relatedPerson___remoteId'
+  | 'relatedCollection___asset___relatedPerson___locale'
   | 'relatedCollection___asset___relatedPerson___stage'
   | 'relatedCollection___asset___relatedPerson___name'
   | 'relatedCollection___asset___relatedPerson___position'
@@ -17122,6 +17463,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedCollection___asset___relatedBlock___actualStage'
   | 'relatedCollection___asset___relatedBlock___remoteTypeName'
   | 'relatedCollection___asset___relatedBlock___remoteId'
+  | 'relatedCollection___asset___relatedBlock___locale'
   | 'relatedCollection___asset___relatedBlock___stage'
   | 'relatedCollection___asset___relatedBlock___title'
   | 'relatedCollection___asset___relatedBlock___name'
@@ -17145,6 +17487,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedCollection___asset___previewBlock___actualStage'
   | 'relatedCollection___asset___previewBlock___remoteTypeName'
   | 'relatedCollection___asset___previewBlock___remoteId'
+  | 'relatedCollection___asset___previewBlock___locale'
   | 'relatedCollection___asset___previewBlock___stage'
   | 'relatedCollection___asset___previewBlock___title'
   | 'relatedCollection___asset___previewBlock___name'
@@ -17186,6 +17529,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedCollection___asset___relatedPage___actualStage'
   | 'relatedCollection___asset___relatedPage___remoteTypeName'
   | 'relatedCollection___asset___relatedPage___remoteId'
+  | 'relatedCollection___asset___relatedPage___locale'
   | 'relatedCollection___asset___relatedPage___stage'
   | 'relatedCollection___asset___relatedPage___title'
   | 'relatedCollection___asset___relatedPage___slug'
@@ -17266,6 +17610,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedCollection___asset___localFile___url'
   | 'relatedCollection___asset___localFile___publicURL'
   | 'relatedCollection___asset___localFile___childrenImageSharp'
+  | 'relatedCollection___asset___localFile___childrenLocale'
   | 'relatedCollection___asset___localFile___id'
   | 'relatedCollection___asset___localFile___children'
   | 'relatedCollection___asset___id'
@@ -17388,6 +17733,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedCollection___relatedCollection___content___html'
   | 'relatedCollection___relatedCollection___content___markdown'
   | 'relatedCollection___relatedCollection___content___text'
+  | 'relatedCollection___relatedCollection___content___cleaned'
   | 'relatedCollection___relatedCollection___createdBy___updatedAt'
   | 'relatedCollection___relatedCollection___createdBy___createdAt'
   | 'relatedCollection___relatedCollection___createdBy___publishedAt'
@@ -17498,6 +17844,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedCollection___relatedCollection___relatedPage___actualStage'
   | 'relatedCollection___relatedCollection___relatedPage___remoteTypeName'
   | 'relatedCollection___relatedCollection___relatedPage___remoteId'
+  | 'relatedCollection___relatedCollection___relatedPage___locale'
   | 'relatedCollection___relatedCollection___relatedPage___stage'
   | 'relatedCollection___relatedCollection___relatedPage___title'
   | 'relatedCollection___relatedCollection___relatedPage___slug'
@@ -17530,6 +17877,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedCollection___relatedPage___actualStage'
   | 'relatedCollection___relatedPage___remoteTypeName'
   | 'relatedCollection___relatedPage___remoteId'
+  | 'relatedCollection___relatedPage___locale'
   | 'relatedCollection___relatedPage___stage'
   | 'relatedCollection___relatedPage___title'
   | 'relatedCollection___relatedPage___slug'
@@ -17697,6 +18045,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedPage___actualStage'
   | 'relatedPage___remoteTypeName'
   | 'relatedPage___remoteId'
+  | 'relatedPage___locale'
   | 'relatedPage___stage'
   | 'relatedPage___title'
   | 'relatedPage___slug'
@@ -17847,6 +18196,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedPage___image___relatedPerson___actualStage'
   | 'relatedPage___image___relatedPerson___remoteTypeName'
   | 'relatedPage___image___relatedPerson___remoteId'
+  | 'relatedPage___image___relatedPerson___locale'
   | 'relatedPage___image___relatedPerson___stage'
   | 'relatedPage___image___relatedPerson___name'
   | 'relatedPage___image___relatedPerson___position'
@@ -17865,6 +18215,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedPage___image___relatedBlock___actualStage'
   | 'relatedPage___image___relatedBlock___remoteTypeName'
   | 'relatedPage___image___relatedBlock___remoteId'
+  | 'relatedPage___image___relatedBlock___locale'
   | 'relatedPage___image___relatedBlock___stage'
   | 'relatedPage___image___relatedBlock___title'
   | 'relatedPage___image___relatedBlock___name'
@@ -17888,6 +18239,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedPage___image___previewBlock___actualStage'
   | 'relatedPage___image___previewBlock___remoteTypeName'
   | 'relatedPage___image___previewBlock___remoteId'
+  | 'relatedPage___image___previewBlock___locale'
   | 'relatedPage___image___previewBlock___stage'
   | 'relatedPage___image___previewBlock___title'
   | 'relatedPage___image___previewBlock___name'
@@ -17929,6 +18281,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedPage___image___relatedPage___actualStage'
   | 'relatedPage___image___relatedPage___remoteTypeName'
   | 'relatedPage___image___relatedPage___remoteId'
+  | 'relatedPage___image___relatedPage___locale'
   | 'relatedPage___image___relatedPage___stage'
   | 'relatedPage___image___relatedPage___title'
   | 'relatedPage___image___relatedPage___slug'
@@ -18009,6 +18362,7 @@ export type GraphCms_CollectionFieldsEnum =
   | 'relatedPage___image___localFile___url'
   | 'relatedPage___image___localFile___publicURL'
   | 'relatedPage___image___localFile___childrenImageSharp'
+  | 'relatedPage___image___localFile___childrenLocale'
   | 'relatedPage___image___localFile___id'
   | 'relatedPage___image___localFile___children'
   | 'relatedPage___image___id'
@@ -18708,6 +19062,7 @@ export type GraphCms_LinkFieldsEnum =
   | 'asset___relatedPerson___actualStage'
   | 'asset___relatedPerson___remoteTypeName'
   | 'asset___relatedPerson___remoteId'
+  | 'asset___relatedPerson___locale'
   | 'asset___relatedPerson___stage'
   | 'asset___relatedPerson___name'
   | 'asset___relatedPerson___position'
@@ -18821,6 +19176,7 @@ export type GraphCms_LinkFieldsEnum =
   | 'asset___relatedPerson___relatedPage___actualStage'
   | 'asset___relatedPerson___relatedPage___remoteTypeName'
   | 'asset___relatedPerson___relatedPage___remoteId'
+  | 'asset___relatedPerson___relatedPage___locale'
   | 'asset___relatedPerson___relatedPage___stage'
   | 'asset___relatedPerson___relatedPage___title'
   | 'asset___relatedPerson___relatedPage___slug'
@@ -18871,6 +19227,7 @@ export type GraphCms_LinkFieldsEnum =
   | 'asset___relatedBlock___actualStage'
   | 'asset___relatedBlock___remoteTypeName'
   | 'asset___relatedBlock___remoteId'
+  | 'asset___relatedBlock___locale'
   | 'asset___relatedBlock___stage'
   | 'asset___relatedBlock___title'
   | 'asset___relatedBlock___name'
@@ -18881,6 +19238,7 @@ export type GraphCms_LinkFieldsEnum =
   | 'asset___relatedBlock___content___html'
   | 'asset___relatedBlock___content___markdown'
   | 'asset___relatedBlock___content___text'
+  | 'asset___relatedBlock___content___cleaned'
   | 'asset___relatedBlock___loop'
   | 'asset___relatedBlock___left'
   | 'asset___relatedBlock___createdBy___updatedAt'
@@ -19039,6 +19397,7 @@ export type GraphCms_LinkFieldsEnum =
   | 'asset___relatedBlock___relatedPage___actualStage'
   | 'asset___relatedBlock___relatedPage___remoteTypeName'
   | 'asset___relatedBlock___relatedPage___remoteId'
+  | 'asset___relatedBlock___relatedPage___locale'
   | 'asset___relatedBlock___relatedPage___stage'
   | 'asset___relatedBlock___relatedPage___title'
   | 'asset___relatedBlock___relatedPage___slug'
@@ -19071,6 +19430,7 @@ export type GraphCms_LinkFieldsEnum =
   | 'asset___previewBlock___actualStage'
   | 'asset___previewBlock___remoteTypeName'
   | 'asset___previewBlock___remoteId'
+  | 'asset___previewBlock___locale'
   | 'asset___previewBlock___stage'
   | 'asset___previewBlock___title'
   | 'asset___previewBlock___name'
@@ -19081,6 +19441,7 @@ export type GraphCms_LinkFieldsEnum =
   | 'asset___previewBlock___content___html'
   | 'asset___previewBlock___content___markdown'
   | 'asset___previewBlock___content___text'
+  | 'asset___previewBlock___content___cleaned'
   | 'asset___previewBlock___loop'
   | 'asset___previewBlock___left'
   | 'asset___previewBlock___createdBy___updatedAt'
@@ -19239,6 +19600,7 @@ export type GraphCms_LinkFieldsEnum =
   | 'asset___previewBlock___relatedPage___actualStage'
   | 'asset___previewBlock___relatedPage___remoteTypeName'
   | 'asset___previewBlock___relatedPage___remoteId'
+  | 'asset___previewBlock___relatedPage___locale'
   | 'asset___previewBlock___relatedPage___stage'
   | 'asset___previewBlock___relatedPage___title'
   | 'asset___previewBlock___relatedPage___slug'
@@ -19281,6 +19643,7 @@ export type GraphCms_LinkFieldsEnum =
   | 'asset___relatedCollection___content___html'
   | 'asset___relatedCollection___content___markdown'
   | 'asset___relatedCollection___content___text'
+  | 'asset___relatedCollection___content___cleaned'
   | 'asset___relatedCollection___createdBy___updatedAt'
   | 'asset___relatedCollection___createdBy___createdAt'
   | 'asset___relatedCollection___createdBy___publishedAt'
@@ -19391,6 +19754,7 @@ export type GraphCms_LinkFieldsEnum =
   | 'asset___relatedCollection___relatedPage___actualStage'
   | 'asset___relatedCollection___relatedPage___remoteTypeName'
   | 'asset___relatedCollection___relatedPage___remoteId'
+  | 'asset___relatedCollection___relatedPage___locale'
   | 'asset___relatedCollection___relatedPage___stage'
   | 'asset___relatedCollection___relatedPage___title'
   | 'asset___relatedCollection___relatedPage___slug'
@@ -19423,6 +19787,7 @@ export type GraphCms_LinkFieldsEnum =
   | 'asset___relatedPage___actualStage'
   | 'asset___relatedPage___remoteTypeName'
   | 'asset___relatedPage___remoteId'
+  | 'asset___relatedPage___locale'
   | 'asset___relatedPage___stage'
   | 'asset___relatedPage___title'
   | 'asset___relatedPage___slug'
@@ -19786,6 +20151,19 @@ export type GraphCms_LinkFieldsEnum =
   | 'asset___localFile___childImageSharp___gatsbyImageData'
   | 'asset___localFile___childImageSharp___id'
   | 'asset___localFile___childImageSharp___children'
+  | 'asset___localFile___childrenLocale'
+  | 'asset___localFile___childrenLocale___id'
+  | 'asset___localFile___childrenLocale___children'
+  | 'asset___localFile___childrenLocale___language'
+  | 'asset___localFile___childrenLocale___ns'
+  | 'asset___localFile___childrenLocale___data'
+  | 'asset___localFile___childrenLocale___fileAbsolutePath'
+  | 'asset___localFile___childLocale___id'
+  | 'asset___localFile___childLocale___children'
+  | 'asset___localFile___childLocale___language'
+  | 'asset___localFile___childLocale___ns'
+  | 'asset___localFile___childLocale___data'
+  | 'asset___localFile___childLocale___fileAbsolutePath'
   | 'asset___localFile___id'
   | 'asset___localFile___parent___id'
   | 'asset___localFile___parent___children'
@@ -20822,6 +21200,7 @@ export type GraphCms_PageFieldsEnum =
   | 'actualStage'
   | 'remoteTypeName'
   | 'remoteId'
+  | 'locale'
   | 'stage'
   | 'title'
   | 'slug'
@@ -21080,6 +21459,7 @@ export type GraphCms_PageFieldsEnum =
   | 'image___relatedPerson___actualStage'
   | 'image___relatedPerson___remoteTypeName'
   | 'image___relatedPerson___remoteId'
+  | 'image___relatedPerson___locale'
   | 'image___relatedPerson___stage'
   | 'image___relatedPerson___name'
   | 'image___relatedPerson___position'
@@ -21193,6 +21573,7 @@ export type GraphCms_PageFieldsEnum =
   | 'image___relatedPerson___relatedPage___actualStage'
   | 'image___relatedPerson___relatedPage___remoteTypeName'
   | 'image___relatedPerson___relatedPage___remoteId'
+  | 'image___relatedPerson___relatedPage___locale'
   | 'image___relatedPerson___relatedPage___stage'
   | 'image___relatedPerson___relatedPage___title'
   | 'image___relatedPerson___relatedPage___slug'
@@ -21243,6 +21624,7 @@ export type GraphCms_PageFieldsEnum =
   | 'image___relatedBlock___actualStage'
   | 'image___relatedBlock___remoteTypeName'
   | 'image___relatedBlock___remoteId'
+  | 'image___relatedBlock___locale'
   | 'image___relatedBlock___stage'
   | 'image___relatedBlock___title'
   | 'image___relatedBlock___name'
@@ -21253,6 +21635,7 @@ export type GraphCms_PageFieldsEnum =
   | 'image___relatedBlock___content___html'
   | 'image___relatedBlock___content___markdown'
   | 'image___relatedBlock___content___text'
+  | 'image___relatedBlock___content___cleaned'
   | 'image___relatedBlock___loop'
   | 'image___relatedBlock___left'
   | 'image___relatedBlock___createdBy___updatedAt'
@@ -21411,6 +21794,7 @@ export type GraphCms_PageFieldsEnum =
   | 'image___relatedBlock___relatedPage___actualStage'
   | 'image___relatedBlock___relatedPage___remoteTypeName'
   | 'image___relatedBlock___relatedPage___remoteId'
+  | 'image___relatedBlock___relatedPage___locale'
   | 'image___relatedBlock___relatedPage___stage'
   | 'image___relatedBlock___relatedPage___title'
   | 'image___relatedBlock___relatedPage___slug'
@@ -21443,6 +21827,7 @@ export type GraphCms_PageFieldsEnum =
   | 'image___previewBlock___actualStage'
   | 'image___previewBlock___remoteTypeName'
   | 'image___previewBlock___remoteId'
+  | 'image___previewBlock___locale'
   | 'image___previewBlock___stage'
   | 'image___previewBlock___title'
   | 'image___previewBlock___name'
@@ -21453,6 +21838,7 @@ export type GraphCms_PageFieldsEnum =
   | 'image___previewBlock___content___html'
   | 'image___previewBlock___content___markdown'
   | 'image___previewBlock___content___text'
+  | 'image___previewBlock___content___cleaned'
   | 'image___previewBlock___loop'
   | 'image___previewBlock___left'
   | 'image___previewBlock___createdBy___updatedAt'
@@ -21611,6 +21997,7 @@ export type GraphCms_PageFieldsEnum =
   | 'image___previewBlock___relatedPage___actualStage'
   | 'image___previewBlock___relatedPage___remoteTypeName'
   | 'image___previewBlock___relatedPage___remoteId'
+  | 'image___previewBlock___relatedPage___locale'
   | 'image___previewBlock___relatedPage___stage'
   | 'image___previewBlock___relatedPage___title'
   | 'image___previewBlock___relatedPage___slug'
@@ -21653,6 +22040,7 @@ export type GraphCms_PageFieldsEnum =
   | 'image___relatedCollection___content___html'
   | 'image___relatedCollection___content___markdown'
   | 'image___relatedCollection___content___text'
+  | 'image___relatedCollection___content___cleaned'
   | 'image___relatedCollection___createdBy___updatedAt'
   | 'image___relatedCollection___createdBy___createdAt'
   | 'image___relatedCollection___createdBy___publishedAt'
@@ -21763,6 +22151,7 @@ export type GraphCms_PageFieldsEnum =
   | 'image___relatedCollection___relatedPage___actualStage'
   | 'image___relatedCollection___relatedPage___remoteTypeName'
   | 'image___relatedCollection___relatedPage___remoteId'
+  | 'image___relatedCollection___relatedPage___locale'
   | 'image___relatedCollection___relatedPage___stage'
   | 'image___relatedCollection___relatedPage___title'
   | 'image___relatedCollection___relatedPage___slug'
@@ -21795,6 +22184,7 @@ export type GraphCms_PageFieldsEnum =
   | 'image___relatedPage___actualStage'
   | 'image___relatedPage___remoteTypeName'
   | 'image___relatedPage___remoteId'
+  | 'image___relatedPage___locale'
   | 'image___relatedPage___stage'
   | 'image___relatedPage___title'
   | 'image___relatedPage___slug'
@@ -22158,6 +22548,19 @@ export type GraphCms_PageFieldsEnum =
   | 'image___localFile___childImageSharp___gatsbyImageData'
   | 'image___localFile___childImageSharp___id'
   | 'image___localFile___childImageSharp___children'
+  | 'image___localFile___childrenLocale'
+  | 'image___localFile___childrenLocale___id'
+  | 'image___localFile___childrenLocale___children'
+  | 'image___localFile___childrenLocale___language'
+  | 'image___localFile___childrenLocale___ns'
+  | 'image___localFile___childrenLocale___data'
+  | 'image___localFile___childrenLocale___fileAbsolutePath'
+  | 'image___localFile___childLocale___id'
+  | 'image___localFile___childLocale___children'
+  | 'image___localFile___childLocale___language'
+  | 'image___localFile___childLocale___ns'
+  | 'image___localFile___childLocale___data'
+  | 'image___localFile___childLocale___fileAbsolutePath'
   | 'image___localFile___id'
   | 'image___localFile___parent___id'
   | 'image___localFile___parent___children'
@@ -22582,6 +22985,7 @@ export type GraphCms_PageFieldsEnum =
   | 'relatedLink___asset___relatedPerson___actualStage'
   | 'relatedLink___asset___relatedPerson___remoteTypeName'
   | 'relatedLink___asset___relatedPerson___remoteId'
+  | 'relatedLink___asset___relatedPerson___locale'
   | 'relatedLink___asset___relatedPerson___stage'
   | 'relatedLink___asset___relatedPerson___name'
   | 'relatedLink___asset___relatedPerson___position'
@@ -22600,6 +23004,7 @@ export type GraphCms_PageFieldsEnum =
   | 'relatedLink___asset___relatedBlock___actualStage'
   | 'relatedLink___asset___relatedBlock___remoteTypeName'
   | 'relatedLink___asset___relatedBlock___remoteId'
+  | 'relatedLink___asset___relatedBlock___locale'
   | 'relatedLink___asset___relatedBlock___stage'
   | 'relatedLink___asset___relatedBlock___title'
   | 'relatedLink___asset___relatedBlock___name'
@@ -22623,6 +23028,7 @@ export type GraphCms_PageFieldsEnum =
   | 'relatedLink___asset___previewBlock___actualStage'
   | 'relatedLink___asset___previewBlock___remoteTypeName'
   | 'relatedLink___asset___previewBlock___remoteId'
+  | 'relatedLink___asset___previewBlock___locale'
   | 'relatedLink___asset___previewBlock___stage'
   | 'relatedLink___asset___previewBlock___title'
   | 'relatedLink___asset___previewBlock___name'
@@ -22664,6 +23070,7 @@ export type GraphCms_PageFieldsEnum =
   | 'relatedLink___asset___relatedPage___actualStage'
   | 'relatedLink___asset___relatedPage___remoteTypeName'
   | 'relatedLink___asset___relatedPage___remoteId'
+  | 'relatedLink___asset___relatedPage___locale'
   | 'relatedLink___asset___relatedPage___stage'
   | 'relatedLink___asset___relatedPage___title'
   | 'relatedLink___asset___relatedPage___slug'
@@ -22744,6 +23151,7 @@ export type GraphCms_PageFieldsEnum =
   | 'relatedLink___asset___localFile___url'
   | 'relatedLink___asset___localFile___publicURL'
   | 'relatedLink___asset___localFile___childrenImageSharp'
+  | 'relatedLink___asset___localFile___childrenLocale'
   | 'relatedLink___asset___localFile___id'
   | 'relatedLink___asset___localFile___children'
   | 'relatedLink___asset___id'
@@ -23076,6 +23484,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'actualStage'
   | 'remoteTypeName'
   | 'remoteId'
+  | 'locale'
   | 'stage'
   | 'name'
   | 'position'
@@ -23332,6 +23741,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'asset___relatedPerson___actualStage'
   | 'asset___relatedPerson___remoteTypeName'
   | 'asset___relatedPerson___remoteId'
+  | 'asset___relatedPerson___locale'
   | 'asset___relatedPerson___stage'
   | 'asset___relatedPerson___name'
   | 'asset___relatedPerson___position'
@@ -23445,6 +23855,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'asset___relatedPerson___relatedPage___actualStage'
   | 'asset___relatedPerson___relatedPage___remoteTypeName'
   | 'asset___relatedPerson___relatedPage___remoteId'
+  | 'asset___relatedPerson___relatedPage___locale'
   | 'asset___relatedPerson___relatedPage___stage'
   | 'asset___relatedPerson___relatedPage___title'
   | 'asset___relatedPerson___relatedPage___slug'
@@ -23495,6 +23906,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'asset___relatedBlock___actualStage'
   | 'asset___relatedBlock___remoteTypeName'
   | 'asset___relatedBlock___remoteId'
+  | 'asset___relatedBlock___locale'
   | 'asset___relatedBlock___stage'
   | 'asset___relatedBlock___title'
   | 'asset___relatedBlock___name'
@@ -23505,6 +23917,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'asset___relatedBlock___content___html'
   | 'asset___relatedBlock___content___markdown'
   | 'asset___relatedBlock___content___text'
+  | 'asset___relatedBlock___content___cleaned'
   | 'asset___relatedBlock___loop'
   | 'asset___relatedBlock___left'
   | 'asset___relatedBlock___createdBy___updatedAt'
@@ -23663,6 +24076,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'asset___relatedBlock___relatedPage___actualStage'
   | 'asset___relatedBlock___relatedPage___remoteTypeName'
   | 'asset___relatedBlock___relatedPage___remoteId'
+  | 'asset___relatedBlock___relatedPage___locale'
   | 'asset___relatedBlock___relatedPage___stage'
   | 'asset___relatedBlock___relatedPage___title'
   | 'asset___relatedBlock___relatedPage___slug'
@@ -23695,6 +24109,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'asset___previewBlock___actualStage'
   | 'asset___previewBlock___remoteTypeName'
   | 'asset___previewBlock___remoteId'
+  | 'asset___previewBlock___locale'
   | 'asset___previewBlock___stage'
   | 'asset___previewBlock___title'
   | 'asset___previewBlock___name'
@@ -23705,6 +24120,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'asset___previewBlock___content___html'
   | 'asset___previewBlock___content___markdown'
   | 'asset___previewBlock___content___text'
+  | 'asset___previewBlock___content___cleaned'
   | 'asset___previewBlock___loop'
   | 'asset___previewBlock___left'
   | 'asset___previewBlock___createdBy___updatedAt'
@@ -23863,6 +24279,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'asset___previewBlock___relatedPage___actualStage'
   | 'asset___previewBlock___relatedPage___remoteTypeName'
   | 'asset___previewBlock___relatedPage___remoteId'
+  | 'asset___previewBlock___relatedPage___locale'
   | 'asset___previewBlock___relatedPage___stage'
   | 'asset___previewBlock___relatedPage___title'
   | 'asset___previewBlock___relatedPage___slug'
@@ -23905,6 +24322,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'asset___relatedCollection___content___html'
   | 'asset___relatedCollection___content___markdown'
   | 'asset___relatedCollection___content___text'
+  | 'asset___relatedCollection___content___cleaned'
   | 'asset___relatedCollection___createdBy___updatedAt'
   | 'asset___relatedCollection___createdBy___createdAt'
   | 'asset___relatedCollection___createdBy___publishedAt'
@@ -24015,6 +24433,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'asset___relatedCollection___relatedPage___actualStage'
   | 'asset___relatedCollection___relatedPage___remoteTypeName'
   | 'asset___relatedCollection___relatedPage___remoteId'
+  | 'asset___relatedCollection___relatedPage___locale'
   | 'asset___relatedCollection___relatedPage___stage'
   | 'asset___relatedCollection___relatedPage___title'
   | 'asset___relatedCollection___relatedPage___slug'
@@ -24047,6 +24466,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'asset___relatedPage___actualStage'
   | 'asset___relatedPage___remoteTypeName'
   | 'asset___relatedPage___remoteId'
+  | 'asset___relatedPage___locale'
   | 'asset___relatedPage___stage'
   | 'asset___relatedPage___title'
   | 'asset___relatedPage___slug'
@@ -24410,6 +24830,19 @@ export type GraphCms_PersonFieldsEnum =
   | 'asset___localFile___childImageSharp___gatsbyImageData'
   | 'asset___localFile___childImageSharp___id'
   | 'asset___localFile___childImageSharp___children'
+  | 'asset___localFile___childrenLocale'
+  | 'asset___localFile___childrenLocale___id'
+  | 'asset___localFile___childrenLocale___children'
+  | 'asset___localFile___childrenLocale___language'
+  | 'asset___localFile___childrenLocale___ns'
+  | 'asset___localFile___childrenLocale___data'
+  | 'asset___localFile___childrenLocale___fileAbsolutePath'
+  | 'asset___localFile___childLocale___id'
+  | 'asset___localFile___childLocale___children'
+  | 'asset___localFile___childLocale___language'
+  | 'asset___localFile___childLocale___ns'
+  | 'asset___localFile___childLocale___data'
+  | 'asset___localFile___childLocale___fileAbsolutePath'
   | 'asset___localFile___id'
   | 'asset___localFile___parent___id'
   | 'asset___localFile___parent___children'
@@ -24695,6 +25128,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedCollection___content___html'
   | 'relatedCollection___content___markdown'
   | 'relatedCollection___content___text'
+  | 'relatedCollection___content___cleaned'
   | 'relatedCollection___createdBy___updatedAt'
   | 'relatedCollection___createdBy___createdAt'
   | 'relatedCollection___createdBy___publishedAt'
@@ -24839,6 +25273,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedCollection___asset___relatedPerson___actualStage'
   | 'relatedCollection___asset___relatedPerson___remoteTypeName'
   | 'relatedCollection___asset___relatedPerson___remoteId'
+  | 'relatedCollection___asset___relatedPerson___locale'
   | 'relatedCollection___asset___relatedPerson___stage'
   | 'relatedCollection___asset___relatedPerson___name'
   | 'relatedCollection___asset___relatedPerson___position'
@@ -24857,6 +25292,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedCollection___asset___relatedBlock___actualStage'
   | 'relatedCollection___asset___relatedBlock___remoteTypeName'
   | 'relatedCollection___asset___relatedBlock___remoteId'
+  | 'relatedCollection___asset___relatedBlock___locale'
   | 'relatedCollection___asset___relatedBlock___stage'
   | 'relatedCollection___asset___relatedBlock___title'
   | 'relatedCollection___asset___relatedBlock___name'
@@ -24880,6 +25316,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedCollection___asset___previewBlock___actualStage'
   | 'relatedCollection___asset___previewBlock___remoteTypeName'
   | 'relatedCollection___asset___previewBlock___remoteId'
+  | 'relatedCollection___asset___previewBlock___locale'
   | 'relatedCollection___asset___previewBlock___stage'
   | 'relatedCollection___asset___previewBlock___title'
   | 'relatedCollection___asset___previewBlock___name'
@@ -24921,6 +25358,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedCollection___asset___relatedPage___actualStage'
   | 'relatedCollection___asset___relatedPage___remoteTypeName'
   | 'relatedCollection___asset___relatedPage___remoteId'
+  | 'relatedCollection___asset___relatedPage___locale'
   | 'relatedCollection___asset___relatedPage___stage'
   | 'relatedCollection___asset___relatedPage___title'
   | 'relatedCollection___asset___relatedPage___slug'
@@ -25001,6 +25439,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedCollection___asset___localFile___url'
   | 'relatedCollection___asset___localFile___publicURL'
   | 'relatedCollection___asset___localFile___childrenImageSharp'
+  | 'relatedCollection___asset___localFile___childrenLocale'
   | 'relatedCollection___asset___localFile___id'
   | 'relatedCollection___asset___localFile___children'
   | 'relatedCollection___asset___id'
@@ -25123,6 +25562,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedCollection___relatedCollection___content___html'
   | 'relatedCollection___relatedCollection___content___markdown'
   | 'relatedCollection___relatedCollection___content___text'
+  | 'relatedCollection___relatedCollection___content___cleaned'
   | 'relatedCollection___relatedCollection___createdBy___updatedAt'
   | 'relatedCollection___relatedCollection___createdBy___createdAt'
   | 'relatedCollection___relatedCollection___createdBy___publishedAt'
@@ -25233,6 +25673,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedCollection___relatedCollection___relatedPage___actualStage'
   | 'relatedCollection___relatedCollection___relatedPage___remoteTypeName'
   | 'relatedCollection___relatedCollection___relatedPage___remoteId'
+  | 'relatedCollection___relatedCollection___relatedPage___locale'
   | 'relatedCollection___relatedCollection___relatedPage___stage'
   | 'relatedCollection___relatedCollection___relatedPage___title'
   | 'relatedCollection___relatedCollection___relatedPage___slug'
@@ -25265,6 +25706,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedCollection___relatedPage___actualStage'
   | 'relatedCollection___relatedPage___remoteTypeName'
   | 'relatedCollection___relatedPage___remoteId'
+  | 'relatedCollection___relatedPage___locale'
   | 'relatedCollection___relatedPage___stage'
   | 'relatedCollection___relatedPage___title'
   | 'relatedCollection___relatedPage___slug'
@@ -25432,6 +25874,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedPage___actualStage'
   | 'relatedPage___remoteTypeName'
   | 'relatedPage___remoteId'
+  | 'relatedPage___locale'
   | 'relatedPage___stage'
   | 'relatedPage___title'
   | 'relatedPage___slug'
@@ -25582,6 +26025,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedPage___image___relatedPerson___actualStage'
   | 'relatedPage___image___relatedPerson___remoteTypeName'
   | 'relatedPage___image___relatedPerson___remoteId'
+  | 'relatedPage___image___relatedPerson___locale'
   | 'relatedPage___image___relatedPerson___stage'
   | 'relatedPage___image___relatedPerson___name'
   | 'relatedPage___image___relatedPerson___position'
@@ -25600,6 +26044,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedPage___image___relatedBlock___actualStage'
   | 'relatedPage___image___relatedBlock___remoteTypeName'
   | 'relatedPage___image___relatedBlock___remoteId'
+  | 'relatedPage___image___relatedBlock___locale'
   | 'relatedPage___image___relatedBlock___stage'
   | 'relatedPage___image___relatedBlock___title'
   | 'relatedPage___image___relatedBlock___name'
@@ -25623,6 +26068,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedPage___image___previewBlock___actualStage'
   | 'relatedPage___image___previewBlock___remoteTypeName'
   | 'relatedPage___image___previewBlock___remoteId'
+  | 'relatedPage___image___previewBlock___locale'
   | 'relatedPage___image___previewBlock___stage'
   | 'relatedPage___image___previewBlock___title'
   | 'relatedPage___image___previewBlock___name'
@@ -25664,6 +26110,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedPage___image___relatedPage___actualStage'
   | 'relatedPage___image___relatedPage___remoteTypeName'
   | 'relatedPage___image___relatedPage___remoteId'
+  | 'relatedPage___image___relatedPage___locale'
   | 'relatedPage___image___relatedPage___stage'
   | 'relatedPage___image___relatedPage___title'
   | 'relatedPage___image___relatedPage___slug'
@@ -25744,6 +26191,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedPage___image___localFile___url'
   | 'relatedPage___image___localFile___publicURL'
   | 'relatedPage___image___localFile___childrenImageSharp'
+  | 'relatedPage___image___localFile___childrenLocale'
   | 'relatedPage___image___localFile___id'
   | 'relatedPage___image___localFile___children'
   | 'relatedPage___image___id'
@@ -26154,6 +26602,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedLink___asset___relatedPerson___actualStage'
   | 'relatedLink___asset___relatedPerson___remoteTypeName'
   | 'relatedLink___asset___relatedPerson___remoteId'
+  | 'relatedLink___asset___relatedPerson___locale'
   | 'relatedLink___asset___relatedPerson___stage'
   | 'relatedLink___asset___relatedPerson___name'
   | 'relatedLink___asset___relatedPerson___position'
@@ -26172,6 +26621,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedLink___asset___relatedBlock___actualStage'
   | 'relatedLink___asset___relatedBlock___remoteTypeName'
   | 'relatedLink___asset___relatedBlock___remoteId'
+  | 'relatedLink___asset___relatedBlock___locale'
   | 'relatedLink___asset___relatedBlock___stage'
   | 'relatedLink___asset___relatedBlock___title'
   | 'relatedLink___asset___relatedBlock___name'
@@ -26195,6 +26645,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedLink___asset___previewBlock___actualStage'
   | 'relatedLink___asset___previewBlock___remoteTypeName'
   | 'relatedLink___asset___previewBlock___remoteId'
+  | 'relatedLink___asset___previewBlock___locale'
   | 'relatedLink___asset___previewBlock___stage'
   | 'relatedLink___asset___previewBlock___title'
   | 'relatedLink___asset___previewBlock___name'
@@ -26236,6 +26687,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedLink___asset___relatedPage___actualStage'
   | 'relatedLink___asset___relatedPage___remoteTypeName'
   | 'relatedLink___asset___relatedPage___remoteId'
+  | 'relatedLink___asset___relatedPage___locale'
   | 'relatedLink___asset___relatedPage___stage'
   | 'relatedLink___asset___relatedPage___title'
   | 'relatedLink___asset___relatedPage___slug'
@@ -26316,6 +26768,7 @@ export type GraphCms_PersonFieldsEnum =
   | 'relatedLink___asset___localFile___url'
   | 'relatedLink___asset___localFile___publicURL'
   | 'relatedLink___asset___localFile___childrenImageSharp'
+  | 'relatedLink___asset___localFile___childrenLocale'
   | 'relatedLink___asset___localFile___id'
   | 'relatedLink___asset___localFile___children'
   | 'relatedLink___asset___id'
@@ -27932,6 +28385,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'people___actualStage'
   | 'people___remoteTypeName'
   | 'people___remoteId'
+  | 'people___locale'
   | 'people___stage'
   | 'people___name'
   | 'people___position'
@@ -28080,6 +28534,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'people___asset___relatedPerson___actualStage'
   | 'people___asset___relatedPerson___remoteTypeName'
   | 'people___asset___relatedPerson___remoteId'
+  | 'people___asset___relatedPerson___locale'
   | 'people___asset___relatedPerson___stage'
   | 'people___asset___relatedPerson___name'
   | 'people___asset___relatedPerson___position'
@@ -28098,6 +28553,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'people___asset___relatedBlock___actualStage'
   | 'people___asset___relatedBlock___remoteTypeName'
   | 'people___asset___relatedBlock___remoteId'
+  | 'people___asset___relatedBlock___locale'
   | 'people___asset___relatedBlock___stage'
   | 'people___asset___relatedBlock___title'
   | 'people___asset___relatedBlock___name'
@@ -28121,6 +28577,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'people___asset___previewBlock___actualStage'
   | 'people___asset___previewBlock___remoteTypeName'
   | 'people___asset___previewBlock___remoteId'
+  | 'people___asset___previewBlock___locale'
   | 'people___asset___previewBlock___stage'
   | 'people___asset___previewBlock___title'
   | 'people___asset___previewBlock___name'
@@ -28162,6 +28619,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'people___asset___relatedPage___actualStage'
   | 'people___asset___relatedPage___remoteTypeName'
   | 'people___asset___relatedPage___remoteId'
+  | 'people___asset___relatedPage___locale'
   | 'people___asset___relatedPage___stage'
   | 'people___asset___relatedPage___title'
   | 'people___asset___relatedPage___slug'
@@ -28242,6 +28700,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'people___asset___localFile___url'
   | 'people___asset___localFile___publicURL'
   | 'people___asset___localFile___childrenImageSharp'
+  | 'people___asset___localFile___childrenLocale'
   | 'people___asset___localFile___id'
   | 'people___asset___localFile___children'
   | 'people___asset___id'
@@ -28363,6 +28822,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'people___relatedCollection___content___html'
   | 'people___relatedCollection___content___markdown'
   | 'people___relatedCollection___content___text'
+  | 'people___relatedCollection___content___cleaned'
   | 'people___relatedCollection___createdBy___updatedAt'
   | 'people___relatedCollection___createdBy___createdAt'
   | 'people___relatedCollection___createdBy___publishedAt'
@@ -28473,6 +28933,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'people___relatedCollection___relatedPage___actualStage'
   | 'people___relatedCollection___relatedPage___remoteTypeName'
   | 'people___relatedCollection___relatedPage___remoteId'
+  | 'people___relatedCollection___relatedPage___locale'
   | 'people___relatedCollection___relatedPage___stage'
   | 'people___relatedCollection___relatedPage___title'
   | 'people___relatedCollection___relatedPage___slug'
@@ -28505,6 +28966,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'people___relatedPage___actualStage'
   | 'people___relatedPage___remoteTypeName'
   | 'people___relatedPage___remoteId'
+  | 'people___relatedPage___locale'
   | 'people___relatedPage___stage'
   | 'people___relatedPage___title'
   | 'people___relatedPage___slug'
@@ -29009,6 +29471,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedCollection___content___html'
   | 'relatedCollection___content___markdown'
   | 'relatedCollection___content___text'
+  | 'relatedCollection___content___cleaned'
   | 'relatedCollection___createdBy___updatedAt'
   | 'relatedCollection___createdBy___createdAt'
   | 'relatedCollection___createdBy___publishedAt'
@@ -29153,6 +29616,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedCollection___asset___relatedPerson___actualStage'
   | 'relatedCollection___asset___relatedPerson___remoteTypeName'
   | 'relatedCollection___asset___relatedPerson___remoteId'
+  | 'relatedCollection___asset___relatedPerson___locale'
   | 'relatedCollection___asset___relatedPerson___stage'
   | 'relatedCollection___asset___relatedPerson___name'
   | 'relatedCollection___asset___relatedPerson___position'
@@ -29171,6 +29635,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedCollection___asset___relatedBlock___actualStage'
   | 'relatedCollection___asset___relatedBlock___remoteTypeName'
   | 'relatedCollection___asset___relatedBlock___remoteId'
+  | 'relatedCollection___asset___relatedBlock___locale'
   | 'relatedCollection___asset___relatedBlock___stage'
   | 'relatedCollection___asset___relatedBlock___title'
   | 'relatedCollection___asset___relatedBlock___name'
@@ -29194,6 +29659,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedCollection___asset___previewBlock___actualStage'
   | 'relatedCollection___asset___previewBlock___remoteTypeName'
   | 'relatedCollection___asset___previewBlock___remoteId'
+  | 'relatedCollection___asset___previewBlock___locale'
   | 'relatedCollection___asset___previewBlock___stage'
   | 'relatedCollection___asset___previewBlock___title'
   | 'relatedCollection___asset___previewBlock___name'
@@ -29235,6 +29701,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedCollection___asset___relatedPage___actualStage'
   | 'relatedCollection___asset___relatedPage___remoteTypeName'
   | 'relatedCollection___asset___relatedPage___remoteId'
+  | 'relatedCollection___asset___relatedPage___locale'
   | 'relatedCollection___asset___relatedPage___stage'
   | 'relatedCollection___asset___relatedPage___title'
   | 'relatedCollection___asset___relatedPage___slug'
@@ -29315,6 +29782,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedCollection___asset___localFile___url'
   | 'relatedCollection___asset___localFile___publicURL'
   | 'relatedCollection___asset___localFile___childrenImageSharp'
+  | 'relatedCollection___asset___localFile___childrenLocale'
   | 'relatedCollection___asset___localFile___id'
   | 'relatedCollection___asset___localFile___children'
   | 'relatedCollection___asset___id'
@@ -29437,6 +29905,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedCollection___relatedCollection___content___html'
   | 'relatedCollection___relatedCollection___content___markdown'
   | 'relatedCollection___relatedCollection___content___text'
+  | 'relatedCollection___relatedCollection___content___cleaned'
   | 'relatedCollection___relatedCollection___createdBy___updatedAt'
   | 'relatedCollection___relatedCollection___createdBy___createdAt'
   | 'relatedCollection___relatedCollection___createdBy___publishedAt'
@@ -29547,6 +30016,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedCollection___relatedCollection___relatedPage___actualStage'
   | 'relatedCollection___relatedCollection___relatedPage___remoteTypeName'
   | 'relatedCollection___relatedCollection___relatedPage___remoteId'
+  | 'relatedCollection___relatedCollection___relatedPage___locale'
   | 'relatedCollection___relatedCollection___relatedPage___stage'
   | 'relatedCollection___relatedCollection___relatedPage___title'
   | 'relatedCollection___relatedCollection___relatedPage___slug'
@@ -29579,6 +30049,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedCollection___relatedPage___actualStage'
   | 'relatedCollection___relatedPage___remoteTypeName'
   | 'relatedCollection___relatedPage___remoteId'
+  | 'relatedCollection___relatedPage___locale'
   | 'relatedCollection___relatedPage___stage'
   | 'relatedCollection___relatedPage___title'
   | 'relatedCollection___relatedPage___slug'
@@ -29746,6 +30217,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedPage___actualStage'
   | 'relatedPage___remoteTypeName'
   | 'relatedPage___remoteId'
+  | 'relatedPage___locale'
   | 'relatedPage___stage'
   | 'relatedPage___title'
   | 'relatedPage___slug'
@@ -29896,6 +30368,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedPage___image___relatedPerson___actualStage'
   | 'relatedPage___image___relatedPerson___remoteTypeName'
   | 'relatedPage___image___relatedPerson___remoteId'
+  | 'relatedPage___image___relatedPerson___locale'
   | 'relatedPage___image___relatedPerson___stage'
   | 'relatedPage___image___relatedPerson___name'
   | 'relatedPage___image___relatedPerson___position'
@@ -29914,6 +30387,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedPage___image___relatedBlock___actualStage'
   | 'relatedPage___image___relatedBlock___remoteTypeName'
   | 'relatedPage___image___relatedBlock___remoteId'
+  | 'relatedPage___image___relatedBlock___locale'
   | 'relatedPage___image___relatedBlock___stage'
   | 'relatedPage___image___relatedBlock___title'
   | 'relatedPage___image___relatedBlock___name'
@@ -29937,6 +30411,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedPage___image___previewBlock___actualStage'
   | 'relatedPage___image___previewBlock___remoteTypeName'
   | 'relatedPage___image___previewBlock___remoteId'
+  | 'relatedPage___image___previewBlock___locale'
   | 'relatedPage___image___previewBlock___stage'
   | 'relatedPage___image___previewBlock___title'
   | 'relatedPage___image___previewBlock___name'
@@ -29978,6 +30453,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedPage___image___relatedPage___actualStage'
   | 'relatedPage___image___relatedPage___remoteTypeName'
   | 'relatedPage___image___relatedPage___remoteId'
+  | 'relatedPage___image___relatedPage___locale'
   | 'relatedPage___image___relatedPage___stage'
   | 'relatedPage___image___relatedPage___title'
   | 'relatedPage___image___relatedPage___slug'
@@ -30058,6 +30534,7 @@ export type GraphCms_TeamFieldsEnum =
   | 'relatedPage___image___localFile___url'
   | 'relatedPage___image___localFile___publicURL'
   | 'relatedPage___image___localFile___childrenImageSharp'
+  | 'relatedPage___image___localFile___childrenLocale'
   | 'relatedPage___image___localFile___id'
   | 'relatedPage___image___localFile___children'
   | 'relatedPage___image___id'
@@ -30848,5 +31325,191 @@ export type GraphCms_MarkdownNodeFilterInput = {
 
 export type GraphCms_MarkdownNodeSortInput = {
   readonly fields?: InputMaybe<ReadonlyArray<InputMaybe<GraphCms_MarkdownNodeFieldsEnum>>>;
+  readonly order?: InputMaybe<ReadonlyArray<InputMaybe<SortOrderEnum>>>;
+};
+
+export type LocaleConnection = {
+  readonly __typename?: 'LocaleConnection';
+  readonly totalCount: Scalars['Int'];
+  readonly edges: ReadonlyArray<LocaleEdge>;
+  readonly nodes: ReadonlyArray<Locale>;
+  readonly pageInfo: PageInfo;
+  readonly distinct: ReadonlyArray<Scalars['String']>;
+  readonly max?: Maybe<Scalars['Float']>;
+  readonly min?: Maybe<Scalars['Float']>;
+  readonly sum?: Maybe<Scalars['Float']>;
+  readonly group: ReadonlyArray<LocaleGroupConnection>;
+};
+
+
+export type LocaleConnectionDistinctArgs = {
+  field: LocaleFieldsEnum;
+};
+
+
+export type LocaleConnectionMaxArgs = {
+  field: LocaleFieldsEnum;
+};
+
+
+export type LocaleConnectionMinArgs = {
+  field: LocaleFieldsEnum;
+};
+
+
+export type LocaleConnectionSumArgs = {
+  field: LocaleFieldsEnum;
+};
+
+
+export type LocaleConnectionGroupArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  field: LocaleFieldsEnum;
+};
+
+export type LocaleEdge = {
+  readonly __typename?: 'LocaleEdge';
+  readonly next?: Maybe<Locale>;
+  readonly node: Locale;
+  readonly previous?: Maybe<Locale>;
+};
+
+export type LocaleFieldsEnum =
+  | 'id'
+  | 'parent___id'
+  | 'parent___parent___id'
+  | 'parent___parent___parent___id'
+  | 'parent___parent___parent___children'
+  | 'parent___parent___children'
+  | 'parent___parent___children___id'
+  | 'parent___parent___children___children'
+  | 'parent___parent___internal___content'
+  | 'parent___parent___internal___contentDigest'
+  | 'parent___parent___internal___description'
+  | 'parent___parent___internal___fieldOwners'
+  | 'parent___parent___internal___ignoreType'
+  | 'parent___parent___internal___mediaType'
+  | 'parent___parent___internal___owner'
+  | 'parent___parent___internal___type'
+  | 'parent___children'
+  | 'parent___children___id'
+  | 'parent___children___parent___id'
+  | 'parent___children___parent___children'
+  | 'parent___children___children'
+  | 'parent___children___children___id'
+  | 'parent___children___children___children'
+  | 'parent___children___internal___content'
+  | 'parent___children___internal___contentDigest'
+  | 'parent___children___internal___description'
+  | 'parent___children___internal___fieldOwners'
+  | 'parent___children___internal___ignoreType'
+  | 'parent___children___internal___mediaType'
+  | 'parent___children___internal___owner'
+  | 'parent___children___internal___type'
+  | 'parent___internal___content'
+  | 'parent___internal___contentDigest'
+  | 'parent___internal___description'
+  | 'parent___internal___fieldOwners'
+  | 'parent___internal___ignoreType'
+  | 'parent___internal___mediaType'
+  | 'parent___internal___owner'
+  | 'parent___internal___type'
+  | 'children'
+  | 'children___id'
+  | 'children___parent___id'
+  | 'children___parent___parent___id'
+  | 'children___parent___parent___children'
+  | 'children___parent___children'
+  | 'children___parent___children___id'
+  | 'children___parent___children___children'
+  | 'children___parent___internal___content'
+  | 'children___parent___internal___contentDigest'
+  | 'children___parent___internal___description'
+  | 'children___parent___internal___fieldOwners'
+  | 'children___parent___internal___ignoreType'
+  | 'children___parent___internal___mediaType'
+  | 'children___parent___internal___owner'
+  | 'children___parent___internal___type'
+  | 'children___children'
+  | 'children___children___id'
+  | 'children___children___parent___id'
+  | 'children___children___parent___children'
+  | 'children___children___children'
+  | 'children___children___children___id'
+  | 'children___children___children___children'
+  | 'children___children___internal___content'
+  | 'children___children___internal___contentDigest'
+  | 'children___children___internal___description'
+  | 'children___children___internal___fieldOwners'
+  | 'children___children___internal___ignoreType'
+  | 'children___children___internal___mediaType'
+  | 'children___children___internal___owner'
+  | 'children___children___internal___type'
+  | 'children___internal___content'
+  | 'children___internal___contentDigest'
+  | 'children___internal___description'
+  | 'children___internal___fieldOwners'
+  | 'children___internal___ignoreType'
+  | 'children___internal___mediaType'
+  | 'children___internal___owner'
+  | 'children___internal___type'
+  | 'internal___content'
+  | 'internal___contentDigest'
+  | 'internal___description'
+  | 'internal___fieldOwners'
+  | 'internal___ignoreType'
+  | 'internal___mediaType'
+  | 'internal___owner'
+  | 'internal___type'
+  | 'language'
+  | 'ns'
+  | 'data'
+  | 'fileAbsolutePath';
+
+export type LocaleGroupConnection = {
+  readonly __typename?: 'LocaleGroupConnection';
+  readonly totalCount: Scalars['Int'];
+  readonly edges: ReadonlyArray<LocaleEdge>;
+  readonly nodes: ReadonlyArray<Locale>;
+  readonly pageInfo: PageInfo;
+  readonly distinct: ReadonlyArray<Scalars['String']>;
+  readonly max?: Maybe<Scalars['Float']>;
+  readonly min?: Maybe<Scalars['Float']>;
+  readonly sum?: Maybe<Scalars['Float']>;
+  readonly group: ReadonlyArray<LocaleGroupConnection>;
+  readonly field: Scalars['String'];
+  readonly fieldValue?: Maybe<Scalars['String']>;
+};
+
+
+export type LocaleGroupConnectionDistinctArgs = {
+  field: LocaleFieldsEnum;
+};
+
+
+export type LocaleGroupConnectionMaxArgs = {
+  field: LocaleFieldsEnum;
+};
+
+
+export type LocaleGroupConnectionMinArgs = {
+  field: LocaleFieldsEnum;
+};
+
+
+export type LocaleGroupConnectionSumArgs = {
+  field: LocaleFieldsEnum;
+};
+
+
+export type LocaleGroupConnectionGroupArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+  field: LocaleFieldsEnum;
+};
+
+export type LocaleSortInput = {
+  readonly fields?: InputMaybe<ReadonlyArray<InputMaybe<LocaleFieldsEnum>>>;
   readonly order?: InputMaybe<ReadonlyArray<InputMaybe<SortOrderEnum>>>;
 };

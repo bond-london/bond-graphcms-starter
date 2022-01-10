@@ -65,6 +65,7 @@ fragment Collection on Collection {
     ... on Block {
       remoteTypeName: __typename
       remoteId: id
+      locale
       stage
     }
     ... on Collection {
@@ -75,6 +76,7 @@ fragment Collection on Collection {
     ... on Person {
       remoteTypeName: __typename
       remoteId: id
+      locale
       stage
     }
     ... on Team {
@@ -94,6 +96,7 @@ fragment Collection on Collection {
     ... on Page {
       remoteTypeName: __typename
       remoteId: id
+      locale
       stage
     }
   }

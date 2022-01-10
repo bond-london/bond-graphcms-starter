@@ -150,7 +150,13 @@ export const NestedCollectionFragment = graphql`
     title
     collectionType
     content {
-      raw
+      cleaned
+      references {
+        ... on GraphCMS_Asset {
+          id: remoteId
+          mimeType
+        }
+      }
     }
     asset {
       ...ImageAssetFragment
@@ -171,7 +177,13 @@ export const CollectionFragment = graphql`
     title
     collectionType
     content {
-      raw
+      cleaned
+      references {
+        ... on GraphCMS_Asset {
+          id: remoteId
+          mimeType
+        }
+      }
     }
     asset {
       ...ImageAssetFragment

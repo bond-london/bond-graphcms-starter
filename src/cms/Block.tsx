@@ -1,5 +1,5 @@
 import { getVisual } from "@bond-london/gatsby-graphcms-components";
-import { cleanupRTF, getRTF, tryGetRTF } from "@bond-london/graphcms-rich-text";
+import { getCleanedRTF } from "@bond-london/graphcms-rich-text";
 import { graphql } from "gatsby";
 import React from "react";
 import { NamedLinkInformation } from "../components";
@@ -20,22 +20,28 @@ const Hero = loadable(() => import("../components"), {
 const RichTextBlock: React.FC<{ block: GraphCms_Block }> = ({
   block: { content, asset, loop, preview, left },
 }) => {
-  const rtf = getRTF(content);
+  if (!content) {
+    return null;
+  }
+  const rtf = getCleanedRTF(content);
   if (!rtf) {
     return null;
   }
-  const clean = cleanupRTF(rtf);
-  if (!clean) {
-    return null;
-  }
   const visual = getVisual(asset, loop, preview);
-  return <BasicRTF content={clean} visual={visual} right={!left} />;
+  return (
+    <BasicRTF
+      content={rtf}
+      visual={visual}
+      right={!left}
+      references={content.references}
+    />
+  );
 };
 
 const HeroBlock: React.FC<{ block: GraphCms_Block }> = ({
   block: { content, asset, title, showTitle, loop, preview, links, textColour },
 }) => {
-  const rtf = tryGetRTF(content, true);
+  const rtf = getCleanedRTF(content);
   const visual = getVisual(asset, loop, preview);
   if (!visual) {
     return null;
@@ -158,7 +164,20 @@ export const BlockFragment = graphql`
     showTitle
     type
     content {
-      raw
+      cleaned
+      references {
+        ... on GraphCMS_Asset {
+          remoteId
+          mimeType
+          url
+          ...ImageAssetFragment
+          ...VideoAssetFragment
+        }
+        ... on GraphCMS_Person {
+          remoteId
+          ...PersonFragment
+        }
+      }
     }
     links {
       ...LinkFragment

@@ -1,9 +1,10 @@
 fragment Page on Page {
   stage
+  locale
   remoteId: id
-  createdAt
-  updatedAt
-  publishedAt
+  createdAt(variation: COMBINED)
+  updatedAt(variation: COMBINED)
+  publishedAt(variation: COMBINED)
   title
   slug
   header
@@ -49,6 +50,7 @@ fragment Page on Page {
     ... on Block {
       remoteTypeName: __typename
       remoteId: id
+      locale
       stage
     }
     ... on Collection {
@@ -59,6 +61,7 @@ fragment Page on Page {
     ... on Person {
       remoteTypeName: __typename
       remoteId: id
+      locale
       stage
     }
     ... on Team {

@@ -46,6 +46,7 @@ fragment ScheduledOperation on ScheduledOperation {
     ... on Block {
       remoteTypeName: __typename
       remoteId: id
+      locale
       stage
     }
     ... on Collection {
@@ -66,11 +67,13 @@ fragment ScheduledOperation on ScheduledOperation {
     ... on Page {
       remoteTypeName: __typename
       remoteId: id
+      locale
       stage
     }
     ... on Person {
       remoteTypeName: __typename
       remoteId: id
+      locale
       stage
     }
     ... on Team {
