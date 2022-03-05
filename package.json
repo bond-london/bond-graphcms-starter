@@ -25,7 +25,8 @@
     "build:full": "run-s clean clean:generated build",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "migrate": "node migrate/migrate.js",
-    "apitest": "ts-node src/api/test.ts"
+    "apitest": "ts-node src/api/test.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@bond-london/bond-tailwind-plugin": "^1.0.4",
@@ -102,6 +103,7 @@
     "@graphcms/management": "^1.4.0",
     "graphcms-migrate": "^1.0.1",
     "hint": "^6.1.9",
-    "ts-node": "^10.4.0"
+    "ts-node": "^10.4.0",
+    "husky": "^7.0.0"
   }
 }
