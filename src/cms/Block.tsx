@@ -1,15 +1,11 @@
 import { getVisual } from "@bond-london/gatsby-graphcms-components";
 import { getCleanedRTF } from "@bond-london/graphcms-rich-text";
 import { graphql } from "gatsby";
-import React, { lazy, Suspense } from "react";
+import React from "react";
 import { LinkInformation } from "../components";
+import { Hero } from "../components/Hero";
+import { BasicRTF } from "../components/Text";
 import { arrayOrUndefined } from "../utils";
-const BasicRTF = lazy(() =>
-  import("../components/Text/BasicRTF").then((m) => ({ default: m.BasicRTF }))
-);
-const Hero = lazy(() =>
-  import("../components/Hero/Hero").then((m) => ({ default: m.Hero }))
-);
 
 const RichTextBlock: React.FC<{ block: Queries.BlockFragment }> = ({
   block: { content, asset, loop, preview, left },
@@ -23,14 +19,12 @@ const RichTextBlock: React.FC<{ block: Queries.BlockFragment }> = ({
   }
   const visual = getVisual(asset, loop, preview);
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <BasicRTF
-        content={rtf}
-        visual={visual}
-        right={!left}
-        references={content.references}
-      />
-    </Suspense>
+    <BasicRTF
+      content={rtf}
+      visual={visual}
+      right={!left}
+      references={content.references}
+    />
   );
 };
 
@@ -43,15 +37,13 @@ const HeroBlock: React.FC<{ block: Queries.BlockFragment }> = ({
     return null;
   }
   return (
-    <Suspense fallback={<div>Loading ...</div>}>
-      <Hero
-        content={rtf}
-        title={showTitle ? title : undefined}
-        visual={visual}
-        links={arrayOrUndefined(links?.map(buildNamedLink))}
-        textColour={textColour || undefined}
-      />
-    </Suspense>
+    <Hero
+      content={rtf}
+      title={showTitle ? title : undefined}
+      visual={visual}
+      links={arrayOrUndefined(links?.map(buildNamedLink))}
+      textColour={textColour || undefined}
+    />
   );
 };
 
