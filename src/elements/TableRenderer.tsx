@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { PropsWithChildren, useMemo } from "react";
 import classNames from "classnames";
 import {
   buildTableInformationFromChildren,
@@ -124,7 +124,9 @@ export const RenderTable: React.FC<{
   );
 };
 
-export const TableRenderer: React.FC<NodeRendererProps> = (mainProps) => {
+export const TableRenderer: React.FC<PropsWithChildren<NodeRendererProps>> = (
+  mainProps
+) => {
   const { children, renderers, context } = mainProps;
   const table = useMemo(() => {
     const table = buildTableInformationFromChildren(children);

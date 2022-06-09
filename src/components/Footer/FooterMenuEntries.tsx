@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import React, { Fragment } from "react";
 import { FooterEntrySize, sizeToTextClassName } from ".";
-import { MenuItem } from "..";
+import { LinkInformation } from "../Navigation";
 import { FooterMenuEntry } from "./FooterMenuEntry";
 
 export const FooterMenuEntries: React.FC<{
-  links: MenuItem[];
+  links: LinkInformation[];
   size: FooterEntrySize;
   withIcons: boolean;
   className?: string;

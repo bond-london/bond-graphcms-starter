@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import React from "react";
-import { MenuItem } from ".";
 import { LinkOrButton } from "..";
+import { LinkInformation } from "./NavigationBar";
 
 export const NavigationMenu: React.FC<{
-  items: readonly MenuItem[];
+  items: readonly LinkInformation[];
   isOpen: boolean;
 }> = ({ items, isOpen }) => {
   return (

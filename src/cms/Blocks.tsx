@@ -1,8 +1,7 @@
 import React from "react";
 import { Block, Collection, CMSTeam } from ".";
-import { GraphCms_Union_Blocks_RelatedPage } from "../generated/graphql-types";
 
-const SingleBlock: React.FC<{ block: GraphCms_Union_Blocks_RelatedPage }> = ({
+const SingleBlock: React.FC<{ block: Queries.PageFragment["blocks"][0] }> = ({
   block,
 }) => {
   switch (block.__typename) {
@@ -17,7 +16,7 @@ const SingleBlock: React.FC<{ block: GraphCms_Union_Blocks_RelatedPage }> = ({
 };
 
 export const Blocks: React.FC<{
-  blocks: ReadonlyArray<GraphCms_Union_Blocks_RelatedPage>;
+  blocks: Queries.PageFragment["blocks"];
 }> = ({ blocks }) => {
   return (
     <>

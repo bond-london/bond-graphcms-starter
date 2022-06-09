@@ -5,26 +5,23 @@ import { IconType, LinkOrButton } from "..";
 import { useBodyScrollLock } from "../../layouts";
 import { NavigationMenu } from "./NavigationMenu";
 
+export type ColourName = "Green" | "GreenWhite" | "Blue" | "BlueWhite";
 export interface LinkInformation {
   icon?: IconType;
   internal?: string;
   external?: string;
   newPage?: boolean;
-}
-
-export type NamedLinkColour = "Green" | "GreenWhite" | "Blue" | "BlueWhite";
-export interface NamedLinkInformation extends LinkInformation {
   name?: string;
-  colour?: NamedLinkColour;
+  text?: string;
+  colour?: ColourName;
   visual?: VisualAsset;
-}
-
-export interface MenuItem extends NamedLinkInformation {
   isButton?: boolean;
+  action?: () => void;
+  nested?: LinkInformation[];
 }
 
 export interface Menu {
-  items: readonly MenuItem[];
+  items: readonly LinkInformation[];
 }
 
 export const NavigationBar: React.FC<{

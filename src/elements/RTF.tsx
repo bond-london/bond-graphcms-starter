@@ -17,7 +17,6 @@ import {
   ImageAssetRendererProps,
 } from "./ImageAssetRenderer";
 import { CMSPerson } from "../cms";
-import { GraphCms_Person } from "../generated/graphql-types";
 
 const projectRenderers: Partial<NodeRenderer> = {
   code_block: (props) => (
@@ -37,7 +36,7 @@ const projectRenderers: Partial<NodeRenderer> = {
   embed_node: {
     Person: (props: EmbedNodeRendererProps) => {
       const { isInline } = props;
-      const person = props as unknown as GraphCms_Person;
+      const person = props as unknown as Queries.PersonFragment;
       return (
         <CMSPerson
           person={person}

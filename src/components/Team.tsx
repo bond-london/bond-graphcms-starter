@@ -1,6 +1,5 @@
 import React from "react";
 import { Icon, Individual, Person } from ".";
-import { useMediaQuery } from "react-responsive";
 import {
   ButtonBack,
   ButtonNext,
@@ -11,11 +10,12 @@ import {
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { Section } from "../layouts";
 import classNames from "classnames";
+import { useMediaQuery } from "@bond-london/gatsby-graphcms-components";
 
 export const Team: React.FC<{ team: Individual[] }> = ({ team }) => {
-  const isSm = useMediaQuery({ query: "(min-width: 640px)" });
-  const isMd = useMediaQuery({ query: "(min-width: 768px)" });
-  const isLg = useMediaQuery({ query: "(min-width: 1024px)" });
+  const isSm = useMediaQuery("(min-width: 640px)");
+  const isMd = useMediaQuery("(min-width: 768px)");
+  const isLg = useMediaQuery("(min-width: 1024px)");
 
   return (
     <Section

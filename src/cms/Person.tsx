@@ -2,14 +2,13 @@ import { getVisual } from "@bond-london/gatsby-graphcms-components";
 import { graphql } from "gatsby";
 import React from "react";
 import { Person } from "../components";
-import { GraphCms_Person } from "../generated/graphql-types";
 
 export const CMSPerson: React.FC<{
-  person: GraphCms_Person;
+  person: Queries.PersonFragment;
   className?: string;
 }> = ({ person, className }) => {
-  const { asset, name, position } = person;
-  const visual = getVisual(asset);
+  const { headshot, name, position } = person;
+  const visual = getVisual(headshot);
 
   return (
     <Person
@@ -21,19 +20,19 @@ export const CMSPerson: React.FC<{
   );
 };
 export const PersonLinkFragment = graphql`
-  fragment PersonLinkFragment on GraphCMS_Person {
+  fragment PersonLink on GraphCMS_Person {
     id
     slug
   }
 `;
 
 export const PersonFragment = graphql`
-  fragment PersonFragment on GraphCMS_Person {
-    ...PersonLinkFragment
+  fragment Person on GraphCMS_Person {
+    ...PersonLink
     name
     position
-    asset {
-      ...ImageAssetFragment
+    headshot {
+      ...ImageAsset
     }
   }
 `;

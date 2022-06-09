@@ -1,8 +1,9 @@
 import React from "react";
-import { LinkOrButton, MenuItem } from "..";
+import { LinkOrButton } from "..";
+import { LinkInformation } from "../Navigation";
 
 export const FooterMenuEntry: React.FC<{
-  link: MenuItem;
+  link: LinkInformation;
   withIcon?: boolean;
 }> = ({
   link: { isButton, name, icon, internal, external, newPage },

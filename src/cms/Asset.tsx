@@ -1,7 +1,7 @@
 import { graphql } from "gatsby";
 
 export const SeoImageAssetFragment = graphql`
-  fragment SeoImageAssetFragment on GraphCMS_Asset {
+  fragment SeoImageAsset on GraphCMS_Asset {
     id
     alt
     localFile {
@@ -12,38 +12,45 @@ export const SeoImageAssetFragment = graphql`
   }
 `;
 export const ImageAssetFragment = graphql`
-  fragment ImageAssetFragment on GraphCMS_Asset {
+  fragment ImageAsset on GraphCMS_Asset {
     id
     alt
+    dontCrop
+    horizontalCropPosition
+    verticalCropPosition
+    remoteId
     localFile {
-      ...ImageFragment
+      ...ImageFile
     }
   }
 `;
 
 export const SvgAssetFragment = graphql`
-  fragment SvgAssetFragment on GraphCMS_Asset {
+  fragment SvgAsset on GraphCMS_Asset {
     id
+    remoteId
     localFile {
-      ...SvgFragment
+      ...SvgFile
     }
   }
 `;
 
 export const VideoAssetFragment = graphql`
-  fragment VideoAssetFragment on GraphCMS_Asset {
+  fragment VideoAsset on GraphCMS_Asset {
     id
+    remoteId
     localFile {
-      ...VideoFragment
+      ...VideoFile
     }
   }
 `;
 
 export const LottieAssetFragment = graphql`
-  fragment LottieAssetFragment on GraphCMS_Asset {
+  fragment LottieAsset on GraphCMS_Asset {
     id
+    remoteId
     localFile {
-      ...LottieFragment
+      ...LottieFile
     }
   }
 `;

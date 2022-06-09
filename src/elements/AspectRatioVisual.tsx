@@ -3,20 +3,22 @@ import {
   VisualAsset,
 } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
-import React from "react";
-import loadable from "@loadable/component";
+import React, { lazy, PropsWithChildren, Suspense } from "react";
 
-const AutoVisualWithLottie = loadable(
-  () => import("@bond-london/gatsby-graphcms-components/dist/lottie"),
-  { resolveComponent: (lib) => lib.AutoVisualWithLottie }
+const AutoVisualWithLottie = lazy(() =>
+  import("@bond-london/gatsby-graphcms-components/dist/lottie").then((m) => ({
+    default: m.AutoVisualWithLottie,
+  }))
 );
 
-export const AspectRatioVisual: React.FC<{
-  visual?: VisualAsset;
-  className?: string;
-  aspectRatioClassName: string;
-  visualClassName?: string;
-}> = ({
+export const AspectRatioVisual: React.FC<
+  PropsWithChildren<{
+    visual?: VisualAsset;
+    className?: string;
+    aspectRatioClassName: string;
+    visualClassName?: string;
+  }>
+> = ({
   visual,
   className,
   aspectRatioClassName,
@@ -29,17 +31,31 @@ export const AspectRatioVisual: React.FC<{
   const loopDelay = visual.loop ? undefined : 15000;
 
   const hasLottie = !!visual.animation;
-  const Component = hasLottie ? AutoVisualWithLottie : AutoVisualNoLottie;
+  if (hasLottie) {
+    return (
+      <div className={classNames("relative", className)}>
+        <div className={aspectRatioClassName}>
+          {children}
+          <Suspense fallback={<div>Loading...</div>}>
+            <AutoVisualWithLottie
+              visual={visual}
+              fitParent={true}
+              className={visualClassName}
+              loopDelay={loopDelay}
+            />
+          </Suspense>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className={classNames("relative", className)}>
       <div className={aspectRatioClassName}>
         {children}
-        <Component
+        <AutoVisualNoLottie
           visual={visual}
           fitParent={true}
           className={visualClassName}
-          loopDelay={loopDelay}
-          cover={true}
         />
       </div>
     </div>

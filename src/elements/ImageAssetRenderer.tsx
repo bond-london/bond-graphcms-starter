@@ -1,11 +1,11 @@
 import {
   AutoVisualNoLottie,
+  GenericAsset,
   getVisual,
 } from "@bond-london/gatsby-graphcms-components";
 import React from "react";
-import { File } from "../generated/graphql-types";
 
-export type ImageAssetRendererProps = File;
+export type ImageAssetRendererProps = GenericAsset;
 export const ImageAssetRenderer: React.FC<ImageAssetRendererProps> = (
   props
 ) => {

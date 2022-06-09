@@ -1,14 +1,14 @@
 import { graphql } from "gatsby";
 
 export const PageLinkFragment = graphql`
-  fragment PageLinkFragment on GraphCMS_Page {
+  fragment PageLink on GraphCMS_Page {
     id
     slug
   }
 `;
 
 export const PageFragment = graphql`
-  fragment PageFragment on GraphCMS_Page {
+  fragment Page on GraphCMS_Page {
     id
     title
     header
@@ -16,13 +16,14 @@ export const PageFragment = graphql`
     description
     keywords
     image {
-      ...SeoImageAssetFragment
+      ...SeoImageAsset
     }
     blocks {
       __typename
-      ...BlockFragment
-      ...CollectionFragment
-      ...TeamFragment
+      ...Block
+      ...Collection
+      ...Team
+      ...Person
     }
   }
 `;

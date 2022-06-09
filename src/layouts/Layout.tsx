@@ -2,11 +2,17 @@ import { SEO } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
 import { graphql, useStaticQuery } from "gatsby";
 import { IGatsbyImageData } from "gatsby-plugin-image";
-import React, { ReactNode, useMemo, useState } from "react";
+import React, {
+  createContext,
+  PropsWithChildren,
+  ReactNode,
+  useMemo,
+  useState,
+} from "react";
 import { Modal } from ".";
 import { Footer, FooterInformation, Menu, NavigationBar } from "../components";
 
-export const LayoutContext = React.createContext<{
+export const LayoutContext = createContext<{
   setModal: (node?: ReactNode) => void;
   modal?: ReactNode;
 }>({
@@ -68,43 +74,45 @@ export const DefaultFooterInformation: FooterInformation = {
   ],
 };
 
-export const Layout: React.FC<{
-  bodyClassName?: string;
-  title: string;
-  description?: string;
-  keywords?: string;
-  image?: IGatsbyImageData;
-}> = ({ bodyClassName, title, description, keywords, image, children }) => {
-  const { siteBuildMetadata, site } = useStaticQuery<{
-    siteBuildMetadata: { buildTime: string; buildYear: string };
-    site: {
-      siteMetadata: {
-        title: string;
-        description: string;
-        siteUrl: string;
-      };
-    };
-  }>(graphql`
-    query LayoutQuery {
-      site {
-        siteMetadata {
-          description
-          title
-          siteUrl
+export const Layout: React.FC<
+  PropsWithChildren<{
+    bodyClassName?: string;
+    title: string;
+    description?: string;
+    keywords?: string;
+    image?: IGatsbyImageData;
+    pagePath: string;
+  }>
+> = ({
+  bodyClassName,
+  title,
+  description,
+  keywords,
+  image,
+  pagePath,
+  children,
+}) => {
+  const { siteBuildMetadata, site } =
+    useStaticQuery<Queries.LayoutQuery>(graphql`
+      query Layout {
+        site {
+          siteMetadata {
+            description
+            siteName
+            siteUrl
+          }
+        }
+        siteBuildMetadata {
+          buildYear: buildTime(formatString: "YYYY")
+          buildTime(formatString: "dddd, MMMM d YYYY, h:mm:ss A")
         }
       }
-      siteBuildMetadata {
-        buildYear: buildTime(formatString: "YYYY")
-        buildTime(formatString: "dddd, MMMM d YYYY, h:mm:ss A")
-      }
-    }
-  `);
+    `);
 
-  const siteMetadata = site.siteMetadata;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const siteMetadata = site!.siteMetadata!;
 
-  const pageTitle = siteMetadata?.title
-    ? `${siteMetadata.title} | ${title}`
-    : title;
+  const pageTitle = `${title} | ${siteMetadata.siteName || ""}`;
 
   const [modal, setModal] = useState<ReactNode>();
   const provider = useMemo(
@@ -119,7 +127,8 @@ export const Layout: React.FC<{
     <LayoutContext.Provider value={provider}>
       <SEO
         pageTitle={pageTitle}
-        siteBuildMetadata={siteBuildMetadata}
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        siteBuildMetadata={siteBuildMetadata!}
         pageMetadata={{
           title,
           description,
@@ -127,7 +136,7 @@ export const Layout: React.FC<{
           keywords,
         }}
         siteMetadata={siteMetadata}
-        pageUrl={siteMetadata.siteUrl}
+        pagePath={pagePath}
         className={classNames(
           bodyClassName,
           process.env.GATSBY_DEBUG_TAILWIND && "debug-screens"

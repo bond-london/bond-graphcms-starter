@@ -1,20 +1,22 @@
 import { useFirstVisibleToUser } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 export type CoreSectionElement = "div" | "section" | "footer";
 
-export const CoreSection: React.FC<{
-  componentName: string;
-  className: string;
-  contentClassName?: string;
-  element?: CoreSectionElement;
-  preChildren?: React.ReactNode;
-  postChildren?: React.ReactNode;
-  visibleThreshold?: number;
-  visibleDelay?: number;
-  onVisible?: () => void;
-}> = ({
+export const CoreSection: React.FC<
+  PropsWithChildren<{
+    componentName: string;
+    className: string;
+    contentClassName?: string;
+    element?: CoreSectionElement;
+    preChildren?: React.ReactNode;
+    postChildren?: React.ReactNode;
+    visibleThreshold?: number;
+    visibleDelay?: number;
+    onVisible?: () => void;
+  }>
+> = ({
   componentName,
   className,
   contentClassName,
@@ -50,20 +52,22 @@ export const CoreSection: React.FC<{
   );
 };
 
-export const Section: React.FC<{
-  componentName: string;
-  className?: string;
-  contentClassName?: string;
-  spacingClassName?: string;
-  topSpacing?: boolean;
-  bottomSpacing?: boolean;
-  element?: CoreSectionElement;
-  preChildren?: React.ReactNode;
-  postChildren?: React.ReactNode;
-  visibleThreshold?: number;
-  visibleDelay?: number;
-  onVisible?: () => void;
-}> = ({
+export const Section: React.FC<
+  PropsWithChildren<{
+    componentName: string;
+    className?: string;
+    contentClassName?: string;
+    spacingClassName?: string;
+    topSpacing?: boolean;
+    bottomSpacing?: boolean;
+    element?: CoreSectionElement;
+    preChildren?: React.ReactNode;
+    postChildren?: React.ReactNode;
+    visibleThreshold?: number;
+    visibleDelay?: number;
+    onVisible?: () => void;
+  }>
+> = ({
   componentName,
   className,
   contentClassName,

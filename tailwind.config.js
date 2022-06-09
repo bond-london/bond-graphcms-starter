@@ -6,6 +6,7 @@ const animationDuration = "0.5s";
 
 const navHeight = config.spacing.xxxs + config.spacing.m + config.spacing.xxs;
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   mode: "jit",
   content: ["./src/**/*.{tsx,ts}"],

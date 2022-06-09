@@ -1,9 +1,8 @@
-import { graphql } from "gatsby";
+import { graphql, PageProps } from "gatsby";
 import React from "react";
-import { GraphCms_Page } from "../generated/graphql-types";
 import { PageLayout } from "../layouts";
 
-const Page: React.FC<{ data: { page: GraphCms_Page } }> = ({
+const Page: React.FC<PageProps<Queries.SinglePageQuery>> = ({
   data: { page },
 }) => {
   return <PageLayout page={page} />;
@@ -12,18 +11,9 @@ const Page: React.FC<{ data: { page: GraphCms_Page } }> = ({
 export default Page;
 
 export const pageQuery = graphql`
-  query ($id: String!, $language: String!) {
+  query SinglePage($id: String!) {
     page: graphCmsPage(id: { eq: $id }) {
-      ...PageFragment
-    }
-    _locales: allLocale(filter: { language: { eq: $language } }) {
-      edges {
-        node {
-          ns
-          data
-          language
-        }
-      }
+      ...Page
     }
   }
 `;

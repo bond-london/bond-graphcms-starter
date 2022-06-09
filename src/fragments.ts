@@ -2,7 +2,7 @@ import { graphql } from "gatsby";
 
 /* @type {Fragment} */
 export const imageFragment = graphql`
-  fragment ImageFragment on File {
+  fragment ImageFile on File {
     childImageSharp {
       gatsbyImageData
     }
@@ -11,14 +11,14 @@ export const imageFragment = graphql`
 
 /* @type {Fragment} */
 export const videoFragment = graphql`
-  fragment VideoFragment on File {
+  fragment VideoFile on File {
     publicURL
   }
 `;
 
 /* @type {Fragment} */
 export const svgFragment = graphql`
-  fragment SvgFragment on File {
+  fragment SvgFile on File {
     svg {
       encoded
       content
@@ -28,7 +28,7 @@ export const svgFragment = graphql`
 
 /* @type {Fragment} */
 export const lottieFragment = graphql`
-  fragment LottieFragment on File {
+  fragment LottieFile on File {
     publicURL
     lottie {
       encoded

@@ -1,23 +1,17 @@
 import { getVisual } from "@bond-london/gatsby-graphcms-components";
 import { getCleanedRTF } from "@bond-london/graphcms-rich-text";
 import { graphql } from "gatsby";
-import React from "react";
-import { NamedLinkInformation } from "../components";
-import {
-  GraphCms_Block,
-  GraphCms_Link,
-  GraphCms_Union_InternalLink_RelatedLink,
-} from "../generated/graphql-types";
+import React, { lazy } from "react";
+import { LinkInformation } from "../components";
 import { arrayOrUndefined } from "../utils";
-import loadable from "@loadable/component";
-const BasicRTF = loadable(() => import("../components"), {
-  resolveComponent: (lib) => lib.BasicRTF,
-});
-const Hero = loadable(() => import("../components"), {
-  resolveComponent: (lib) => lib.Hero,
-});
+const BasicRTF = lazy(() =>
+  import("../components/Text/BasicRTF").then((m) => ({ default: m.BasicRTF }))
+);
+const Hero = lazy(() =>
+  import("../components/Hero/Hero").then((m) => ({ default: m.Hero }))
+);
 
-const RichTextBlock: React.FC<{ block: GraphCms_Block }> = ({
+const RichTextBlock: React.FC<{ block: Queries.BlockFragment }> = ({
   block: { content, asset, loop, preview, left },
 }) => {
   if (!content) {
@@ -38,7 +32,7 @@ const RichTextBlock: React.FC<{ block: GraphCms_Block }> = ({
   );
 };
 
-const HeroBlock: React.FC<{ block: GraphCms_Block }> = ({
+const HeroBlock: React.FC<{ block: Queries.BlockFragment }> = ({
   block: { content, asset, title, showTitle, loop, preview, links, textColour },
 }) => {
   const rtf = getCleanedRTF(content);
@@ -52,31 +46,12 @@ const HeroBlock: React.FC<{ block: GraphCms_Block }> = ({
       title={showTitle ? title : undefined}
       visual={visual}
       links={arrayOrUndefined(links?.map(buildNamedLink))}
-      textColour={textColour}
+      textColour={textColour || undefined}
     />
   );
 };
 
-// const MessageBlock: React.FC<{ block: GraphCms_Block }> = ({
-//   block: { title, showTitle, content, asset, loop, backgroundColour },
-// }) => {
-//   const realTitle = showTitle ? title : content?.text;
-//   if (!realTitle) {
-//     return null;
-//   }
-//   const visual = getVisual(asset, loop);
-//   const rtf = tryGetRTF(content, true);
-//   return (
-//     <Message
-//       title={realTitle}
-//       visual={visual}
-//       content={rtf}
-//       backgroundColour={backgroundColour}
-//     />
-//   );
-// };
-
-function tryGetInternalLink(link?: GraphCms_Union_InternalLink_RelatedLink) {
+function tryGetInternalLink(link?: Queries.LinkFragment["internalLink"]) {
   switch (link?.__typename) {
     case "GraphCMS_Page":
       return `/${link.slug}`;
@@ -84,81 +59,46 @@ function tryGetInternalLink(link?: GraphCms_Union_InternalLink_RelatedLink) {
       return `/person/${link.slug}`;
   }
 }
-export function buildNamedLink(link: GraphCms_Link): NamedLinkInformation {
-  const { colour, internalLink, title, asset, ...rest } = link;
+export function buildNamedLink(link: Queries.LinkFragment): LinkInformation {
+  const {
+    colour,
+    internalLink,
+    title,
+    asset,
+    icon,
+    external,
+    newPage,
+    isButton,
+  } = link;
   const visual = getVisual(asset);
   const internal = tryGetInternalLink(internalLink);
 
   return {
-    ...rest,
+    icon: icon || undefined,
+    external: external || undefined,
+    newPage: newPage || undefined,
     name: title,
-    colour,
+    colour: colour || undefined,
     internal,
     visual,
+    isButton: isButton || undefined,
   };
 }
 
-// const CtaBlock: React.FC<{ block: GraphCms_Block }> = ({
-//   block: { title, content, asset, links },
-// }) => {
-//   if (!links) {
-//     return null;
-//   }
-//   const visual = getVisual(asset);
-//   if (!visual) {
-//     return null;
-//   }
-//   const rtf = tryGetRTF(content, true);
-
-//   return (
-//     <CTA
-//       title={title}
-//       content={rtf}
-//       visual={visual}
-//       links={arrayOrUndefined(links?.map(buildNamedLink))}
-//     />
-//   );
-// };
-
-// const InformationBlock: React.FC<{ block: GraphCms_Block }> = ({
-//   block: { title, content, asset, links, left },
-// }) => {
-//   const visual = getVisual(asset);
-//   const rtf = tryGetRTF(content, true);
-//   if (!rtf || !visual) {
-//     return null;
-//   }
-//   return (
-//     <Information
-//       visual={visual}
-//       content={rtf}
-//       title={title}
-//       links={arrayOrUndefined(links?.map(buildNamedLink))}
-//       right={!left}
-//     />
-//   );
-// };
-
-export const Block: React.FC<{ block: GraphCms_Block }> = ({ block }) => {
+export const Block: React.FC<{ block: Queries.BlockFragment }> = ({
+  block,
+}) => {
   switch (block.type) {
     case "richtext":
       return <RichTextBlock block={block} />;
     case "hero":
       return <HeroBlock block={block} />;
-    // case "message":
-    //   return <MessageBlock block={block} />;
-    // case "information":
-    //   return <InformationBlock block={block} />;
-    // case "cta":
-    //   return <CtaBlock block={block} />;
-    // case "product":
-    //   return <ProductBlock block={block} />;
   }
   return <pre>Block {block.type} not yet implemented</pre>;
 };
 
 export const BlockFragment = graphql`
-  fragment BlockFragment on GraphCMS_Block {
+  fragment Block on GraphCMS_Block {
     id
     title
     showTitle
@@ -170,26 +110,26 @@ export const BlockFragment = graphql`
           remoteId
           mimeType
           url
-          ...ImageAssetFragment
-          ...VideoAssetFragment
+          ...ImageAsset
+          ...VideoAsset
         }
         ... on GraphCMS_Person {
           remoteId
-          ...PersonFragment
+          ...Person
         }
       }
     }
     links {
-      ...LinkFragment
+      ...Link
     }
     asset {
-      ...ImageAssetFragment
-      ...VideoAssetFragment
-      ...LottieAssetFragment
-      ...SvgAssetFragment
+      ...ImageAsset
+      ...VideoAsset
+      ...LottieAsset
+      ...SvgAsset
     }
     preview {
-      ...ImageAssetFragment
+      ...ImageAsset
     }
     loop
     left

@@ -1,13 +1,10 @@
-import {
-  AutoVisualNoLottie,
-  VisualAsset,
-} from "@bond-london/gatsby-graphcms-components";
+import { AutoVisualNoLottie } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
 import { Link } from "gatsby";
-import React from "react";
-import { Icon, NamedLinkColour, NamedLinkInformation } from ".";
+import React, { PropsWithChildren } from "react";
+import { Icon, ColourName, LinkInformation } from ".";
 
-export function getButtonColour(colour?: NamedLinkColour): string {
+export function getButtonColour(colour?: ColourName): string {
   switch (colour) {
     case "Blue":
       return "blue-button";
@@ -20,13 +17,12 @@ export function getButtonColour(colour?: NamedLinkColour): string {
 }
 
 export const LinkOrButton: React.FC<
-  NamedLinkInformation & {
-    visual?: VisualAsset;
-    className?: string;
-    iconClassName?: string;
-    isButton?: boolean;
-    action?: () => void;
-  }
+  PropsWithChildren<
+    LinkInformation & {
+      className?: string;
+      iconClassName?: string;
+    }
+  >
 > = ({
   className,
   internal,

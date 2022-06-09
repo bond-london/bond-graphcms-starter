@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import { graphql, useStaticQuery } from "gatsby";
 import React, { useMemo } from "react";
-import { MenuItem } from "..";
 import { Section } from "../../layouts";
+import { LinkInformation } from "../Navigation";
 import { FooterColumn } from "./FooterColumn";
 import { FooterRow } from "./FooterRow";
 
@@ -27,7 +27,7 @@ export interface FooterEntry {
   type: "Logo" | "Text" | "Links";
   size: FooterEntrySize;
   text?: string;
-  links?: MenuItem[];
+  links?: LinkInformation[];
   separator?: string;
 }
 
@@ -57,20 +57,19 @@ function formatInformation(
 }
 
 export const Footer: React.FC<FooterInformation> = (information) => {
-  const {
-    siteBuildMetadata: { buildYear, buildTime },
-  } = useStaticQuery<{
-    siteBuildMetadata: { buildTime: string; buildYear: string };
-  }>(graphql`
-    query {
+  const { siteBuildMetadata } = useStaticQuery<Queries.FooterQuery>(graphql`
+    query Footer {
       siteBuildMetadata {
         buildYear: buildTime(formatString: "YYYY")
         buildTime(formatString: "dddd, MMMM d YYYY, h:mm:ss A")
       }
     }
   `);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const { buildYear, buildTime } = siteBuildMetadata!;
   const { columns, lastRow } = useMemo(
-    () => formatInformation(information, buildYear, buildTime),
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    () => formatInformation(information, buildYear!, buildTime!),
     [information, buildYear, buildTime]
   );
 

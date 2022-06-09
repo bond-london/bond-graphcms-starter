@@ -1,7 +1,7 @@
 import { VisualAsset } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
 import React from "react";
-import { LinkOrButton, NamedLinkInformation } from "..";
+import { LinkOrButton, LinkInformation } from "..";
 import { AspectRatioVisual, RTF } from "../../elements";
 import { useFirstVisible } from "../../utils";
 import { CleanedRTF } from "@bond-london/graphcms-rich-text";
@@ -11,7 +11,7 @@ import { ColourName, lookupColourClassName } from "../../lookups";
 export const Hero: React.FC<{
   title?: string;
   content?: CleanedRTF;
-  links?: NamedLinkInformation[];
+  links?: LinkInformation[];
   visual?: VisualAsset;
   textColour?: ColourName;
 }> = ({ title, content, links, visual, textColour }) => {
