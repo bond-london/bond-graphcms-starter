@@ -10,6 +10,7 @@ import {
   RealRTFProps,
   ClassNodeRendererProps,
   EmbedNodeRendererProps,
+  DefaultRenderer,
 } from "@bond-london/graphcms-rich-text";
 import { ClassRenderer } from "./ClassRenderer";
 import {
@@ -19,6 +20,13 @@ import {
 import { CMSPerson } from "../cms";
 
 const projectRenderers: Partial<NodeRenderer> = {
+  p: (props) => (
+    <DefaultRenderer
+      {...props}
+      element="div"
+      className="rtfp not-first:mb-xs"
+    />
+  ),
   code_block: (props) => (
     <CodeOrActionRenderer {...(props as unknown as NodeRendererProps)} />
   ),
@@ -54,7 +62,6 @@ const projectClassNameOverrides: ClassNameOverrides = {
   h3: "h3 not-first:my-s",
   h5: "p2sb not-first:mt-xs",
   ol: "list-decimal list-outside space-y-xs my-xs pl-s",
-  p: "not-first:mb-xs",
   ul: classNames("space-y-xs my-xs ml-xxs bulleted"),
   b: classNames("font-semibold"),
   a: classNames("underline text-dark-blue"),
