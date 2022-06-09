@@ -6,31 +6,14 @@
   "tailwindCSS.validate": true,
   "tailwindCSS.experimental.classRegex": [
     "classNames\\(\"(.*)\"\\)",
-    // ["classNames\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
-      "const\\s+.*ClassName\\s*=\\s*\"([^']*)\""
-      ],
-  "tailwindCSS.classAttributes": [
-    "class",
-    "className",
-    "ngClass",
-    "containerClasses",
-    "buttonWrapperClasses",
-    "buttonClasses",
-    "contentClasses",
-    "containerClassName",
-    "iconClassName",
-    "buttonClassName",
-    "fixedParagraphClassName",
-    "fixedHeadingClassName",
-    "contentClassName",
-    "visualClassName",
-    "headingClassName",
-    "rowClassName"
+    "const\\s+.*ClassName\\s*=\\s*\"([^']*)\""
   ],
+  "tailwindCSS.lint.cssConflict": "ignore",
   "files.exclude": {
     ".cache": true,
     "node_modules": true,
     "public": true
   },
   "svg.preview.background": "transparent",
+  "editor.formatOnSave": true,
 }

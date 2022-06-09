@@ -2,14 +2,9 @@ import {
   AutoVisualNoLottie,
   VisualAsset,
 } from "@bond-london/gatsby-graphcms-components";
+import { AutoVisualWithLottie } from "@bond-london/gatsby-graphcms-components/dist/lottie";
 import classNames from "classnames";
-import React, { lazy, PropsWithChildren, Suspense } from "react";
-
-const AutoVisualWithLottie = lazy(() =>
-  import("@bond-london/gatsby-graphcms-components/dist/lottie").then((m) => ({
-    default: m.AutoVisualWithLottie,
-  }))
-);
+import React, { PropsWithChildren } from "react";
 
 export const AspectRatioVisual: React.FC<
   PropsWithChildren<{
@@ -36,14 +31,12 @@ export const AspectRatioVisual: React.FC<
       <div className={classNames("relative", className)}>
         <div className={aspectRatioClassName}>
           {children}
-          <Suspense fallback={<div>Loading...</div>}>
-            <AutoVisualWithLottie
-              visual={visual}
-              fitParent={true}
-              className={visualClassName}
-              loopDelay={loopDelay}
-            />
-          </Suspense>
+          <AutoVisualWithLottie
+            visual={visual}
+            fitParent={true}
+            className={visualClassName}
+            loopDelay={loopDelay}
+          />
         </div>
       </div>
     );

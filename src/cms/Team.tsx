@@ -14,7 +14,7 @@ export const CMSTeam: React.FC<{ team: Queries.TeamFragment }> = ({
     position,
   }));
   return (
-    <Suspense fallback={<div>Loading</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
       <Team team={individuals} />
     </Suspense>
   );
