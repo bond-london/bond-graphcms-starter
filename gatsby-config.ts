@@ -1,6 +1,12 @@
 import type { GatsbyConfig } from "gatsby";
 import { join, resolve } from "path";
-import { allowIndex, isProduction, showDevPages, siteUrl } from "./gatsby-env";
+import {
+  allowIndex,
+  isProduction,
+  showDevPages,
+  siteUrl,
+  GOOGLE_TAG,
+} from "./gatsby-env";
 
 // Get paths of Gatsby's required rules, which as of writing is located at:
 // https://github.com/gatsbyjs/gatsby/tree/fbfe3f63dec23d279a27b54b4057dd611dce74bb/packages/
@@ -16,6 +22,9 @@ const gatsbyRequiredRules = join(
 
 const config: GatsbyConfig = {
   trailingSlash: "always",
+  partytownProxiedURLs: [
+    `https://www.googletagmanager.com/gtm.js?id=${GOOGLE_TAG}`,
+  ],
   flags: {
     FAST_DEV: true,
   },

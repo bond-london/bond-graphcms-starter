@@ -12,8 +12,8 @@ import React, {
 import { Modal } from ".";
 import { Footer, FooterInformation, Menu, NavigationBar } from "../components";
 
-const GTM = process.env.GOOGLE_TAG || "G-XXXXXXXX";
-const gtag = `https://www.googletagmanager.com/gtag/js?id=${GTM}`;
+const GTM = process.env.GOOGLE_TAG || "GTM-XXXXXXXX";
+const gtag = `https://www.googletagmanager.com/gtm.js?id=${GTM}`;
 
 export const LayoutContext = createContext<{
   setModal: (node?: ReactNode) => void;
@@ -26,7 +26,7 @@ export const LayoutContext = createContext<{
 
 export const DefaultNavigationMenu: Menu = {
   items: [
-    { name: "Page 1", internal: "/page-1" },
+    { name: "Page 1", internal: "/home-with-no-lottie/" },
     {
       name: "Bond",
       external: "https://bond-agency.london",
@@ -131,14 +131,14 @@ export const Layout: React.FC<
       <Script
         strategy={ScriptStrategy.offMainThread}
         src={gtag}
-        forward={["gtag"]}
+        forward={["datalayer.push"]}
       />
       <Script id="gtag-config" strategy={ScriptStrategy.offMainThread}>
         {`
         window.dataLayer = window.dataLayer || [];
         window.gtag = function gtag() { window.dataLayer.push(arguments); }
         gtag("js", new Date());
-        gtag("config", ${GTM}, { send_page_view: false});
+        gtag("config", "${GTM}", { send_page_view: false});
         gtag("consent", "default", {
           "ad_storage": "denied"
         });
