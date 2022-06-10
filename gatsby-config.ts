@@ -35,6 +35,7 @@ const config: GatsbyConfig = {
     siteUrl,
     logo: `${siteUrl}/icons/icon-512x512.png`,
     cookieName: COOKIE_NAME,
+    googleTag: GOOGLE_TAG,
   },
   plugins: [
     {

@@ -15,9 +15,6 @@ import CookieConsent, { getCookieConsentValue } from "react-cookie-consent";
 import { Modal } from ".";
 import { Footer, FooterInformation, Menu, NavigationBar } from "../components";
 
-const GTM = process.env.GOOGLE_TAG || "GTM-XXXXXXXX";
-const gtag = `https://www.googletagmanager.com/gtm.js?id=${GTM}`;
-
 export const LayoutContext = createContext<{
   setModal: (node?: ReactNode) => void;
   modal?: ReactNode;
@@ -108,6 +105,7 @@ export const Layout: React.FC<
             siteUrl
             cookieName
             logo
+            googleTag
           }
         }
         siteBuildMetadata {
@@ -122,6 +120,9 @@ export const Layout: React.FC<
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const cookieName = siteMetadata.cookieName!;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const GTM = siteMetadata.googleTag!;
+  const gtag = `https://www.googletagmanager.com/gtm.js?id=${GTM}`;
 
   const pageTitle = `${title} | ${siteMetadata.siteName || ""}`;
 
