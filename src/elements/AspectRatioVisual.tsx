@@ -36,6 +36,7 @@ export const AspectRatioVisual: React.FC<
             fitParent={true}
             className={visualClassName}
             loopDelay={loopDelay}
+            delay={10000}
           />
         </div>
       </div>

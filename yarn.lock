@@ -1080,10 +1080,10 @@
   dependencies:
     tslib "^2.3.1"
 
-"@bond-london/gatsby-graphcms-components@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@bond-london/gatsby-graphcms-components/-/gatsby-graphcms-components-3.0.1.tgz#7534a8739d7743b9387e17c8d3678100e26270f3"
-  integrity sha512-xqdufRVFI7RvaNingbDyO7ouxfhim8x3joQUsHMOnWN1RDJFhuOk8unF7YK4U9RgMpSmP4jmh/b7u2gttYNmrw==
+"@bond-london/gatsby-graphcms-components@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@bond-london/gatsby-graphcms-components/-/gatsby-graphcms-components-3.1.0.tgz#75508693a007e1a2671a6953e5ba099e15a5696f"
+  integrity sha512-qm7SdnPCx4/9207/ZzVa47hhzM4lsTEgYt8h5ibgXFmm+o6Tzy3Yir6H7Y/kQ4j1sBk0fMGS0CuT8b87gIPQ1Q==
   dependencies:
     react-helmet "^6.1.0"
 
@@ -1092,13 +1092,13 @@
   resolved "https://registry.yarnpkg.com/@bond-london/gatsby-graphql-typegen/-/gatsby-graphql-typegen-1.0.1.tgz#6ecb49f1ed9e017064363d3a61ab4812356a3df1"
   integrity sha512-lUsdWIzVwLN2Qkaj3qNrfykWxrzXEsH3kYbAiUf2mhNcusyQRls5OAWBq00d1PLkB9/Y89Qv6qjWbWF4vAbZzA==
 
-"@bond-london/gatsby-transformer-extracted-lottie@^2.0.1":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@bond-london/gatsby-transformer-extracted-lottie/-/gatsby-transformer-extracted-lottie-2.0.3.tgz#7a6a97e8e42130c8ea2c5bea58fe683755623575"
-  integrity sha512-JsVYVAshVNcYbxOGGwtYaq/Y0UqKHttATz/jpJcN2LSY153qXKYGuqrsVU8MWoDKgAksfx9IptAx4ay6nSa57A==
+"@bond-london/gatsby-transformer-extracted-lottie@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@bond-london/gatsby-transformer-extracted-lottie/-/gatsby-transformer-extracted-lottie-3.0.1.tgz#18025e8a4cd1106ec3fb1189e941fab3a04a1c89"
+  integrity sha512-lRzbmUiUK3IgK7YDdcvEeTdQMaCWZ+tk/DY8jy96mNitONN3YvxHIw1dQt01b7LnhhW0hN6ChSFdwoCwCM4pSQ==
   dependencies:
     lottie-to-svg "^1.0.0"
-    mini-svg-data-uri "^1.4.3"
+    mini-svg-data-uri "^1.4.4"
     svgo "^2.8.0"
 
 "@bond-london/gatsby-transformer-extracted-svg@^2.0.0":

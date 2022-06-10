@@ -30,8 +30,13 @@ export const svgFragment = graphql`
 export const lottieFragment = graphql`
   fragment LottieFile on File {
     publicURL
-    lottie {
+    childExtractedLottie {
+      width
+      height
       encoded
+      encodedFile {
+        publicURL
+      }
     }
   }
 `;
