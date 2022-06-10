@@ -1,12 +1,6 @@
 import type { GatsbyConfig } from "gatsby";
 import { join, resolve } from "path";
-import {
-  allowIndex,
-  GOOGLE_TAG,
-  isProduction,
-  showDevPages,
-  siteUrl,
-} from "./gatsby-env";
+import { allowIndex, isProduction, showDevPages, siteUrl } from "./gatsby-env";
 
 // Get paths of Gatsby's required rules, which as of writing is located at:
 // https://github.com/gatsbyjs/gatsby/tree/fbfe3f63dec23d279a27b54b4057dd611dce74bb/packages/
@@ -105,7 +99,9 @@ const config: GatsbyConfig = {
       options: {
         defaults: {
           formats: isProduction ? ["auto", "webp", "avif"] : ["auto"],
-          breakpoints: isProduction ? [400, 750, 1080, 1366, 1920] : [1920],
+          breakpoints: isProduction
+            ? [320, 400, 750, 1080, 1366, 1920]
+            : [1920],
         },
       },
     },
@@ -144,19 +140,5 @@ const config: GatsbyConfig = {
     },
   ],
 };
-
-if (GOOGLE_TAG) {
-  config.plugins?.push({
-    resolve: "gatsby-plugin-google-tagmanager",
-    options: {
-      id: GOOGLE_TAG,
-      includeInDevelopment: true,
-      defaultDataLayer: { platform: "gatsby" },
-      gtmAuth: process.env.GTM_AUTH,
-      gtmPreview: process.env.GTM_PREVIEW,
-      enableWebVitalsTracking: true,
-    },
-  });
-}
 
 export default config;

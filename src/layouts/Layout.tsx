@@ -1,6 +1,6 @@
 import { SEO } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
-import { graphql, useStaticQuery } from "gatsby";
+import { graphql, Script, ScriptStrategy, useStaticQuery } from "gatsby";
 import { IGatsbyImageData } from "gatsby-plugin-image";
 import React, {
   createContext,
@@ -11,6 +11,9 @@ import React, {
 } from "react";
 import { Modal } from ".";
 import { Footer, FooterInformation, Menu, NavigationBar } from "../components";
+
+const GTM = process.env.GOOGLE_TAG || "G-XXXXXXXX";
+const gtag = `https://www.googletagmanager.com/gtag/js?id=${GTM}`;
 
 export const LayoutContext = createContext<{
   setModal: (node?: ReactNode) => void;
@@ -125,6 +128,23 @@ export const Layout: React.FC<
 
   return (
     <LayoutContext.Provider value={provider}>
+      <Script
+        strategy={ScriptStrategy.offMainThread}
+        src={gtag}
+        forward={["gtag"]}
+      />
+      <Script id="gtag-config" strategy={ScriptStrategy.offMainThread}>
+        {`
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function gtag() { window.dataLayer.push(arguments); }
+        gtag("js", new Date());
+        gtag("config", ${GTM}, { send_page_view: false});
+        gtag("consent", "default", {
+          "ad_storage": "denied"
+        });
+    
+        `}
+      </Script>
       <SEO
         pageTitle={pageTitle}
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
