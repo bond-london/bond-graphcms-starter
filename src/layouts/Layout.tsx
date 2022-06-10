@@ -169,11 +169,11 @@ export const Layout: React.FC<
       </CookieConsent>
 
       <Script
-        strategy={ScriptStrategy.offMainThread}
+        strategy={ScriptStrategy.idle}
         src={gtag}
         forward={["datalayer.push"]}
       />
-      <Script id="gtag-config" strategy={ScriptStrategy.offMainThread}>
+      <Script id="gtag-config" strategy={ScriptStrategy.idle}>
         {`
         window.dataLayer = window.dataLayer || [];
         window.gtag = function gtag() { window.dataLayer.push(arguments); }
