@@ -6,6 +6,8 @@
   "tailwindCSS.validate": true,
   "tailwindCSS.experimental.classRegex": [
     "classNames\\(\"(.*)\"\\)",
+    "Classes\\s*=\\s*\"([^\"]*)\"",
+    "classeName\\s*=\\s*\"([^\"]*)\"",
     "const\\s+.*ClassName\\s*=\\s*\"([^']*)\""
   ],
   "tailwindCSS.lint.cssConflict": "ignore",
@@ -15,5 +17,5 @@
     "public": true
   },
   "svg.preview.background": "transparent",
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": true
 }

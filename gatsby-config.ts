@@ -6,6 +6,7 @@ import {
   showDevPages,
   siteUrl,
   GOOGLE_TAG,
+  COOKIE_NAME,
 } from "./gatsby-env";
 
 // Get paths of Gatsby's required rules, which as of writing is located at:
@@ -33,6 +34,7 @@ const config: GatsbyConfig = {
     description: "Starter project for Bond London and GraphCMS with Gatsby",
     siteUrl,
     logo: `${siteUrl}/icons/icon-512x512.png`,
+    cookieName: COOKIE_NAME,
   },
   plugins: [
     {

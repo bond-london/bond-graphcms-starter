@@ -6,9 +6,12 @@ import React, {
   createContext,
   PropsWithChildren,
   ReactNode,
+  useCallback,
+  useEffect,
   useMemo,
   useState,
 } from "react";
+import CookieConsent, { getCookieConsentValue } from "react-cookie-consent";
 import { Modal } from ".";
 import { Footer, FooterInformation, Menu, NavigationBar } from "../components";
 
@@ -103,6 +106,8 @@ export const Layout: React.FC<
             description
             siteName
             siteUrl
+            cookieName
+            logo
           }
         }
         siteBuildMetadata {
@@ -115,6 +120,9 @@ export const Layout: React.FC<
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const siteMetadata = site!.siteMetadata!;
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const cookieName = siteMetadata.cookieName!;
+
   const pageTitle = `${title} | ${siteMetadata.siteName || ""}`;
 
   const [modal, setModal] = useState<ReactNode>();
@@ -126,8 +134,40 @@ export const Layout: React.FC<
     [modal, setModal]
   );
 
+  const onAccept = useCallback(() => {
+    window.gtag?.("consent", "update", { ad_storage: "granted" });
+  }, []);
+
+  useEffect(() => {
+    const cookieValue = getCookieConsentValue(cookieName);
+    if (cookieValue) {
+      onAccept();
+    }
+  }, [cookieName, onAccept]);
+
   return (
     <LayoutContext.Provider value={provider}>
+      <CookieConsent
+        cookieName={cookieName}
+        declineCookieValue="declined"
+        containerClasses="bg-error container-grid w-full z-cookies items-center py-xxxs"
+        disableStyles={true}
+        disableButtonStyles={true}
+        location={"top"}
+        buttonWrapperClasses="flex col-start-2 col-span-1 justify-self-end row-start-1 gap-x-xs"
+        buttonClasses="bg-blue text-white px-xxxs"
+        buttonText="Accept"
+        enableDeclineButton={true}
+        declineButtonText="Decline"
+        declineButtonClasses="border border-blue text-blue px-xxs "
+        contentClasses="col-start-2 col-span-1 row-start-1"
+        onAccept={onAccept}
+        customContainerAttributes={{}}
+        customContentAttributes={{}}
+      >
+        We use cookies to make this site awesome
+      </CookieConsent>
+
       <Script
         strategy={ScriptStrategy.offMainThread}
         src={gtag}

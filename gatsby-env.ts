@@ -12,6 +12,7 @@ function parseEnvBoolean(varName: string) {
   return false;
 }
 
+export const COOKIE_NAME = process.env.COOKIE_NAME || "no-cookie-name";
 export const GOOGLE_TAG = process.env.GOOGLE_TAG || "GTM-XXXXXX";
 export const allowIndex = parseEnvBoolean("ALLOW_INDEX");
 export const siteUrl = process.env.GATSBY_SITE_URL || "http://localhost:8000";
