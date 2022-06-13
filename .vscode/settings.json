@@ -7,7 +7,7 @@
   "tailwindCSS.experimental.classRegex": [
     "classNames\\(\"(.*)\"\\)",
     "Classes\\s*=\\s*\"([^\"]*)\"",
-    "classeName\\s*=\\s*\"([^\"]*)\"",
+    "className\\s*=\\s*\"([^\"]*)\"",
     "const\\s+.*ClassName\\s*=\\s*\"([^']*)\""
   ],
   "tailwindCSS.lint.cssConflict": "ignore",
