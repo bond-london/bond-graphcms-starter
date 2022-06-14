@@ -4,7 +4,7 @@ import React from "react";
 import { Heading } from "../components/Heading";
 
 const meta: ComponentMeta<typeof Heading> = {
-  title: "Heading",
+  title: "Components/Heading",
   component: Heading,
 };
 
