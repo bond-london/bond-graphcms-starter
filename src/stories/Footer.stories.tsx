@@ -3,7 +3,7 @@ import React from "react";
 import { Footer } from "../components/Footer/Footer";
 
 const meta: ComponentMeta<typeof Footer> = {
-  title: "Footer",
+  title: "Components/Footer",
   component: Footer,
 };
 

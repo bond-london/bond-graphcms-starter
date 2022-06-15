@@ -2,6 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import tailwindConfig from "../../tailwind.config.json";
 import classNames from "classnames";
+import { Section } from "../layouts";
 
 function mapObject<T, K = string>(o: { [s: string]: T }) {
   return Object.entries(o).map(([key, value]) => ({
@@ -15,9 +16,9 @@ const colours = mapObject(tailwindConfig.colorOptions);
 
 stories.add("Colours", () => {
   return (
-    <div className="flex flex-col text-black">
+    <Section componentName="Colours" className="text-black">
       {colours.map(({ key, value }) => (
-        <div key={value}>
+        <div key={value} className="col-span-2">
           <div className="m-xs flex flex-col">
             <h3 className="p4">{key}</h3>
             <p className="p4">{value}</p>
@@ -32,6 +33,6 @@ stories.add("Colours", () => {
           ></div>
         </div>
       ))}
-    </div>
+    </Section>
   );
 });

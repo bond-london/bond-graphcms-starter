@@ -8,9 +8,13 @@ export const Heading: React.FC<{
 }> = ({ preHeader, header, postHeader }) => {
   return (
     <Section componentName="Heading">
-      {preHeader && <h5 className="h3">{preHeader}</h5>}
-      {header && <h2 className="h2">{header}</h2>}
-      {postHeader && <h5 className="h3">{postHeader}</h5>}
+      {preHeader && (
+        <h5 className="col-span-full text-center h3">{preHeader}</h5>
+      )}
+      {header && <h2 className="col-span-full text-center h2">{header}</h2>}
+      {postHeader && (
+        <h5 className="col-span-full text-center h3">{postHeader}</h5>
+      )}
     </Section>
   );
 };

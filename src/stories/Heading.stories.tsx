@@ -22,6 +22,10 @@ const meta: ComponentMeta<typeof Heading> = {
   title: "Components/Heading",
   component: Heading,
   subcomponents: { Basic, Full },
+  argTypes: {
+    preHeader: { control: { type: "text" } },
+    postHeader: { control: { type: "text" } },
+  },
 };
 
 export default meta;
