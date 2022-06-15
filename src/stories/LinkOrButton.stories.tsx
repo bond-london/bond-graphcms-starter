@@ -1,3 +1,4 @@
+import { linkTo } from "@storybook/addon-links";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
 import { LinkOrButton } from "../components/LinkOrButton";
@@ -8,12 +9,14 @@ const Template: ComponentStory<typeof LinkOrButton> = (args) => (
 
 export const LinkOnly = Template.bind({});
 LinkOnly.args = {
-  name: "Link Or Button",
+  name: "Go to next example",
+  action: linkTo("components-linkorbutton--button"),
 };
 
 export const Button = Template.bind({});
 Button.args = {
   ...LinkOnly.args,
+  name: "Click me",
   colour: "Green",
   isButton: true,
 };

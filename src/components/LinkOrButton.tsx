@@ -100,7 +100,7 @@ export const LinkOrButton: React.FC<
     return (
       <button
         onClick={action}
-        className={realButtonClassName}
+        className={classNames(realButtonClassName, "active:font-bold")}
         aria-label={label}
       >
         {inside}

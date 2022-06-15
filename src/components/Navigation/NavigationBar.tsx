@@ -16,7 +16,7 @@ export interface LinkInformation {
   colour?: ColourName;
   visual?: VisualAsset;
   isButton?: boolean;
-  action?: () => void;
+  action?: () => void | void;
   nested?: LinkInformation[];
 }
 

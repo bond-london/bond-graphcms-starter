@@ -28,6 +28,7 @@ export const NavigationMenu: React.FC<{
             external={item.external}
             isButton={item.isButton}
             colour={item.colour}
+            action={item.action}
           >
             {item.name}
           </LinkOrButton>
