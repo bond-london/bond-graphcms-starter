@@ -73,6 +73,7 @@ export const Footer: React.FC<FooterInformation> = (information) => {
     [information, buildYear, buildTime]
   );
 
+  console.log(information);
   return (
     <Section
       componentName="Footer"

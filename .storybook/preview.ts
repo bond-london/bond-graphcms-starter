@@ -12,7 +12,14 @@ export const parameters = {
     storySort: {
       method: 'configure',
       includeNames: true,
-      order: ['Getting Started', ['Intro'], 'Design System', ['Colours'], 'Components', '*'], 
+      order: ['Getting Started', ['Intro'], 'Design System', ['Colours'], 'Components', ['Heading', 'LinkOrButton'], '*'], 
     },
-  }
+  },
+  previewTabs: {
+    'storybook/docs/panel': {hidden: true},
+    canvas: {
+      hidden: true
+    }
+  },
+  viewMode: 'story'
 }
