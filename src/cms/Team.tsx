@@ -1,6 +1,7 @@
-import { getVisual } from "@bond-london/gatsby-graphcms-components";
 import { graphql } from "gatsby";
 import React, { lazy, Suspense } from "react";
+import { Individual } from "../components";
+import { convertCMSPersonToIndividual } from "./Person";
 const Team = lazy(() =>
   import("../components/Team").then((m) => ({ default: m.Team }))
 );
@@ -8,11 +9,7 @@ const Team = lazy(() =>
 export const CMSTeam: React.FC<{ team: Queries.TeamFragment }> = ({
   team: { people },
 }) => {
-  const individuals = people.map(({ headshot, name, position }) => ({
-    visual: getVisual(headshot),
-    name,
-    position,
-  }));
+  const individuals: Individual[] = people.map(convertCMSPersonToIndividual);
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Team team={individuals} />

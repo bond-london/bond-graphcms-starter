@@ -25,6 +25,11 @@ NoImageAvatar.args = { colour: "bg-blue text-white", initial: "JT" };
 const meta: ComponentMeta<typeof Avatar> = {
   title: "Components/Avatar",
   component: Avatar,
+  argTypes: {
+    colour: {
+      control: { type: "color" },
+    },
+  },
 };
 
 export default meta;

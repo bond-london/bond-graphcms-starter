@@ -8,8 +8,8 @@ export const Avatar: React.FC<{
   size?: string;
   font?: string;
   colour?: string;
-  initial?: string;
-}> = ({ visual, size, font, colour, initial }) => {
+  initials?: string;
+}> = ({ visual, size, font, colour, initials }) => {
   if (visual) {
     return (
       <AspectRatioVisual
@@ -28,7 +28,7 @@ export const Avatar: React.FC<{
           "rounded-full flex items-center justify-center"
         )}
       >
-        <p className={font}>{initial}</p>
+        <p className={font}>{initials}</p>
       </div>
     );
   }

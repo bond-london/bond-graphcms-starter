@@ -63,11 +63,7 @@ export const Team: React.FC<{ team: Individual[] }> = ({ team }) => {
         >
           {team.map((individual, index) => (
             <Slide key={individual.name} index={index}>
-              <Person
-                visual={individual.visual}
-                name={individual.name}
-                position={individual.position}
-              />
+              <Person personData={individual} />
             </Slide>
           ))}
         </Slider>

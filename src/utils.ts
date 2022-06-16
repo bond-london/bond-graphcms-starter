@@ -9,3 +9,13 @@ export function arrayOrUndefined<T>(array?: T[]): T[] | undefined {
     return array;
   }
 }
+
+export function getInitials(name?: string): string {
+  if (name) {
+    const initialArray: Array<string> = [];
+    const fullName = name.split(" ");
+    fullName.forEach((name) => initialArray.push(name.charAt(0).toUpperCase()));
+    return initialArray.join("");
+  }
+  return "?";
+}
