@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
-import { Heading } from "../components/Heading";
+import { Heading } from "../../components/Heading";
 
 const Template: ComponentStory<typeof Heading> = (args) => (
   <Heading {...args} />

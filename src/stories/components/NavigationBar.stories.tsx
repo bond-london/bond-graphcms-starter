@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
-import { NavigationBar } from "../components/Navigation/NavigationBar";
+import { NavigationBar } from "../../components/Navigation/NavigationBar";
 import { linkTo } from "@storybook/addon-links";
 
 const Template: ComponentStory<typeof NavigationBar> = (args) => (
@@ -16,8 +16,11 @@ Nav.args = {
         name: "Link Or Button",
         action: linkTo("components-linkorbutton--link-only"),
       },
-      { name: "Footer", action: linkTo("components-footer--simple") },
-      { name: "Item #4", action: linkTo("components-heading--basic") },
+      { name: "Person", action: linkTo("components-person--basic") },
+      {
+        name: "Content Divider",
+        action: linkTo("components-contentdivider--simple-divider"),
+      },
     ],
   },
 };

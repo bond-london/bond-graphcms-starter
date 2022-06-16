@@ -1,7 +1,7 @@
 import { linkTo } from "@storybook/addon-links";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
-import { LinkOrButton } from "../components/LinkOrButton";
+import { LinkOrButton } from "../../components/LinkOrButton";
 
 const Template: ComponentStory<typeof LinkOrButton> = (args) => (
   <LinkOrButton {...args} />

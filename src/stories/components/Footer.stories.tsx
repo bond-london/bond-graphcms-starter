@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
-import { Footer } from "../components/Footer/Footer";
+import { Footer } from "../../components/Footer/Footer";
 
 const meta: ComponentMeta<typeof Footer> = {
   title: "Components/Footer",

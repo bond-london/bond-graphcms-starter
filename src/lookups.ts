@@ -6,6 +6,8 @@ const colourTable = {
   Blue: ["text-blue", "bg-blue"],
   Red: ["text-red", "bg-red"],
   Error: ["text-red", "bg-red"],
+  BlueWhite: ["text-blue", "bg-blue"],
+  GreenWhite: ["text-green", "bg-green"],
 };
 
 export type ColourName = keyof typeof colourTable;

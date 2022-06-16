@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
-import { Person } from "../components";
-import { createVisualAssetFromLocalFile } from "./storyUtils";
+import { Person } from "../../components";
+import { createVisualAssetFromLocalFile } from "../storyUtils";
 
 const Template: ComponentStory<typeof Person> = (args) => <Person {...args} />;
 

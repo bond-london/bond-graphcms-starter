@@ -17,11 +17,16 @@ const colours = mapObject(tailwindConfig.colorOptions);
 stories.add("Colours", () => {
   return (
     <Section componentName="Colours" className="text-black">
+      <h1 className="h1 col-span-full mb-s">Colours</h1>
       {colours.map(({ key, value }) => (
-        <div key={value} className="col-span-2">
-          <div className="m-xs flex flex-col">
-            <h3 className="p4">{key}</h3>
-            <p className="p4">{value}</p>
+        <div key={value} className="col-span-2 border-2 border-grey mb-xs">
+          <div className="m-xs flex flex-col h-m">
+            <h3 className="p4">
+              Tailwind: <span className="font-semibold">{key}</span>
+            </h3>
+            <p className="p4">
+              Hex: <span className="font-semibold">{value}</span>
+            </p>
           </div>
           <div
             key={key}
