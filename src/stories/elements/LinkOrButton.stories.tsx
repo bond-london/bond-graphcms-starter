@@ -9,13 +9,12 @@ const Template: ComponentStory<typeof LinkOrButton> = (args) => (
 
 export const LinkOnly = Template.bind({});
 LinkOnly.args = {
-  name: "Go to next example",
+  name: "Click to see the button option",
   action: linkTo("components-linkorbutton--button"),
 };
 
 export const Button = Template.bind({});
 Button.args = {
-  ...LinkOnly.args,
   name: "Click me",
   colour: "Green",
   isButton: true,
@@ -25,6 +24,9 @@ const meta: ComponentMeta<typeof LinkOrButton> = {
   title: "Components/LinkOrButton",
   component: LinkOrButton,
   subcomponents: { LinkOnly, Button },
+  argTypes: {
+    action: { action: "Clicked" },
+  },
 };
 
 export default meta;
