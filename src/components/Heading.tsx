@@ -5,6 +5,7 @@ export const Heading: React.FC<{
   preHeader?: string;
   header?: string;
   postHeader?: string;
+  className?: string;
 }> = ({ preHeader, header, postHeader }) => {
   return (
     <Section componentName="Heading">

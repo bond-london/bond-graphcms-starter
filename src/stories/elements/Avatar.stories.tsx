@@ -20,7 +20,7 @@ SmallAvatar.args = {
 };
 
 export const NoImageAvatar = Template.bind({});
-NoImageAvatar.args = { colour: "bg-blue text-white", initial: "JT" };
+NoImageAvatar.args = { colour: "bg-blue text-white", initials: "JT" };
 
 const meta: ComponentMeta<typeof Avatar> = {
   title: "Components/Avatar",
