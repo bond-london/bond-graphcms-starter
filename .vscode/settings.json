@@ -17,5 +17,9 @@
     "public": true
   },
   "svg.preview.background": "transparent",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "eslint.rules.customizations": [
+    { "rule": "limited-exports-page-templates", "severity": "off" },
+    { "rule": "no-anonymous-exports-page-templates", "severity": "off" }
+  ],
 }
