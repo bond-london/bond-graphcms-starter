@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from "react";
-import { LayoutContext } from ".";
 import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
 import classNames from "classnames";
+import { LayoutContext } from "./Layout";
 
 export const Modal: React.FC<{
   containerClassName?: string;
@@ -25,7 +25,7 @@ export const Modal: React.FC<{
   return (
     <div
       className={classNames(
-        "fixed left-0 top-0 right-0 bottom-0 flex z-modal justify-center items-center",
+        "fixed left-0 top-0 right-0 bottom-0 z-modal flex items-center justify-center",
         containerClassName
       )}
     >

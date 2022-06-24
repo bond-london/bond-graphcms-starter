@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { FooterEntry, sizeToTextClassName } from ".";
+import { FooterEntry, sizeToTextClassName } from "./Footer";
 import { FooterMenuEntries } from "./FooterMenuEntries";
 
 export const FooterRow: React.FC<{
@@ -13,7 +13,7 @@ export const FooterRow: React.FC<{
         className,
         "flex gap-y-xxs",
         "flex-col",
-        "tablet:flex-row tablet:justify-between tablet:items-center"
+        "tablet:flex-row tablet:items-center tablet:justify-between"
       )}
     >
       {entries.map((entryArray, index) => (

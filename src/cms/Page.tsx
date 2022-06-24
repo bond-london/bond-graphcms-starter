@@ -1,5 +1,6 @@
 import { graphql } from "gatsby";
 
+// eslint-disable-next-line import/no-unused-modules
 export const PageLinkFragment = graphql`
   fragment PageLink on GraphCMS_Page {
     id
@@ -7,6 +8,7 @@ export const PageLinkFragment = graphql`
   }
 `;
 
+// eslint-disable-next-line import/no-unused-modules
 export const PageFragment = graphql`
   fragment Page on GraphCMS_Page {
     id

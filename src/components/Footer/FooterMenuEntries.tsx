@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, { Fragment } from "react";
-import { FooterEntrySize, sizeToTextClassName } from ".";
-import { LinkInformation } from "../Navigation";
+import { LinkInformation } from "../Navigation/NavigationBar";
+import { FooterEntrySize, sizeToTextClassName } from "./Footer";
 import { FooterMenuEntry } from "./FooterMenuEntry";
 
 export const FooterMenuEntries: React.FC<{

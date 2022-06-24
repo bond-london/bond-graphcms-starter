@@ -1,5 +1,8 @@
+import { getCleanedRTF } from "@bond-london/graphcms-rich-text";
 import { graphql } from "gatsby";
 import React from "react";
+import { Accordion } from "../components/Accordion";
+import { AccordionRowType } from "../elements/AccordionRow";
 
 export const Collection: React.FC<{
   collection: Queries.NestedCollectionFragment;
@@ -8,14 +11,12 @@ export const Collection: React.FC<{
     return <pre>Collection not yet implemented</pre>;
   }
   switch (collection.collectionType) {
-    // case "insights":
-    //   return <InsightsCollection collection={collection} />;
-    // case "productInsights":
-    //   return <ProductInsightsCollection collection={collection} />;
-    // case "testimonials":
-    //   return <TestimonialCollections collection={collection} />;
-    // case "servicing":
-    //   return <Servicing collection={collection} />;
+    case "accordion":
+      return (
+        <Accordion
+          collection={collection.blocks.map(convertBlockToAccordionRow)}
+        />
+      );
     default:
       return (
         <pre>Collection {collection.collectionType} not yet implemented</pre>
@@ -23,6 +24,23 @@ export const Collection: React.FC<{
   }
 };
 
+function convertBlockToAccordionRow(
+  block: Queries.NestedCollectionFragment["blocks"][0]
+): AccordionRowType {
+  switch (block.__typename) {
+    case "GraphCMS_Block":
+      return {
+        className: "",
+        contentClassName: "",
+        buttonClassName: "",
+        title: block.title,
+        content: getCleanedRTF(block.content),
+      };
+  }
+  throw new Error("Not a block");
+}
+
+// eslint-disable-next-line import/no-unused-modules
 export const NestedCollectionFragment = graphql`
   fragment NestedCollection on GraphCMS_Collection {
     id
@@ -50,6 +68,7 @@ export const NestedCollectionFragment = graphql`
   }
 `;
 
+// eslint-disable-next-line import/no-unused-modules
 export const CollectionFragment = graphql`
   fragment Collection on GraphCMS_Collection {
     id

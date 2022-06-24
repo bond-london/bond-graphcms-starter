@@ -1,16 +1,18 @@
 import classNames from "classnames";
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, PropsWithChildren } from "react";
 
-export const SmallSquareElement: React.FC<{
-  className?: string;
-  style?: CSSProperties;
-}> = ({ className, children, style }) => {
+export const SmallSquareElement: React.FC<
+  PropsWithChildren<{
+    className?: string;
+    style?: CSSProperties;
+  }>
+> = ({ className, children, style }) => {
   return (
     <div
       className={classNames(
         className,
-        "w-xs h-xs bg-green text-blue border-square",
-        "flex justify-center items-center"
+        "border-square h-xs w-xs bg-green text-blue",
+        "flex items-center justify-center"
       )}
       style={style}
     >

@@ -2,9 +2,11 @@ import { AutoVisualNoLottie } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
 import { Link } from "gatsby";
 import React, { PropsWithChildren } from "react";
-import { Icon, ColourName, LinkInformation } from ".";
+import { ColourName } from "../lookups";
+import { Icon } from "./Icons";
+import { LinkInformation } from "./Navigation/NavigationBar";
 
-export function getButtonColour(colour?: ColourName): string {
+function getButtonColour(colour?: ColourName): string {
   switch (colour) {
     case "Blue":
       return "blue-button";
@@ -100,7 +102,7 @@ export const LinkOrButton: React.FC<
     return (
       <button
         onClick={action}
-        className={realButtonClassName}
+        className={classNames(realButtonClassName, "active:font-bold")}
         aria-label={label}
       >
         {inside}

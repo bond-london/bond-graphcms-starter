@@ -17,7 +17,7 @@ import {
   ImageAssetRenderer,
   ImageAssetRendererProps,
 } from "./ImageAssetRenderer";
-import { CMSPerson } from "../cms";
+import { CMSPerson } from "../cms/Person";
 
 const projectRenderers: Partial<NodeRenderer> = {
   p: (props) => (

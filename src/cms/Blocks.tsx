@@ -1,5 +1,7 @@
 import React from "react";
-import { Block, Collection, CMSTeam } from ".";
+import { Block } from "./Block";
+import { Collection } from "./Collection";
+import { CMSTeam } from "./Team";
 
 const SingleBlock: React.FC<{ block: Queries.PageFragment["blocks"][0] }> = ({
   block,

@@ -1,8 +1,8 @@
 import React from "react";
-import { Layout } from "../layouts";
-import { PageHeader } from "../components";
-import { Blocks } from "../cms";
 import { getImage } from "@bond-london/gatsby-graphcms-components";
+import { Blocks } from "../cms/Blocks";
+import { PageHeader } from "../components/PageHeader";
+import { Layout } from "./Layout";
 
 export const PageLayout: React.FC<{
   page: Queries.PageFragment;

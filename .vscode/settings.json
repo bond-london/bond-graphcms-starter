@@ -5,9 +5,9 @@
   },
   "tailwindCSS.validate": true,
   "tailwindCSS.experimental.classRegex": [
-    "classNames\\(\"(.*)\"\\)",
+    // "classNames\\(\"(.*)\"\\)",
     "Classes\\s*=\\s*\"([^\"]*)\"",
-    "className\\s*=\\s*\"([^\"]*)\"",
+    ".+ClassName\\s*=\\s*\"([^\"]*)\"",
     "const\\s+.*ClassName\\s*=\\s*\"([^']*)\""
   ],
   "tailwindCSS.lint.cssConflict": "ignore",
@@ -17,5 +17,9 @@
     "public": true
   },
   "svg.preview.background": "transparent",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "eslint.rules.customizations": [
+    { "rule": "limited-exports-page-templates", "severity": "off" },
+    { "rule": "no-anonymous-exports-page-templates", "severity": "off" }
+  ]
 }

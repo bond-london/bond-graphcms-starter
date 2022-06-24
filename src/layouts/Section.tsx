@@ -2,9 +2,9 @@ import { useFirstVisibleToUser } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
 import React, { PropsWithChildren } from "react";
 
-export type CoreSectionElement = "div" | "section" | "footer";
+type CoreSectionElement = "div" | "section" | "footer";
 
-export const CoreSection: React.FC<
+const CoreSection: React.FC<
   PropsWithChildren<{
     componentName: string;
     className: string;
@@ -39,7 +39,7 @@ export const CoreSection: React.FC<
       ref={ref}
       data-component={componentName}
       className={classNames(
-        "relative grid-container container-grid",
+        "container-grid relative grid-container",
         className
       )}
     >

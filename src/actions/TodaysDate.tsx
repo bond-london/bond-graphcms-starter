@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "../components";
+import { Icon } from "../components/Icons";
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString(undefined, {
@@ -12,8 +12,8 @@ function formatDate(date: Date): string {
 export const TodaysDate: React.FC = () => {
   const date = formatDate(new Date());
   return (
-    <div className="grid grid-cols-icon-button gap-x-xs p2">
-      <Icon type="Calendar" className="text-blue h-xs" />
+    <div className="p2 grid grid-cols-icon-button gap-x-xs">
+      <Icon type="Calendar" className="h-xs text-blue" />
       <p>{date}</p>
     </div>
   );

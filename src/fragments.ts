@@ -1,6 +1,7 @@
 import { graphql } from "gatsby";
 
 /* @type {Fragment} */
+// eslint-disable-next-line import/no-unused-modules
 export const imageFragment = graphql`
   fragment ImageFile on File {
     childImageSharp {
@@ -10,6 +11,7 @@ export const imageFragment = graphql`
 `;
 
 /* @type {Fragment} */
+// eslint-disable-next-line import/no-unused-modules
 export const videoFragment = graphql`
   fragment VideoFile on File {
     publicURL
@@ -17,6 +19,7 @@ export const videoFragment = graphql`
 `;
 
 /* @type {Fragment} */
+// eslint-disable-next-line import/no-unused-modules
 export const svgFragment = graphql`
   fragment SvgFile on File {
     svg {
@@ -27,6 +30,7 @@ export const svgFragment = graphql`
 `;
 
 /* @type {Fragment} */
+// eslint-disable-next-line import/no-unused-modules
 export const lottieFragment = graphql`
   fragment LottieFile on File {
     publicURL

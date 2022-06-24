@@ -1,7 +1,7 @@
-src/generated/
 node_modules/
 .cache/
 public
 .env.*
 .bondgraphcmsassets/
 gatsby-types.d.ts
+storybook-static
