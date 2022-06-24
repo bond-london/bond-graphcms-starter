@@ -7,6 +7,7 @@ import {
   siteUrl,
   GOOGLE_TAG,
   COOKIE_NAME,
+  BUILD_DESIGN,
 } from "./gatsby-env";
 
 // Get paths of Gatsby's required rules, which as of writing is located at:
@@ -95,7 +96,6 @@ const config: GatsbyConfig = {
       },
     },
     "gatsby-plugin-postcss",
-    "gatsby-plugin-gatsby-cloud",
     "gatsby-plugin-image",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sitemap",
@@ -152,5 +152,16 @@ const config: GatsbyConfig = {
     },
   ],
 };
+
+if (BUILD_DESIGN) {
+  config.plugins?.push({
+    resolve: "gatsby-plugin-gatsby-cloud",
+    options: {
+      headers: {
+        "/design-system/*": ["X-Frame-Options: SAMEORIGIN"],
+      },
+    },
+  });
+}
 
 export default config;
