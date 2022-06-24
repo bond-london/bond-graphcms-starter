@@ -1,8 +1,9 @@
+// eslint-disable-next-line import/no-unused-modules
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import tailwindConfig from "../../tailwind.config.json";
 import classNames from "classnames";
-import { Section } from "../layouts";
+import { Section } from "../layouts/Section";
 
 function mapObject<T, K = string>(o: { [s: string]: T }) {
   return Object.entries(o).map(([key, value]) => ({
@@ -19,8 +20,8 @@ stories.add("Colours", () => {
     <Section componentName="Colours" className="text-black">
       <h1 className="h1 col-span-full mb-s">Colours</h1>
       {colours.map(({ key, value }) => (
-        <div key={value} className="col-span-2 border-2 border-grey mb-xs">
-          <div className="m-xs flex flex-col h-m">
+        <div key={value} className="col-span-2 mb-xs border-2 border-grey">
+          <div className="m-xs flex h-m flex-col">
             <h3 className="p4">
               Tailwind: <span className="font-semibold">{key}</span>
             </h3>

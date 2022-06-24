@@ -7,12 +7,14 @@ const Template: ComponentStory<typeof LinkOrButton> = (args) => (
   <LinkOrButton {...args} />
 );
 
+// eslint-disable-next-line import/no-unused-modules
 export const LinkOnly = Template.bind({});
 LinkOnly.args = {
   name: "Click to see the button option",
   action: linkTo("components-linkorbutton--button"),
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export const Button = Template.bind({});
 Button.args = {
   name: "Click me",
@@ -29,4 +31,5 @@ const meta: ComponentMeta<typeof LinkOrButton> = {
   },
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default meta;

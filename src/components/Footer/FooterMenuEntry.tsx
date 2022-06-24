@@ -1,6 +1,6 @@
 import React from "react";
-import { LinkOrButton } from "..";
-import { LinkInformation } from "../Navigation";
+import { LinkOrButton } from "../LinkOrButton";
+import { LinkInformation } from "../Navigation/NavigationBar";
 
 export const FooterMenuEntry: React.FC<{
   link: LinkInformation;

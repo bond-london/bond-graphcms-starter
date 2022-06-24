@@ -1,5 +1,6 @@
 import { graphql } from "gatsby";
 
+// eslint-disable-next-line import/no-unused-modules
 export const SeoImageAssetFragment = graphql`
   fragment SeoImageAsset on GraphCMS_Asset {
     id
@@ -11,6 +12,8 @@ export const SeoImageAssetFragment = graphql`
     }
   }
 `;
+
+// eslint-disable-next-line import/no-unused-modules
 export const ImageAssetFragment = graphql`
   fragment ImageAsset on GraphCMS_Asset {
     id
@@ -25,6 +28,7 @@ export const ImageAssetFragment = graphql`
   }
 `;
 
+// eslint-disable-next-line import/no-unused-modules
 export const SvgAssetFragment = graphql`
   fragment SvgAsset on GraphCMS_Asset {
     id
@@ -35,6 +39,7 @@ export const SvgAssetFragment = graphql`
   }
 `;
 
+// eslint-disable-next-line import/no-unused-modules
 export const VideoAssetFragment = graphql`
   fragment VideoAsset on GraphCMS_Asset {
     id
@@ -45,6 +50,7 @@ export const VideoAssetFragment = graphql`
   }
 `;
 
+// eslint-disable-next-line import/no-unused-modules
 export const LottieAssetFragment = graphql`
   fragment LottieAsset on GraphCMS_Asset {
     id

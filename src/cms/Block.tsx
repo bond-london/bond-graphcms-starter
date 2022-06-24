@@ -2,9 +2,9 @@ import { getVisual } from "@bond-london/gatsby-graphcms-components";
 import { getCleanedRTF } from "@bond-london/graphcms-rich-text";
 import { graphql } from "gatsby";
 import React from "react";
-import { LinkInformation } from "../components";
-import { Hero } from "../components/Hero";
-import { BasicRTF } from "../components/Text";
+import { Hero } from "../components/Hero/Hero";
+import { LinkInformation } from "../components/Navigation/NavigationBar";
+import { BasicRTF } from "../components/Text/BasicRTF";
 import { arrayOrUndefined } from "../utils";
 
 const RichTextBlock: React.FC<{ block: Queries.BlockFragment }> = ({
@@ -55,7 +55,7 @@ function tryGetInternalLink(link?: Queries.LinkFragment["internalLink"]) {
       return `/person/${link.slug}`;
   }
 }
-export function buildNamedLink(link: Queries.LinkFragment): LinkInformation {
+function buildNamedLink(link: Queries.LinkFragment): LinkInformation {
   const {
     colour,
     internalLink,
@@ -93,6 +93,7 @@ export const Block: React.FC<{ block: Queries.BlockFragment }> = ({
   return <pre>Block {block.type} not yet implemented</pre>;
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export const BlockFragment = graphql`
   fragment Block on GraphCMS_Block {
     id

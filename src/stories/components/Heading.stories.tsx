@@ -6,11 +6,13 @@ const Template: ComponentStory<typeof Heading> = (args) => (
   <Heading {...args} />
 );
 
+// eslint-disable-next-line import/no-unused-modules
 export const Basic = Template.bind({});
 Basic.args = {
   header: "Header",
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export const Full = Template.bind({});
 Full.args = {
   ...Basic.args,
@@ -28,4 +30,5 @@ const meta: ComponentMeta<typeof Heading> = {
   },
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default meta;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Section } from "../layouts";
+import { Section } from "../layouts/Section";
 
 export const Heading: React.FC<{
   preHeader?: string;
@@ -10,11 +10,11 @@ export const Heading: React.FC<{
   return (
     <Section componentName="Heading">
       {preHeader && (
-        <h5 className="col-span-full text-center h3">{preHeader}</h5>
+        <h5 className="h3 col-span-full text-center">{preHeader}</h5>
       )}
-      {header && <h2 className="col-span-full text-center h2">{header}</h2>}
+      {header && <h2 className="h2 col-span-full text-center">{header}</h2>}
       {postHeader && (
-        <h5 className="col-span-full text-center h3">{postHeader}</h5>
+        <h5 className="h3 col-span-full text-center">{postHeader}</h5>
       )}
     </Section>
   );

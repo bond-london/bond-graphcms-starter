@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import { graphql, useStaticQuery } from "gatsby";
 import React, { useMemo } from "react";
-import { Section } from "../../layouts";
-import { LinkInformation } from "../Navigation";
+import { Section } from "../../layouts/Section";
+import { LinkInformation } from "../Navigation/NavigationBar";
 import { FooterColumn } from "./FooterColumn";
 import { FooterRow } from "./FooterRow";
 
@@ -84,18 +84,18 @@ export const Footer: React.FC<FooterInformation> = (information) => {
           key={index}
           entries={column}
           className={classNames(
-            "col-start-1 col-span-4",
+            "col-span-4 col-start-1",
             "tablet:col-span-4",
             index === 0
               ? "tablet:col-start-1"
-              : "tablet:col-start-auto laptop:col-start-auto laptop:col-span-3"
+              : "tablet:col-start-auto laptop:col-span-3 laptop:col-start-auto"
           )}
         />
       ))}
       <FooterRow
         entries={lastRow}
         className={classNames(
-          "col-span-full tablet:pt-s laptop:col-start-2 laptop:col-span-10"
+          "col-span-full tablet:pt-s laptop:col-span-10 laptop:col-start-2"
         )}
       />
     </Section>

@@ -6,8 +6,10 @@ const Template: ComponentStory<typeof ContentDivider> = (args) => (
   <ContentDivider {...args} />
 );
 
+// eslint-disable-next-line import/no-unused-modules
 export const SimpleDivider = Template.bind({});
 
+// eslint-disable-next-line import/no-unused-modules
 export const CustomColour = Template.bind({});
 CustomColour.args = {
   ...SimpleDivider.args,
@@ -26,4 +28,5 @@ const meta: ComponentMeta<typeof ContentDivider> = {
   },
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default meta;

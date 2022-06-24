@@ -1,9 +1,7 @@
 import { VisualAsset } from "@bond-london/gatsby-graphcms-components";
 import { IGatsbyImageData } from "gatsby-plugin-image";
 
-export function createGatsbyImageDataFromLocalFile(
-  path: string
-): IGatsbyImageData {
+function createGatsbyImageDataFromLocalFile(path: string): IGatsbyImageData {
   return {
     layout: "fullWidth",
     width: 100,

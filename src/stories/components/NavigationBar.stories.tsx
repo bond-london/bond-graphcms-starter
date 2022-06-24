@@ -7,6 +7,7 @@ const Template: ComponentStory<typeof NavigationBar> = (args) => (
   <NavigationBar {...args} />
 );
 
+// eslint-disable-next-line import/no-unused-modules
 export const Nav = Template.bind({});
 Nav.args = {
   menu: {
@@ -31,4 +32,5 @@ const meta: ComponentMeta<typeof NavigationBar> = {
   subcomponents: { Nav },
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default meta;

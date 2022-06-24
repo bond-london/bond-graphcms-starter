@@ -1,7 +1,7 @@
 import { VisualAsset } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
 import React from "react";
-import { AspectRatioVisual } from "../elements";
+import { AspectRatioVisual } from "../elements/AspectRatioVisual";
 
 export const Avatar: React.FC<{
   visual?: VisualAsset;
@@ -25,7 +25,7 @@ export const Avatar: React.FC<{
         className={classNames(
           size,
           colour || "bg-blue",
-          "rounded-full flex items-center justify-center"
+          "flex items-center justify-center rounded-full"
         )}
       >
         <p className={font}>{initials}</p>

@@ -6,6 +6,7 @@ const Template: ComponentStory<typeof BasicRTF> = (args) => (
   <BasicRTF {...args} />
 );
 
+// eslint-disable-next-line import/no-unused-modules
 export const Article = Template.bind({});
 Article.args = {
   className: "w-m text-black",
@@ -18,4 +19,5 @@ const meta: ComponentMeta<typeof BasicRTF> = {
   argTypes: {},
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default meta;

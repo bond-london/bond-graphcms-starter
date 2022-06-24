@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
 import { Card } from "../../elements/CardRow";
-import { Section } from "../../layouts";
+import { Section } from "../../layouts/Section";
 import { createVisualAssetFromLocalFile } from "../storyUtils";
 
 const Template: ComponentStory<typeof Card> = (args) => (
@@ -12,12 +12,14 @@ const Template: ComponentStory<typeof Card> = (args) => (
   </Section>
 );
 
+// eslint-disable-next-line import/no-unused-modules
 export const CardWithImage = Template.bind({});
 CardWithImage.args = {
   title: "This is my card",
   visual: createVisualAssetFromLocalFile("/hero_image_example.jpg"),
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export const CardNoImage = Template.bind({});
 CardNoImage.args = {
   title: "This card has no image",
@@ -32,4 +34,5 @@ const meta: ComponentMeta<typeof Card> = {
   argTypes: {},
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default meta;

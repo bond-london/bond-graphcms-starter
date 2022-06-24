@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { Icon } from "../components";
+import { Icon } from "../components/Icons";
 
 export const Stars: React.FC<{ stars: number; className?: string }> = ({
   stars,
@@ -10,7 +10,7 @@ export const Stars: React.FC<{ stars: number; className?: string }> = ({
   const array = [...Array(stars)];
 
   return (
-    <div className={classNames("h-xxs flex gap-x-xxxs", className)}>
+    <div className={classNames("flex h-xxs gap-x-xxxs", className)}>
       {array.map((_, index) => (
         <Icon type="Star" key={index} />
       ))}

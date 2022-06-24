@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
 import { AspectRatioVisual } from "../../elements/AspectRatioVisual";
-import { Section } from "../../layouts";
+import { Section } from "../../layouts/Section";
 import { createVisualAssetFromLocalFile } from "../storyUtils";
 
 const Template: ComponentStory<typeof AspectRatioVisual> = (args) => (
@@ -12,18 +12,21 @@ const Template: ComponentStory<typeof AspectRatioVisual> = (args) => (
   </Section>
 );
 
+// eslint-disable-next-line import/no-unused-modules
 export const HeroAspectRatio = Template.bind({});
 HeroAspectRatio.args = {
   visual: createVisualAssetFromLocalFile("/hero_image_example.jpg"),
   aspectRatioClassName: "aspect-w-2 aspect-h-1",
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export const SquareAspectRatio = Template.bind({});
 SquareAspectRatio.args = {
   visual: createVisualAssetFromLocalFile("/hero_image_example.jpg"),
   aspectRatioClassName: "aspect-w-1 aspect-h-1",
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export const PortraitAspectRatio = Template.bind({});
 PortraitAspectRatio.args = {
   visual: createVisualAssetFromLocalFile("/hero_image_example.jpg"),
@@ -36,4 +39,5 @@ const meta: ComponentMeta<typeof AspectRatioVisual> = {
   subcomponents: { HeroAspectRatio, SquareAspectRatio, PortraitAspectRatio },
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default meta;

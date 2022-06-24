@@ -1,8 +1,8 @@
 import { CleanedRTF } from "@bond-london/graphcms-rich-text";
 import classNames from "classnames";
 import React, { useCallback, useRef, useState } from "react";
-import { RTF } from ".";
 import { Icon } from "../components/Icons";
+import { RTF } from "./RTF";
 
 interface State {
   active: boolean;
@@ -48,7 +48,7 @@ export const AccordionRow: React.FC<{
     <div className={classNames("flex flex-col", className)}>
       <button
         className={classNames(
-          "appearance-none cursor-pointer flex items-center justify-between",
+          "flex cursor-pointer appearance-none items-center justify-between",
           buttonClassName
         )}
         onClick={toggleAccordion}
@@ -56,14 +56,14 @@ export const AccordionRow: React.FC<{
         {title}
         <Icon
           type="ArrowBack"
-          className={classNames("transform duration-700 ease", rotate)}
+          className={classNames("ease transform duration-700", rotate)}
         />
       </button>
       <div
         ref={contentRef}
         style={{ maxHeight: `${height}` }}
         className={classNames(
-          "overflow-auto transition-max-height duration-700 ease-in-out",
+          "transition-max-height overflow-auto duration-700 ease-in-out",
           active && contentClassName
         )}
       >

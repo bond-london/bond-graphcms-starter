@@ -21,5 +21,5 @@
   "eslint.rules.customizations": [
     { "rule": "limited-exports-page-templates", "severity": "off" },
     { "rule": "no-anonymous-exports-page-templates", "severity": "off" }
-  ],
+  ]
 }

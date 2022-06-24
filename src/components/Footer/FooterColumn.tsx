@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
-import { FooterEntry, sizeToTextClassName } from ".";
-import { Icon } from "..";
+import { Icon } from "../Icons";
+import { FooterEntry, sizeToTextClassName } from "./Footer";
 import { FooterMenuEntries } from "./FooterMenuEntries";
 
 export const FooterColumn: React.FC<{

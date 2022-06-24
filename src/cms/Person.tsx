@@ -1,7 +1,7 @@
 import { getVisual } from "@bond-london/gatsby-graphcms-components";
 import { graphql } from "gatsby";
 import React from "react";
-import { Person } from "../components";
+import { Person } from "../components/Person";
 import { getInitials } from "../utils";
 
 export const CMSPerson: React.FC<{
@@ -11,7 +11,7 @@ export const CMSPerson: React.FC<{
   return <Person personData={convertCMSPersonToIndividual(person)} />;
 };
 
-export const findSize = (size: Queries.GraphCMS_Size) => {
+const findSize = (size: Queries.GraphCMS_Size) => {
   switch (size) {
     case "Small":
       return "h-s w-s";
@@ -38,6 +38,7 @@ export const convertCMSPersonToIndividual = (
   };
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export const PersonLinkFragment = graphql`
   fragment PersonLink on GraphCMS_Person {
     id
@@ -45,6 +46,7 @@ export const PersonLinkFragment = graphql`
   }
 `;
 
+// eslint-disable-next-line import/no-unused-modules
 export const PersonFragment = graphql`
   fragment Person on GraphCMS_Person {
     ...PersonLink

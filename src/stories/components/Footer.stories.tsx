@@ -7,10 +7,12 @@ const meta: ComponentMeta<typeof Footer> = {
   component: Footer,
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default meta;
 
 const Template: ComponentStory<typeof Footer> = (args) => <Footer {...args} />;
 
+// eslint-disable-next-line import/no-unused-modules
 export const Simple = Template.bind({});
 Simple.args = {
   columns: [

@@ -12,8 +12,9 @@ import React, {
   useState,
 } from "react";
 import CookieConsent, { getCookieConsentValue } from "react-cookie-consent";
-import { Modal } from ".";
-import { Footer, FooterInformation, Menu, NavigationBar } from "../components";
+import { FooterInformation, Footer } from "../components/Footer/Footer";
+import { Menu, NavigationBar } from "../components/Navigation/NavigationBar";
+import { Modal } from "./Modal";
 
 export const LayoutContext = createContext<{
   setModal: (node?: ReactNode) => void;
@@ -24,7 +25,7 @@ export const LayoutContext = createContext<{
   },
 });
 
-export const DefaultNavigationMenu: Menu = {
+const DefaultNavigationMenu: Menu = {
   items: [
     { name: "Page 1", internal: "/home-with-no-lottie/" },
     {
@@ -36,7 +37,7 @@ export const DefaultNavigationMenu: Menu = {
   ],
 };
 
-export const DefaultFooterInformation: FooterInformation = {
+const DefaultFooterInformation: FooterInformation = {
   columns: [
     [
       { type: "Logo", size: "Large", text: "Home page" },

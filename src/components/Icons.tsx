@@ -11,7 +11,7 @@ const BondLogoIcon: React.FC<Props> = ({ className }) => (
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
     className={classNames(
-      "inline-block stroke-current fill-current",
+      "inline-block fill-current stroke-current",
       className
     )}
   >
@@ -122,7 +122,7 @@ const AlertIcon: React.FC<Props> = ({ className }) => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     className={classNames(
-      "icon inline-block stroke-current fill-current",
+      "icon inline-block fill-current stroke-current",
       className
     )}
   >
@@ -135,7 +135,7 @@ const BlankIcon: React.FC<Props> = ({ className }) => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     className={classNames(
-      "icon inline-block stroke-current fill-current",
+      "icon inline-block fill-current stroke-current",
       className
     )}
   />

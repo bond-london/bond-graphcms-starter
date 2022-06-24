@@ -1,12 +1,14 @@
 import { VisualAsset } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
 import React from "react";
-import { LinkOrButton, LinkInformation } from "..";
-import { AspectRatioVisual, RTF } from "../../elements";
 import { useFirstVisible } from "../../utils";
 import { CleanedRTF } from "@bond-london/graphcms-rich-text";
-import { Section } from "../../layouts";
 import { ColourName, lookupColourClassName } from "../../lookups";
+import { AspectRatioVisual } from "../../elements/AspectRatioVisual";
+import { RTF } from "../../elements/RTF";
+import { Section } from "../../layouts/Section";
+import { LinkOrButton } from "../LinkOrButton";
+import { LinkInformation } from "../Navigation/NavigationBar";
 
 export const Hero: React.FC<{
   title?: string;
@@ -37,11 +39,11 @@ export const Hero: React.FC<{
           className={classNames(
             "pt-s laptop:pt-0",
             "self-center",
-            "col-start-1 col-span-4",
-            "row-start-4 row-span-3",
-            "tablet:col-start-1 tablet:col-span-3",
-            "laptop:col-start-1 laptop:col-span-5",
-            "tablet:row-start-1 tablet:row-span-5"
+            "col-span-4 col-start-1",
+            "row-span-3 row-start-4",
+            "tablet:col-span-3 tablet:col-start-1",
+            "laptop:col-span-5 laptop:col-start-1",
+            "tablet:row-span-5 tablet:row-start-1"
           )}
         >
           {title && (

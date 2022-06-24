@@ -1,15 +1,17 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
-import { Hero } from "../../components/Hero";
+import { Hero } from "../../components/Hero/Hero";
 import { createVisualAssetFromLocalFile } from "../storyUtils";
 
 const Template: ComponentStory<typeof Hero> = (args) => <Hero {...args} />;
 
+// eslint-disable-next-line import/no-unused-modules
 export const BasicHero = Template.bind({});
 BasicHero.args = {
   title: "Page Title",
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export const ImageHero = Template.bind({});
 ImageHero.args = {
   ...BasicHero.args,
@@ -23,4 +25,5 @@ const meta: ComponentMeta<typeof Hero> = {
   subcomponents: { BasicHero, ImageHero },
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default meta;

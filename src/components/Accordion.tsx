@@ -1,6 +1,6 @@
 import React from "react";
-import { Section } from "../layouts";
-import { AccordionRow, AccordionRowType } from "../elements";
+import { AccordionRowType, AccordionRow } from "../elements/AccordionRow";
+import { Section } from "../layouts/Section";
 
 export const Accordion: React.FC<{
   collection: AccordionRowType[];

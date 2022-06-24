@@ -34,7 +34,6 @@ export const ClassRenderer: React.FC<ClassNodeRendererProps> = (props) => {
       parentIndex={index}
       renderers={props.renderers}
       context={context}
-      removeEmptyElements={props.removeEmptyElements}
       contents={props.contents}
     />
   );

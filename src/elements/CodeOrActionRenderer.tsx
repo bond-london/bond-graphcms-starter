@@ -1,11 +1,11 @@
 import { ElementsRendererProps } from "@bond-london/graphcms-rich-text";
 import { isText } from "@graphcms/rich-text-types";
-import React from "react";
-import { Actions } from "../actions";
+import React, { PropsWithChildren } from "react";
+import { Actions } from "../actions/Actions";
 
-export const CodeOrActionRenderer: React.FC<ElementsRendererProps> = (
-  props
-) => {
+export const CodeOrActionRenderer: React.FC<
+  PropsWithChildren<ElementsRendererProps>
+> = (props) => {
   const { contents } = props;
   if (contents?.length === 1 && isText(contents[0])) {
     const childrenString = contents[0].text;

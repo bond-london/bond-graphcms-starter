@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
 import { Avatar } from "../../elements/Avatar";
-import { Section } from "../../layouts";
+import { Section } from "../../layouts/Section";
 import { createVisualAssetFromLocalFile } from "../storyUtils";
 
 const Template: ComponentStory<typeof Avatar> = (args) => (
@@ -14,11 +14,13 @@ const Template: ComponentStory<typeof Avatar> = (args) => (
   </Section>
 );
 
+// eslint-disable-next-line import/no-unused-modules
 export const SmallAvatar = Template.bind({});
 SmallAvatar.args = {
   visual: createVisualAssetFromLocalFile("/female-silhouette.png"),
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export const NoImageAvatar = Template.bind({});
 NoImageAvatar.args = { colour: "bg-blue text-white", initials: "JT" };
 
@@ -32,4 +34,5 @@ const meta: ComponentMeta<typeof Avatar> = {
   },
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default meta;

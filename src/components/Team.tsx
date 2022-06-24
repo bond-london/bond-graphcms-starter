@@ -1,5 +1,4 @@
 import React from "react";
-import { Icon, Individual, Person } from ".";
 import {
   ButtonBack,
   ButtonNext,
@@ -8,9 +7,11 @@ import {
   Slider,
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import { Section } from "../layouts";
 import classNames from "classnames";
 import { useMediaQuery } from "@bond-london/gatsby-graphcms-components";
+import { Section } from "../layouts/Section";
+import { Icon } from "./Icons";
+import { Individual, Person } from "./Person";
 
 export const Team: React.FC<{ team: Individual[] }> = ({ team }) => {
   const isSm = useMediaQuery("(min-width: 640px)");
@@ -22,11 +23,11 @@ export const Team: React.FC<{ team: Individual[] }> = ({ team }) => {
       componentName="Team"
       className="bg-light-blue"
       preChildren={
-        <div className="col-start-1 col-span-3 row-start-4 row-span-3 bg-blue" />
+        <div className="col-span-3 col-start-1 row-span-3 row-start-4 bg-blue" />
       }
     >
       <CarouselProvider
-        className={classNames("col-span-full content-grid")}
+        className={classNames("content-grid col-span-full")}
         totalSlides={team.length}
         naturalSlideWidth={1}
         naturalSlideHeight={1}
@@ -35,7 +36,7 @@ export const Team: React.FC<{ team: Individual[] }> = ({ team }) => {
       >
         <ButtonBack
           className={classNames(
-            "row-start-1 self-end justify-self-start z-30",
+            "z-30 row-start-1 self-end justify-self-start",
             "col-start-1",
             "tablet:col-start-1",
             "tablet:grid tablet:grid-cols-1 tablet:grid-rows-3 tablet:self-auto"
@@ -43,9 +44,9 @@ export const Team: React.FC<{ team: Individual[] }> = ({ team }) => {
         >
           <div
             className={classNames(
-              "h-xs w-xs rounded-square bg-green",
-              "flex justify-center items-center",
-              "tablet:row-start-1 tablet:row-span-2 tablet:self-center"
+              "rounded-square h-xs w-xs bg-green",
+              "flex items-center justify-center",
+              "tablet:row-span-2 tablet:row-start-1 tablet:self-center"
             )}
           >
             <Icon type="ArrowBack" className="text-dark-blue h-xxs" />
@@ -54,9 +55,9 @@ export const Team: React.FC<{ team: Individual[] }> = ({ team }) => {
         <Slider
           className={classNames(
             "row-start-1",
-            "col-start-1 col-span-4",
-            "tablet:col-start-2 tablet:col-span-6",
-            "laptop:col-start-2 laptop:col-span-10",
+            "col-span-4 col-start-1",
+            "tablet:col-span-6 tablet:col-start-2",
+            "laptop:col-span-10 laptop:col-start-2",
             "text-grey"
           )}
           classNameTray="space-x-mobile-gap tablet:space-x-tablet-gap laptop:space-x-desktop-gap"
@@ -69,7 +70,7 @@ export const Team: React.FC<{ team: Individual[] }> = ({ team }) => {
         </Slider>
         <ButtonNext
           className={classNames(
-            "row-start-1 self-end justify-self-end z-30",
+            "z-30 row-start-1 self-end justify-self-end",
             "col-start-4",
             "tablet:col-start-8 laptop:col-start-12",
             "tablet:grid tablet:grid-cols-1 tablet:grid-rows-3 tablet:self-auto"
@@ -77,9 +78,9 @@ export const Team: React.FC<{ team: Individual[] }> = ({ team }) => {
         >
           <div
             className={classNames(
-              "h-xs w-xs rounded-square bg-green",
-              "flex justify-center items-center",
-              "tablet:row-start-1 tablet:row-span-2 tablet:self-center"
+              "rounded-square h-xs w-xs bg-green",
+              "flex items-center justify-center",
+              "tablet:row-span-2 tablet:row-start-1 tablet:self-center"
             )}
           >
             <Icon type="ArrowForward" className="text-dark-blue h-xxs" />

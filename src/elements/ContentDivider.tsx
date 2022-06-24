@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { ColourName } from "../components";
-import { lookupColourClassName } from "../lookups";
+import { ColourName, lookupColourClassName } from "../lookups";
 
 export const ContentDivider: React.FC<{
   colour?: ColourName | undefined;

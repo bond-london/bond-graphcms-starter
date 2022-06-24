@@ -9,7 +9,7 @@ import {
 } from "@bond-london/graphcms-rich-text";
 import { RTFContext } from "./ClassRenderer";
 
-export const RenderTable: React.FC<{
+const RenderTable: React.FC<{
   table: TableInformation;
   renderers: NodeRenderer;
   headingClassName?: string;
@@ -44,16 +44,16 @@ export const RenderTable: React.FC<{
         "border-spacing-0",
         "border-separate",
         "table-auto",
-        "col-start-1 col-span-4",
-        "tablet:col-start-1 tablet:col-span-8",
-        "laptop:col-start-2 laptop:col-span-10",
+        "col-span-4 col-start-1",
+        "tablet:col-span-8 tablet:col-start-1",
+        "laptop:col-span-10 laptop:col-start-2",
         "w-full",
         className
       )}
     >
       <thead
         className={classNames(
-          "hidden tablet:table-header-group font-semibold",
+          "hidden font-semibold tablet:table-header-group",
           headingClassName
         )}
       >
@@ -87,7 +87,7 @@ export const RenderTable: React.FC<{
           <tr
             key={index}
             className={classNames(
-              "table p-xxs w-full laptop:table-row not-first:mt-xs laptop:mt-0",
+              "table w-full p-xxs not-first:mt-xs laptop:mt-0 laptop:table-row",
               "rounded-normal laptop:rounded-0",
               rowClassName
             )}
@@ -96,7 +96,7 @@ export const RenderTable: React.FC<{
               const header = table.header[index];
               return (
                 <td key={index} className={tdClassName}>
-                  <div className="laptop:hidden inline-block w-1/3 pr-mobile-gap p4">
+                  <div className="p4 inline-block w-1/3 pr-mobile-gap laptop:hidden">
                     {header && (
                       <RenderElements
                         parentIndex={0}
@@ -106,7 +106,7 @@ export const RenderTable: React.FC<{
                       />
                     )}
                   </div>
-                  <div className="w-2/3 inline-block laptop:w-auto">
+                  <div className="inline-block w-2/3 laptop:w-auto">
                     <RenderElements
                       parentIndex={0}
                       index={index}

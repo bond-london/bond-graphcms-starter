@@ -1,11 +1,12 @@
 import { VisualAsset } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
 import React, { useCallback, useState } from "react";
-import { IconType, LinkOrButton } from "..";
-import { useBodyScrollLock } from "../../layouts";
+import { useBodyScrollLock } from "../../layouts/BodyLock";
+import { IconType } from "../Icons";
+import { LinkOrButton } from "../LinkOrButton";
 import { NavigationMenu } from "./NavigationMenu";
 
-export type ColourName = "Green" | "GreenWhite" | "Blue" | "BlueWhite";
+type ColourName = "Green" | "GreenWhite" | "Blue" | "BlueWhite";
 export interface LinkInformation {
   icon?: IconType;
   internal?: string;
@@ -46,45 +47,45 @@ export const NavigationBar: React.FC<{
         "transition-all transition-duration-1000",
         "container-grid",
         isOpen
-          ? "fixed max-h-navOpen top-0 left-0 h-screen z-50"
-          : "relative max-h-navClosed h-nav"
+          ? "fixed top-0 left-0 z-50 h-screen max-h-navOpen"
+          : "relative h-nav max-h-navClosed"
       )}
     >
       <div
         className={classNames(
-          "col-start-2 col-span-1",
+          "col-span-1 col-start-2",
           "content-grid items-center",
           isOpen ? "grid-rows-nav-open" : "grid-rows-nav-closed"
         )}
       >
         <LinkOrButton
           internal="/"
-          className="col-start-1 col-span-2 py-xs"
+          className="col-span-2 col-start-1 py-xs"
           icon="BondLogo"
           name="Home page"
           iconClassName="h-m"
         />
         <button
           aria-label="Toggle menu"
-          className="col-start-4 col-span-1 tablet:col-start-8 justify-self-end laptop:hidden relative w-xs h-xxs "
+          className="relative col-span-1 col-start-4 h-xxs w-xs justify-self-end tablet:col-start-8 laptop:hidden "
           onClick={toggleMenu}
         >
-          <div className="block absolute">
+          <div className="absolute block">
             <span
               className={classNames(
-                "block absolute h-3 w-xs text-white bg-current transform transition duration-500 ease-in-out rounded-full",
+                "absolute block h-3 w-xs transform rounded-full bg-current text-white transition duration-500 ease-in-out",
                 isOpen ? "rotate-45" : "-translate-y-xxxs"
               )}
             />
             <span
               className={classNames(
-                "block absolute h-3 w-xs text-white bg-current transform transition duration-500 ease-in-out",
+                "absolute block h-3 w-xs transform bg-current text-white transition duration-500 ease-in-out",
                 isOpen && "opacity-0"
               )}
             />
             <span
               className={classNames(
-                "block absolute h-3 w-xs text-white bg-current transform transition duration-500 ease-in-out",
+                "absolute block h-3 w-xs transform bg-current text-white transition duration-500 ease-in-out",
                 isOpen ? "-rotate-45" : "translate-y-xxxs"
               )}
             />

@@ -6,8 +6,9 @@ import {
 } from "@bond-london/graphcms-rich-text";
 import classNames from "classnames";
 import React from "react";
-import { AspectRatioVisual, RTF } from "../../elements";
-import { Section } from "../../layouts";
+import { AspectRatioVisual } from "../../elements/AspectRatioVisual";
+import { RTF } from "../../elements/RTF";
+import { Section } from "../../layouts/Section";
 
 export const BasicRTF: React.FC<{
   content: CleanedRTF;
@@ -49,11 +50,11 @@ export const BasicRTF: React.FC<{
         <AspectRatioVisual
           aspectRatioClassName="aspect-square"
           className={classNames(
-            "col-start-1 col-span-4",
+            "col-span-4 col-start-1",
             "tablet:row-start-1",
             right
-              ? "tablet:col-start-3 tablet:col-span-4 laptop:col-start-9 laptop:col-span-4"
-              : "tablet:col-start-1 tablet:col-span-4 laptop:col-start-2 laptop:col-span-4"
+              ? "tablet:col-span-4 tablet:col-start-3 laptop:col-span-4 laptop:col-start-9"
+              : "tablet:col-span-4 tablet:col-start-1 laptop:col-span-4 laptop:col-start-2"
           )}
           visual={visual}
         />

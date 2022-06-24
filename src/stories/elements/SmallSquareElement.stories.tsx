@@ -6,6 +6,7 @@ const Template: ComponentStory<typeof SmallSquareElement> = (args) => (
   <SmallSquareElement {...args} />
 );
 
+// eslint-disable-next-line import/no-unused-modules
 export const SimpleSquareElement = Template.bind({});
 SimpleSquareElement.args = {
   className: "w-m bg-blue",
@@ -18,4 +19,5 @@ const meta: ComponentMeta<typeof SmallSquareElement> = {
   argTypes: {},
 };
 
+// eslint-disable-next-line import/no-unused-modules
 export default meta;
