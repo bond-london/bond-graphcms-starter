@@ -7,7 +7,7 @@ function createGatsbyImageDataFromLocalFile(path: string): IGatsbyImageData {
     width: 100,
     height: 100,
     images: {
-      fallback: { src: path },
+      fallback: { src: path.startsWith("/") ? `.${path}` : path },
     },
   };
 }
