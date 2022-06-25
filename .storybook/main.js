@@ -35,7 +35,7 @@ const config = {
   features: {
     postcss: false,
   },
-  staticDirs: ["../storyBookAssets"],
+  staticDirs: [{ from: "../storyBookAssets", to: "/" }],
   framework: "@storybook/react",
   core: {
     builder: "@storybook/builder-webpack5",
