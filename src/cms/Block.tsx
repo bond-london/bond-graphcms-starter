@@ -42,7 +42,7 @@ const HeroBlock: React.FC<{ block: Queries.BlockFragment }> = ({
       title={showTitle ? title : undefined}
       visual={visual}
       links={arrayOrUndefined(links?.map(buildNamedLink))}
-      textColour={textColour || undefined}
+      textColour={textColour}
     />
   );
 };
@@ -70,14 +70,14 @@ function buildNamedLink(link: Queries.LinkFragment): LinkInformation {
   const internal = tryGetInternalLink(internalLink);
 
   return {
-    icon: icon || undefined,
-    external: external || undefined,
-    newPage: newPage || undefined,
+    icon: icon,
+    external: external,
+    newPage: newPage,
     name: title,
-    colour: colour || undefined,
+    colour: colour,
     internal,
     visual,
-    isButton: isButton || undefined,
+    isButton: isButton,
   };
 }
 

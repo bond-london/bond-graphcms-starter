@@ -67,7 +67,11 @@ export const LinkOrButton: React.FC<
 
   if (internal) {
     return (
-      <Link className={realButtonClassName} to={internal} aria-label={label}>
+      <Link
+        className={realButtonClassName}
+        to={internal}
+        aria-label={label || undefined}
+      >
         {inside}
       </Link>
     );
@@ -77,7 +81,7 @@ export const LinkOrButton: React.FC<
     if (newPage) {
       return (
         <a
-          aria-label={label}
+          aria-label={label || undefined}
           href={external}
           className={classNames(realButtonClassName, "inline-flex")}
           target="_blank"
@@ -89,7 +93,7 @@ export const LinkOrButton: React.FC<
     }
     return (
       <a
-        aria-label={label}
+        aria-label={label || undefined}
         className={classNames(realButtonClassName, "inline-flex")}
         href={external}
       >
@@ -103,7 +107,7 @@ export const LinkOrButton: React.FC<
       <button
         onClick={action}
         className={classNames(realButtonClassName, "active:font-bold")}
-        aria-label={label}
+        aria-label={label || undefined}
       >
         {inside}
       </button>

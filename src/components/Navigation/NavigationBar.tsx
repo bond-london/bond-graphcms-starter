@@ -8,17 +8,17 @@ import { NavigationMenu } from "./NavigationMenu";
 
 type ColourName = "Green" | "GreenWhite" | "Blue" | "BlueWhite";
 export interface LinkInformation {
-  icon?: IconType;
-  internal?: string;
-  external?: string;
-  newPage?: boolean;
-  name?: string;
-  text?: string;
-  colour?: ColourName;
-  visual?: VisualAsset;
-  isButton?: boolean;
+  icon?: IconType | null;
+  internal?: string | null;
+  external?: string | null;
+  newPage?: boolean | null;
+  name?: string | null;
+  text?: string | null;
+  colour?: ColourName | null;
+  visual?: VisualAsset | null;
+  isButton?: boolean | null;
   action?: () => void | void;
-  nested?: LinkInformation[];
+  nested?: LinkInformation[] | null;
 }
 
 export interface Menu {

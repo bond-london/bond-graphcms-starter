@@ -11,8 +11,8 @@ export const PageLayout: React.FC<{
   return (
     <Layout
       title={page.title}
-      description={page.description || undefined}
-      keywords={page.keywords || undefined}
+      description={page.description}
+      keywords={page.keywords}
       image={getImage(page.image)}
       pagePath={pagePath}
     >

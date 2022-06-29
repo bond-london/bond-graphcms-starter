@@ -1,6 +1,6 @@
 import { SEO } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
-import { graphql, Script, ScriptStrategy, useStaticQuery } from "gatsby";
+import { graphql, useStaticQuery } from "gatsby";
 import { IGatsbyImageData } from "gatsby-plugin-image";
 import React, {
   createContext,
@@ -15,6 +15,12 @@ import CookieConsent, { getCookieConsentValue } from "react-cookie-consent";
 import { FooterInformation, Footer } from "../components/Footer/Footer";
 import { Menu, NavigationBar } from "../components/Navigation/NavigationBar";
 import { Modal } from "./Modal";
+
+declare global {
+  interface Window {
+    bondHadCookie?: boolean;
+  }
+}
 
 export const LayoutContext = createContext<{
   setModal: (node?: ReactNode) => void;
@@ -82,9 +88,9 @@ export const Layout: React.FC<
   PropsWithChildren<{
     bodyClassName?: string;
     title: string;
-    description?: string;
-    keywords?: string;
-    image?: IGatsbyImageData;
+    description?: string | null;
+    keywords?: string | null;
+    image?: IGatsbyImageData | null;
     pagePath: string;
   }>
 > = ({
@@ -106,7 +112,6 @@ export const Layout: React.FC<
             siteUrl
             cookieName
             logo
-            googleTag
           }
         }
         siteBuildMetadata {
@@ -121,9 +126,6 @@ export const Layout: React.FC<
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const cookieName = siteMetadata.cookieName!;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const GTM = siteMetadata.googleTag!;
-  const gtag = `https://www.googletagmanager.com/gtm.js?id=${GTM}`;
 
   const pageTitle = `${title} | ${siteMetadata.siteName || ""}`;
 
@@ -137,8 +139,14 @@ export const Layout: React.FC<
   );
 
   const onAccept = useCallback(() => {
-    window.gtag?.("consent", "update", { ad_storage: "granted" });
-  }, []);
+    if (!window.bondHadCookie) {
+      window.localStorage.setItem(cookieName, "true");
+      window.gtag?.("consent", "update", {
+        ad_storage: "granted",
+        analytics_storage: "granted",
+      });
+    }
+  }, [cookieName]);
 
   useEffect(() => {
     const cookieValue = getCookieConsentValue(cookieName);
@@ -170,23 +178,6 @@ export const Layout: React.FC<
         We use cookies to make this site awesome
       </CookieConsent>
 
-      <Script
-        strategy={ScriptStrategy.idle}
-        src={gtag}
-        forward={["datalayer.push"]}
-      />
-      <Script id="gtag-config" strategy={ScriptStrategy.idle}>
-        {`
-        window.dataLayer = window.dataLayer || [];
-        window.gtag = function gtag() { window.dataLayer.push(arguments); }
-        gtag("js", new Date());
-        gtag("config", "${GTM}", { send_page_view: false});
-        gtag("consent", "default", {
-          "ad_storage": "denied"
-        });
-    
-        `}
-      </Script>
       <SEO
         pageTitle={pageTitle}
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

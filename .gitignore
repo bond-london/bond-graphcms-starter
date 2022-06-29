@@ -4,4 +4,5 @@ public
 .env.*
 .bondgraphcmsassets/
 gatsby-types.d.ts
+yarn-error.log
 storybook-static

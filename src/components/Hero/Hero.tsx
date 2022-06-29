@@ -11,11 +11,11 @@ import { LinkOrButton } from "../LinkOrButton";
 import { LinkInformation } from "../Navigation/NavigationBar";
 
 export const Hero: React.FC<{
-  title?: string;
-  content?: CleanedRTF;
-  links?: LinkInformation[];
-  visual?: VisualAsset;
-  textColour?: ColourName;
+  title?: string | null;
+  content?: CleanedRTF | null;
+  links?: LinkInformation[] | null;
+  visual?: VisualAsset | null;
+  textColour?: ColourName | null;
 }> = ({ title, content, links, visual, textColour }) => {
   const [onVisible, animationMode] = useFirstVisible();
   const hasInside = title || content || links;

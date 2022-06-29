@@ -22,7 +22,7 @@ const gatsbyRequiredRules = join(
   "eslint-rules"
 );
 
-const config: GatsbyConfig = {
+const gatsbyConfig: GatsbyConfig = {
   trailingSlash: "always",
   partytownProxiedURLs: [
     `https://www.googletagmanager.com/gtm.js?id=${GOOGLE_TAG}`,
@@ -36,7 +36,6 @@ const config: GatsbyConfig = {
     siteUrl,
     logo: `${siteUrl}/icons/icon-512x512.png`,
     cookieName: COOKIE_NAME,
-    googleTag: GOOGLE_TAG,
   },
   plugins: [
     {
@@ -127,6 +126,12 @@ const config: GatsbyConfig = {
     "@bond-london/gatsby-transformer-extracted-svg",
     "@bond-london/gatsby-transformer-extracted-lottie",
     {
+      resolve: "@bond-london/gatsby-graphql-typegen",
+      options: {
+        gatsbyTypesFile: "gatsby-types.d.ts",
+      },
+    },
+    {
       resolve: "@bond-london/simple-gatsby-source-graphcms",
       options: {
         endpoint: process.env.GRAPHCMS_ENDPOINT,
@@ -141,20 +146,11 @@ const config: GatsbyConfig = {
         path: "./src/images/",
       },
     },
-    {
-      resolve: "@bond-london/gatsby-graphql-typegen",
-      options: {
-        gatsbyTypesFile: "gatsby-types.d.ts",
-        configOptions: {
-          skipTypename: false,
-        },
-      },
-    },
   ],
 };
 
 if (BUILD_DESIGN) {
-  config.plugins?.push({
+  gatsbyConfig.plugins?.push({
     resolve: "gatsby-plugin-gatsby-cloud",
     options: {
       headers: {
@@ -163,5 +159,18 @@ if (BUILD_DESIGN) {
     },
   });
 }
+if (GOOGLE_TAG && COOKIE_NAME) {
+  gatsbyConfig.plugins?.push({
+    resolve: "gatsby-plugin-google-tagmanager",
+    options: {
+      id: GOOGLE_TAG,
+      includeInDevelopment: true,
+      defaultDataLayer: { platform: "gatsby" },
+      gtmAuth: process.env.GTM_AUTH,
+      gtmPreview: process.env.GTM_PREVIEW,
+      enableWebVitalsTracking: true,
+    },
+  });
+}
 
-export default config;
+export default gatsbyConfig;

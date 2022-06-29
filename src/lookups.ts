@@ -12,7 +12,7 @@ const colourTable = {
 
 export type ColourName = keyof typeof colourTable;
 export function lookupColourClassName(
-  colourName: ColourName | undefined,
+  colourName: ColourName | undefined | null,
   type: "text" | "bg"
 ): string | undefined {
   if (colourName) {
