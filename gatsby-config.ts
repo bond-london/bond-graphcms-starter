@@ -24,11 +24,15 @@ const gatsbyRequiredRules = join(
 
 const gatsbyConfig: GatsbyConfig = {
   trailingSlash: "always",
+  graphqlTypegen: {
+    typesOutputPath: "gatsby-types.d.ts",
+  },
   partytownProxiedURLs: [
     `https://www.googletagmanager.com/gtm.js?id=${GOOGLE_TAG}`,
   ],
   flags: {
     FAST_DEV: true,
+    DEV_SSR: true,
   },
   siteMetadata: {
     siteName: "Bond London GraphCMS Starter",
@@ -125,12 +129,6 @@ const gatsbyConfig: GatsbyConfig = {
     },
     "@bond-london/gatsby-transformer-extracted-svg",
     "@bond-london/gatsby-transformer-extracted-lottie",
-    {
-      resolve: "@bond-london/gatsby-graphql-typegen",
-      options: {
-        gatsbyTypesFile: "gatsby-types.d.ts",
-      },
-    },
     {
       resolve: "@bond-london/simple-gatsby-source-graphcms",
       options: {

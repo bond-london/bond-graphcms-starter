@@ -4,10 +4,10 @@ import { PageLayout } from "../layouts/PageLayout";
 
 const Page: React.FC<PageProps<Queries.Page404Query>> = ({
   data: { page },
-  path,
+  location: { pathname },
 }) => {
   if (!page) throw new Error("No 404");
-  return <PageLayout page={page} pagePath={path} />;
+  return <PageLayout page={page} pagePath={pathname} />;
 };
 
 // eslint-disable-next-line import/no-unused-modules

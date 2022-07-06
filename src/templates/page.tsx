@@ -4,10 +4,10 @@ import { PageLayout } from "../layouts/PageLayout";
 
 const Page: React.FC<PageProps<Queries.SinglePageQuery>> = ({
   data: { page },
-  path,
+  location: { pathname },
 }) => {
   if (!page) throw new Error("No page");
-  return <PageLayout page={page} pagePath={path} />;
+  return <PageLayout page={page} pagePath={pathname} />;
 };
 
 // eslint-disable-next-line import/no-unused-modules

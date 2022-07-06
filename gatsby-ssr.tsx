@@ -2,7 +2,7 @@ import React from "react";
 import { PreRenderHTMLArgs } from "gatsby";
 import { oneLine } from "common-tags";
 
-import { COOKIE_NAME } from "./gatsby-env";
+const COOKIE_NAME = process.env.COOKIE_NAME || "no-cookie-name";
 
 // eslint-disable-next-line import/no-unused-modules
 export function onPreRenderHTML(args: PreRenderHTMLArgs) {
