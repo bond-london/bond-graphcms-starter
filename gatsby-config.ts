@@ -129,6 +129,7 @@ const gatsbyConfig: GatsbyConfig = {
     },
     "@bond-london/gatsby-transformer-extracted-svg",
     "@bond-london/gatsby-transformer-extracted-lottie",
+    "@bond-london/gatsby-transformer-video",
     {
       resolve: "@bond-london/simple-gatsby-source-graphcms",
       options: {

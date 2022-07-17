@@ -1,4 +1,8 @@
 import { getVisual } from "@bond-london/gatsby-graphcms-components";
+import {
+  getGatsbyVideo,
+  GatsbyVideo,
+} from "@bond-london/gatsby-transformer-video";
 import { getCleanedRTF } from "@bond-london/graphcms-rich-text";
 import { graphql } from "gatsby";
 import React from "react";
@@ -7,6 +11,28 @@ import { LinkInformation } from "../components/Navigation/NavigationBar";
 import { BasicRTF } from "../components/Text/BasicRTF";
 import { arrayOrUndefined } from "../utils";
 
+const InformationBlock: React.FC<{ block: Queries.BlockFragment }> = ({
+  block,
+}) => {
+  const transformed = getGatsbyVideo(
+    block.asset?.localFile?.childGatsbyVideo?.transformed
+  );
+  return (
+    <div>
+      {transformed && (
+        <GatsbyVideo
+          className="w-full"
+          videoData={transformed}
+          autoPlay={true}
+          loop={true}
+          onPlay={() => console.log("playing")}
+          onPause={() => console.log("paused")}
+        />
+      )}
+      <pre>{JSON.stringify(block, undefined, 2)}</pre>
+    </div>
+  );
+};
 const RichTextBlock: React.FC<{ block: Queries.BlockFragment }> = ({
   block: { content, asset, loop, preview, left },
 }) => {
@@ -89,6 +115,8 @@ export const Block: React.FC<{ block: Queries.BlockFragment }> = ({
       return <RichTextBlock block={block} />;
     case "hero":
       return <HeroBlock block={block} />;
+    case "information":
+      return <InformationBlock block={block} />;
   }
   return <pre>Block {block.type} not yet implemented</pre>;
 };
@@ -124,6 +152,7 @@ export const BlockFragment = graphql`
       ...VideoAsset
       ...LottieAsset
       ...SvgAsset
+      ...GatsbyVideoAsset
     }
     preview {
       ...ImageAsset

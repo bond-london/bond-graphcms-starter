@@ -20,6 +20,30 @@ export const videoFragment = graphql`
 
 /* @type {Fragment} */
 // eslint-disable-next-line import/no-unused-modules
+// export const GatsbyTransformedVideoFragment = graphql`
+//   fragment GatsbyTransformedVideo on GatsbyTransformedVideo {
+//     width
+//     height
+//     duration
+//     hasAudio
+//     mp4
+//     webm
+//     poster
+//   }
+// `;
+
+/* @type {Fragment} */
+// eslint-disable-next-line import/no-unused-modules
+export const gatsbyVideoFragment = graphql`
+  fragment GatsbyVideo on File {
+    childGatsbyVideo {
+      transformed(width: 1024)
+    }
+  }
+`;
+
+/* @type {Fragment} */
+// eslint-disable-next-line import/no-unused-modules
 export const svgFragment = graphql`
   fragment SvgFile on File {
     svg {

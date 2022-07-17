@@ -51,6 +51,17 @@ export const VideoAssetFragment = graphql`
 `;
 
 // eslint-disable-next-line import/no-unused-modules
+export const GatsbyVideoAssetFragment = graphql`
+  fragment GatsbyVideoAsset on GraphCMS_Asset {
+    id
+    remoteId
+    localFile {
+      ...GatsbyVideo
+    }
+  }
+`;
+
+// eslint-disable-next-line import/no-unused-modules
 export const LottieAssetFragment = graphql`
   fragment LottieAsset on GraphCMS_Asset {
     id
