@@ -129,7 +129,14 @@ const gatsbyConfig: GatsbyConfig = {
     },
     "@bond-london/gatsby-transformer-extracted-svg",
     "@bond-london/gatsby-transformer-extracted-lottie",
-    "@bond-london/gatsby-transformer-video",
+    {
+      resolve: "@bond-london/gatsby-transformer-video",
+      options: {
+        useRemoteCache: true,
+        remoteContainer: "bondgraphcms",
+        remoteConnectionString: process.env.VIDEO_CACHE_CONNECTION_STRING,
+      },
+    },
     {
       resolve: "@bond-london/simple-gatsby-source-graphcms",
       options: {
