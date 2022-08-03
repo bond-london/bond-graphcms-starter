@@ -100,7 +100,6 @@ const gatsbyConfig: GatsbyConfig = {
     },
     "gatsby-plugin-postcss",
     "gatsby-plugin-image",
-    "gatsby-plugin-react-helmet",
     "gatsby-plugin-sitemap",
     {
       resolve: "gatsby-plugin-manifest",
@@ -165,18 +164,18 @@ if (BUILD_DESIGN) {
     },
   });
 }
-if (GOOGLE_TAG && COOKIE_NAME) {
-  gatsbyConfig.plugins?.push({
-    resolve: "gatsby-plugin-google-tagmanager",
-    options: {
-      id: GOOGLE_TAG,
-      includeInDevelopment: true,
-      defaultDataLayer: { platform: "gatsby" },
-      gtmAuth: process.env.GTM_AUTH,
-      gtmPreview: process.env.GTM_PREVIEW,
-      enableWebVitalsTracking: true,
-    },
-  });
-}
+// if (GOOGLE_TAG && COOKIE_NAME) {
+//   gatsbyConfig.plugins?.push({
+//     resolve: "gatsby-plugin-google-tagmanager",
+//     options: {
+//       id: GOOGLE_TAG,
+//       includeInDevelopment: true,
+//       defaultDataLayer: { platform: "gatsby" },
+//       gtmAuth: process.env.GTM_AUTH,
+//       gtmPreview: process.env.GTM_PREVIEW,
+//       enableWebVitalsTracking: true,
+//     },
+//   });
+// }
 
 export default gatsbyConfig;

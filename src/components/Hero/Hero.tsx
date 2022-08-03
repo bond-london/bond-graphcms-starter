@@ -1,10 +1,12 @@
-import { VisualAsset } from "@bond-london/gatsby-graphcms-components";
+import {
+  AspectRatioVisual,
+  VisualAsset,
+} from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
 import React from "react";
 import { useFirstVisible } from "../../utils";
 import { CleanedRTF } from "@bond-london/graphcms-rich-text";
 import { ColourName, lookupColourClassName } from "../../lookups";
-import { AspectRatioVisual } from "../../elements/AspectRatioVisual";
 import { RTF } from "../../elements/RTF";
 import { Section } from "../../layouts/Section";
 import { LinkOrButton } from "../LinkOrButton";

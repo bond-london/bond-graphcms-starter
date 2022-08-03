@@ -1,4 +1,7 @@
-import { VisualAsset } from "@bond-london/gatsby-graphcms-components";
+import {
+  AspectRatioVisual,
+  VisualAsset,
+} from "@bond-london/gatsby-graphcms-components";
 import {
   ClassNameOverrides,
   CleanedRTF,
@@ -6,7 +9,6 @@ import {
 } from "@bond-london/graphcms-rich-text";
 import classNames from "classnames";
 import React from "react";
-import { AspectRatioVisual } from "../../elements/AspectRatioVisual";
 import { RTF } from "../../elements/RTF";
 import { Section } from "../../layouts/Section";
 

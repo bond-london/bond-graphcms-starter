@@ -1,4 +1,4 @@
-import { AutoVisualNoLottie } from "@bond-london/gatsby-graphcms-components";
+import { AutoVisual } from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
 import { Link } from "gatsby";
 import React, { PropsWithChildren } from "react";
@@ -60,7 +60,7 @@ export const LinkOrButton: React.FC<
       {children && <div>{children}</div>}
     </div>
   ) : visual ? (
-    <AutoVisualNoLottie visual={visual} />
+    <AutoVisual visual={visual} />
   ) : (
     name || children
   );

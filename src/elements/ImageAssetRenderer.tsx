@@ -1,5 +1,5 @@
 import {
-  AutoVisualNoLottie,
+  AutoVisual,
   GenericAsset,
   getVisual,
 } from "@bond-london/gatsby-graphcms-components";
@@ -10,5 +10,5 @@ export const ImageAssetRenderer: React.FC<ImageAssetRendererProps> = (
   props
 ) => {
   const visual = getVisual(props);
-  return <AutoVisualNoLottie visual={visual} />;
+  return <AutoVisual visual={visual} />;
 };

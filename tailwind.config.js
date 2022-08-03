@@ -9,7 +9,7 @@ const navHeight = config.spacing.xxxs + config.spacing.m + config.spacing.xxs;
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   mode: "jit",
-  content: ["./src/**/*.{tsx,ts}"],
+  content: ["./src/**/*.{tsx,ts}", "./gatsby-ssr.tsx"],
   theme: {
     fontFamily: {
       poppins: ["Poppins", ...defaulttheme.fontFamily.sans],

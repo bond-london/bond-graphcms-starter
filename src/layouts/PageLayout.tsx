@@ -1,5 +1,4 @@
 import React from "react";
-import { getImage } from "@bond-london/gatsby-graphcms-components";
 import { Blocks } from "../cms/Blocks";
 import { PageHeader } from "../components/PageHeader";
 import { Layout } from "./Layout";
@@ -7,15 +6,9 @@ import { Layout } from "./Layout";
 export const PageLayout: React.FC<{
   page: Queries.PageFragment;
   pagePath: string;
-}> = ({ page, pagePath }) => {
+}> = ({ page }) => {
   return (
-    <Layout
-      title={page.title}
-      description={page.description}
-      keywords={page.keywords}
-      image={getImage(page.image)}
-      pagePath={pagePath}
-    >
+    <Layout>
       {page.header && <PageHeader title={page.header} />}
       <Blocks blocks={page.blocks} />
     </Layout>

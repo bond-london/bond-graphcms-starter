@@ -1,7 +1,9 @@
-import { VisualAsset } from "@bond-london/gatsby-graphcms-components";
+import {
+  AspectRatioVisual,
+  VisualAsset,
+} from "@bond-london/gatsby-graphcms-components";
 import classNames from "classnames";
 import React from "react";
-import { AspectRatioVisual } from "../elements/AspectRatioVisual";
 
 export const Avatar: React.FC<{
   visual?: VisualAsset;

@@ -1,6 +1,11 @@
 import { SEO } from "@bond-london/gatsby-graphcms-components";
-import classNames from "classnames";
-import { graphql, useStaticQuery } from "gatsby";
+import {
+  graphql,
+  HeadProps,
+  Script,
+  ScriptStrategy,
+  useStaticQuery,
+} from "gatsby";
 import { IGatsbyImageData } from "gatsby-plugin-image";
 import React, {
   createContext,
@@ -11,6 +16,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
+// eslint-disable-next-line import/no-named-as-default
 import CookieConsent, { getCookieConsentValue } from "react-cookie-consent";
 import { FooterInformation, Footer } from "../components/Footer/Footer";
 import { Menu, NavigationBar } from "../components/Navigation/NavigationBar";
@@ -84,50 +90,9 @@ const DefaultFooterInformation: FooterInformation = {
   ],
 };
 
-export const Layout: React.FC<
-  PropsWithChildren<{
-    bodyClassName?: string;
-    title: string;
-    description?: string | null;
-    keywords?: string | null;
-    image?: IGatsbyImageData | null;
-    pagePath: string;
-  }>
-> = ({
-  bodyClassName,
-  title,
-  description,
-  keywords,
-  image,
-  pagePath,
-  children,
-}) => {
-  const { siteBuildMetadata, site } =
-    useStaticQuery<Queries.LayoutQuery>(graphql`
-      query Layout {
-        site {
-          siteMetadata {
-            description
-            siteName
-            siteUrl
-            cookieName
-            logo
-          }
-        }
-        siteBuildMetadata {
-          buildYear: buildTime(formatString: "YYYY")
-          buildTime(formatString: "dddd, MMMM d YYYY, h:mm:ss A")
-        }
-      }
-    `);
-
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const siteMetadata = site!.siteMetadata!;
-
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const cookieName = siteMetadata.cookieName!;
-
-  const pageTitle = `${title} | ${siteMetadata.siteName || ""}`;
+export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+  const gtm = process.env.GOOGLE_TAG;
+  const cookieName = process.env.COOKIE_NAME;
 
   const [modal, setModal] = useState<ReactNode>();
   const provider = useMemo(
@@ -139,7 +104,7 @@ export const Layout: React.FC<
   );
 
   const onAccept = useCallback(() => {
-    if (!window.bondHadCookie) {
+    if (!window.bondHadCookie && cookieName) {
       window.localStorage.setItem(cookieName, "true");
       window.gtag?.("consent", "update", {
         ad_storage: "granted",
@@ -157,6 +122,28 @@ export const Layout: React.FC<
 
   return (
     <LayoutContext.Provider value={provider}>
+      {gtm && cookieName && (
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtm.js?id=${gtm}`}
+            strategy={ScriptStrategy.idle}
+          />
+          <Script id="gtm-init" strategy={ScriptStrategy.idle}>{`
+          window.dataLayer = window.dataLayer || [];
+          const hasCookie = window.localStorage.getItem("${cookieName}");
+          const status = hasCookie ? "granted": "denied";
+          if (hasCookie) {
+            window.bondHadCookie = true;
+          }
+       
+          window.dataLayer.push('consent', 'default', {
+            'ad_storage': status,
+            'analytics_storage': status
+          });
+                
+          `}</Script>
+        </>
+      )}
       <CookieConsent
         cookieName={cookieName}
         declineCookieValue="declined"
@@ -178,23 +165,6 @@ export const Layout: React.FC<
         We use cookies to make this site awesome
       </CookieConsent>
 
-      <SEO
-        pageTitle={pageTitle}
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        siteBuildMetadata={siteBuildMetadata!}
-        pageMetadata={{
-          title,
-          description,
-          image,
-          keywords,
-        }}
-        siteMetadata={siteMetadata}
-        pagePath={pagePath}
-        className={classNames(
-          bodyClassName,
-          process.env.GATSBY_DEBUG_TAILWIND && "debug-screens"
-        )}
-      />
       <NavigationBar menu={DefaultNavigationMenu} />
 
       {children}
@@ -204,5 +174,61 @@ export const Layout: React.FC<
         contentClassName="bg-white rounded-normal p-s"
       />
     </LayoutContext.Provider>
+  );
+};
+
+export const LayoutHead: React.FC<{
+  headProps: HeadProps;
+  title: string;
+  description: string | null;
+  image: IGatsbyImageData | undefined;
+  keywords: string | null;
+}> = ({
+  headProps: {
+    location: { pathname },
+  },
+  title,
+  description,
+  image,
+  keywords,
+}) => {
+  const { siteBuildMetadata, site } =
+    useStaticQuery<Queries.LayoutHeadQuery>(graphql`
+      query LayoutHead {
+        site {
+          siteMetadata {
+            description
+            siteName
+            siteUrl
+            cookieName
+            logo
+          }
+        }
+        siteBuildMetadata {
+          buildYear: buildTime(formatString: "YYYY")
+          buildTime(formatString: "dddd, MMMM d YYYY, h:mm:ss A")
+        }
+      }
+    `);
+
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const siteMetadata = site!.siteMetadata!;
+
+  const pageTitle = `${title} | ${siteMetadata.siteName || ""}`;
+
+  return (
+    <SEO
+      pageTitle={pageTitle}
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      siteBuildMetadata={siteBuildMetadata!}
+      pageMetadata={{
+        title,
+        description,
+        image,
+        keywords,
+      }}
+      siteMetadata={siteMetadata}
+      pagePath={pathname}
+    />
   );
 };

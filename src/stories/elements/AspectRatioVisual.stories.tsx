@@ -1,6 +1,6 @@
+import { AspectRatioVisual } from "@bond-london/gatsby-graphcms-components";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
-import { AspectRatioVisual } from "../../elements/AspectRatioVisual";
 import { Section } from "../../layouts/Section";
 import { createVisualAssetFromLocalFile } from "../storyUtils";
 

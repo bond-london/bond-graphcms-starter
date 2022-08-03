@@ -1,8 +1,10 @@
-import { VisualAsset } from "@bond-london/gatsby-graphcms-components";
+import {
+  AspectRatioVisual,
+  VisualAsset,
+} from "@bond-london/gatsby-graphcms-components";
 import { CleanedRTF } from "@bond-london/graphcms-rich-text";
 import React from "react";
 import classNames from "classnames";
-import { AspectRatioVisual } from "./AspectRatioVisual";
 import { RTF } from "./RTF";
 
 export const Card: React.FC<{
